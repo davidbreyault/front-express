@@ -14,11 +14,11 @@ body {
   width: 100%;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-  @include lg {max-width: calc($lg - 3rem)};
-  @include xl {max-width: calc($xl - 3rem)};
-  @include xxl {max-width: calc($xxl - 3rem)};
+  padding-left: map-get($spaces, m);
+  padding-right: map-get($spaces, m);
+  @include lg {max-width: calc($lg - map-get($spaces, l))};
+  @include xl {max-width: calc($xl - map-get($spaces, l))};
+  @include xxl {max-width: calc($xxl - map-get($spaces, l))};
 }
 
 .material-icons {

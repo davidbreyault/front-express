@@ -1,13 +1,16 @@
 <app-header *ngIf="!onHomePage()"></app-header>
-<mat-sidenav-container [ngClass]="{'container': !onHomePage()}">
-  <mat-sidenav mode="side" [opened]="!onHomePage()">
-    <p>Menu</p>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <main>
+
+
+<main [ngClass]="{'main container': !onHomePage()}">
+  <app-banner *ngIf="!onHomePage()"></app-banner>
+  <mat-sidenav-container>
+    <mat-sidenav mode="side" [opened]="!onHomePage()">
+      <p>Menu</p>
+    </mat-sidenav>
+    <mat-sidenav-content>
       <div [ngClass]="{'container': !onHomePage()}">
         <router-outlet></router-outlet>
       </div>
-    </main>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</main>

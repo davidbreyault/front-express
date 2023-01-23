@@ -1,7 +1,15 @@
 @import '../variables';
 
-.mat-drawer-side {border: none};
+.main {
+  padding-top: map-get($spaces, m);
+  padding-bottom: map-get($spaces, m);
+  border-radius: map-get($radius, default);
+  background-color: map-get($background-colors, white);
+}
+
+//.mat-drawer-side {border: none};
+mat-sidenav {border: 1px blue solid};
 
 .mat-drawer-container {background-color: map-get($background-colors, white)};
 
-mat-sidenav-container {border-radius: map-get($radius, default)};
+mat-sidenav-container {border: 1px red solid};
