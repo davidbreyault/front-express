@@ -1,7 +1,7 @@
-h1 {
-  font-family: "Source Code Pro", sans-serif;
-}
+@import '../variables';
 
-h2 {
-  font-family: "Montserrat", sans-serif;
-}
+.mat-drawer-side {border: none};
+
+.mat-drawer-container {background-color: map-get($background-colors, white)};
+
+mat-sidenav-container {border-radius: map-get($radius, default)};

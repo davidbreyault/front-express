@@ -1,0 +1,49 @@
+// BREAKPOINTS
+
+// Breakpoint 576px
+$sm: 36em;
+// Breakpoint 768px
+$md: 48em;
+// Breakpoint 992px
+$lg: 62em;
+// Breakpoint 1200px
+$xl: 75em;
+// Breakpoint 1400px 
+$xxl: 87em;
+
+// COLORS
+
+$background-colors: (
+  primary: #2196F3,
+  light-primary: #E8F4FD,
+  dark-primary: #0D3C61,
+  white: #FFFFFF,
+  tin: #F5F5F5,
+  success: #EDFFF9,
+  error: #FFF6F6
+);
+
+$text-colors: (
+  primary: #2196F3,
+  light-primary: #E8F4FD,
+  dark-primary: #0D3C61,
+  success: #00B490,
+  error: #F44336,
+  white: #FFFFFF,
+  black: #000000
+);
+
+$border-colors: (
+  primary: #E4E4E4
+);
+
+// RADIUS
+
+$radius: (
+  default: 4px,
+  half: 2em
+);
+
+// SHADOWS
+
+$shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);

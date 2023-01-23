@@ -1,0 +1,23 @@
+@import '../../../variables';
+
+.header {
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  border-radius: map-get($radius, default);
+  background-color: map-get($background-colors, white);
+}
+
+.header.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .logo, span {
+    font-family: 'Source code pro', sans-serif;
+    font-weight: 200;
+  }
+  mat-icon {margin-right: 0.8rem};
+}
