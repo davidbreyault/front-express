@@ -1,0 +1,6 @@
+@import "../../../../variables";
+
+p {
+  margin-bottom: map-get($spaces, m);
+  padding: map-get($spaces, m) map-get($spaces, l);
+}
