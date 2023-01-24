@@ -1,4 +1,5 @@
 @import '../../../variables';
+@import '../../../mixins';
 
 .home {
   width: 100%;
@@ -14,25 +15,18 @@ h1 {
 }
 
 a {
-  display: flex;
-  justify-content: space-between;
-  align-items: stretch;
+  @include flex-rsbc;
   padding: map-get($spaces, m) map-get($spaces, l);
+  color: map-get($text-colors, primary-dark);
   background-color: map-get($background-colors, white);
-  color: map-get($text-colors, dark-primary);
   border-radius: map-get($radius, half);
-  box-shadow: $shadow;
+  box-shadow: map-get($shadows, cta);
   font-weight: 600;
   text-decoration: none;
-  span {
-    margin-right: map-get($spaces, s);
-  }
+  span {margin-right: map-get($spaces, s)};
 }
 
 .app-title {
+  @include flex-ccc;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }

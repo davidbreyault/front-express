@@ -1,0 +1,4 @@
+<mat-spinner *ngIf="isLoadingWheelVisible" strokeWidth="2" diameter="50"></mat-spinner>
+<div class="notes-list">
+  <app-note *ngFor="let n of notes" [note]="n"></app-note>
+</div>

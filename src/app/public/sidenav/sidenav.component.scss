@@ -1,0 +1,31 @@
+@import '../../../variables';
+@import '../../../mixins';
+
+ul, li {
+  list-style: none;
+}
+
+a {
+  @include flex-rfsc;
+  padding-top: map-get($spaces, l);
+  padding-bottom: map-get($spaces, l);
+  padding-left: map-get($spaces, s);
+  padding-right: map-get($spaces, xl);
+  color: inherit;
+  text-decoration: none;
+  span.material-symbols-outlined {margin-right: map-get($spaces, m)};
+  span:not(.material-symbols-outlined) {
+    font-family: 'Source Code Pro', sans-serif;
+    font-weight: 200;
+  }
+  &.active {
+    background-color: map-get($background-colors, primary-light);
+    color: map-get($background-colors, primary);
+    border-right-width: 3px;
+    border-right-color: map-get($background-colors, primary);
+    border-right-style: solid;
+  }
+  &:hover {
+    background-color: map-get($background-colors, primary-light);
+  }
+}

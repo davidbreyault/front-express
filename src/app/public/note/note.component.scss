@@ -1,0 +1,61 @@
+@import '../../../variables';
+
+.note {
+  margin: map-get($spaces, m);
+  padding: map-get($spaces, m);
+  max-width: max-content;
+  border-radius: map-get($radius, default);
+  box-shadow: map-get($shadows, default);
+  background-color: map-get($background-colors, tin);
+  font-weight: 300;
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: map-get($spaces, s);
+    border-bottom: 1px solid map-get($border-colors, primary);
+    &--avatar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      width: max-content;
+      max-height: 4.2rem;
+      img {
+        display: block;
+        width: 70px;
+      }
+    }
+    &--data--author {
+      color: map-get($text-colors, steel);
+      font-weight: 200;
+      span {
+        font-weight: 400;
+        color: map-get($text-colors, black);
+      }
+    }
+    &--data--date {
+      color: map-get($text-colors, steel);
+      font-size: 1.2rem;
+    }
+  }
+  &__content {
+    margin-top: map-get($spaces, m);
+    margin-bottom: map-get($spaces, m);
+    word-wrap: break-word;
+    word-break: break-word;
+  }
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+    .note__footer--data {
+      margin-left: map-get($spaces, xs);
+      margin-right: map-get($spaces, xs);
+    }
+    button {
+      padding: 0;
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+      outline: none;
+    }
+  }
+}

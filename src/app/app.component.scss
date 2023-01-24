@@ -7,9 +7,6 @@
   background-color: map-get($background-colors, white);
 }
 
-//.mat-drawer-side {border: none};
-mat-sidenav {border: 1px blue solid};
+.mat-drawer-side {border: none};
 
 .mat-drawer-container {background-color: map-get($background-colors, white)};
-
-mat-sidenav-container {border: 1px red solid};

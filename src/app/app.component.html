@@ -2,10 +2,13 @@
 
 
 <main [ngClass]="{'main container': !onHomePage()}">
-  <app-banner *ngIf="!onHomePage()"></app-banner>
+  <ng-container *ngIf="!onHomePage()">
+    <app-banner></app-banner>
+    <app-button-burger [isOpen]="sideNavOpened" (clicked)="sideNavButtonClicked()"></app-button-burger>
+  </ng-container>
   <mat-sidenav-container>
-    <mat-sidenav mode="side" [opened]="!onHomePage()">
-      <p>Menu</p>
+    <mat-sidenav mode="side" [opened]="!onHomePage() && sideNavOpened">
+      <app-sidenav></app-sidenav>
     </mat-sidenav>
     <mat-sidenav-content>
       <div [ngClass]="{'container': !onHomePage()}">

@@ -1,0 +1,6 @@
+@import '../../../mixins';
+
+.notes-list {
+  @include flex-rcc;
+  flex-wrap: wrap;
+}

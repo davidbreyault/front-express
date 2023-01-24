@@ -10,6 +10,15 @@ body {
   background-color: map-get($background-colors, tin);
 }
 
+h2, .h2-like {
+  margin-bottom: map-get($spaces, l);
+  font-family: 'Source Code Pro', sans-serif;
+}
+
+mat-spinner {
+  margin: 0 auto;
+}
+
 .container {
   width: 100%;
   margin-left: auto;
