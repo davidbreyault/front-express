@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -9,9 +8,15 @@ import { filter } from 'rxjs';
 })
 export class AppComponent {
 
+  sideNavOpened: boolean = false;
+
   constructor(private router: Router) {}
 
   onHomePage(): boolean {
     return this.router.url.includes('home');
+  }
+
+  sideNavButtonClicked(): void {
+    this.sideNavOpened = !this.sideNavOpened;
   }
 }

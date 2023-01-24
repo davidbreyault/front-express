@@ -14,17 +14,19 @@ $xxl: 87em;
 // SPACING
 
 $spaces: (
+  xs: 0.8rem,
   s: 1rem,
   m: 1.5rem,
-  l: 3rem
+  l: 3rem,
+  xl: 6rem
 );
 
 // COLORS
 
 $background-colors: (
-  primary: #2196F3,
-  light-primary: #E8F4FD,
-  dark-primary: #0D3C61,
+  primary: #4994EC,
+  primary-light: #F7FBFD,
+  primary-dark: #0D3C61,
   white: #FFFFFF,
   tin: #F5F5F5,
   success: #EDFFF9,
@@ -32,9 +34,10 @@ $background-colors: (
 );
 
 $text-colors: (
-  primary: #2196F3,
-  light-primary: #E8F4FD,
-  dark-primary: #0D3C61,
+  primary: #4994EC,
+  primary-light: #F7FBFD,
+  primary-dark: #0D3C61,
+  steel: #a4a4a4,
   success: #00B490,
   error: #F44336,
   white: #FFFFFF,
@@ -54,4 +57,13 @@ $radius: (
 
 // SHADOWS
 
-$shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
+$shadows: (
+  default: 2px 1px 5px rgba(151, 151, 151, 0.35),
+  cta: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14): 0px 1px 5px 0px rgba(0, 0, 0, 0.12)
+);
+
+// TRANSITIONS
+
+$transitions: (
+  default: all 0.25s ease-in-out
+);

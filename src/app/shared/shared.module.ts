@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MaterialModule } from './material.module'
-import { BannerDirective } from './directives/banner.directive';
-import { BannerComponent } from './components/banner/banner.component';
+import { MaterialModule } from './material.module';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { InterceptorService } from './_services/interceptor.service';
+import { ButtonBurgerComponent } from './button-burger/button-burger.component';
 
 
 
 @NgModule({
   declarations: [
-    BannerDirective,
-    BannerComponent
+    ButtonBurgerComponent
   ],
   imports: [
     CommonModule,
@@ -17,7 +17,15 @@ import { BannerComponent } from './components/banner/banner.component';
   exports: [
     CommonModule,
     MaterialModule,
-    BannerComponent
+    HttpClientModule,
+    ButtonBurgerComponent
+  ], 
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: InterceptorService,
+      multi: true
+    }
   ]
 })
 export class SharedModule { }
