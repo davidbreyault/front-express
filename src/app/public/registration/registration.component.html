@@ -1,0 +1,54 @@
+<div class="dialog">
+  <div class="dialog__header">
+    <h2>Sign up</h2>
+    <button class="button" (click)="onCloseRegistrationDialog()">X</button>
+  </div>
+  <div class="dialog__content">
+    <form [formGroup]="registrationForm" (ngSubmit)="onRegistrationSubmit()">
+      <!-- USERNAME -->
+      <mat-form-field appearance="fill">
+        <mat-label>Username</mat-label>
+        <input matInput placeholder="Joe Dassin" formControlName="username">
+      </mat-form-field>
+      <!-- EMAIL -->
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="joedassin@yahoo.fr" formControlName="email">
+      </mat-form-field>
+      <!-- PASSWORD -->
+      <mat-form-field appearance="fill">
+        <mat-label>Enter your password</mat-label>
+        <input matInput [type]="hidePasswordInput ? 'password' : 'text'" formControlName="password">
+        <button 
+          matSuffix
+          mat-icon-button  
+          [attr.aria-label]="'Hide password'" 
+          [attr.aria-pressed]="hidePasswordInput"
+          (click)="hidePasswordInput = !hidePasswordInput">
+          <mat-icon>{{hidePasswordInput ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+      <!-- PASSWORD CONFIRMATION -->
+      <mat-form-field appearance="fill">
+        <mat-label>Confirm your password</mat-label>
+        <input matInput [type]="hidePasswordConfirmationInput ? 'password' : 'text'" formControlName="confirmation">
+        <button 
+          matSuffix
+          mat-icon-button 
+          [attr.aria-label]="'Hide password'" 
+          [attr.aria-pressed]="hidePasswordConfirmationInput"
+          (click)="hidePasswordConfirmationInput = !hidePasswordConfirmationInput" >
+          <mat-icon>{{hidePasswordConfirmationInput ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+      <!-- SUBMISSION -->
+      <div class="form-submit">
+        <button mat-button color="primary" (click)="onSwitchForAuthentication()">
+          <mat-icon>arrow_back</mat-icon>
+          <span>Log in</span>
+        </button>
+        <button mat-raised-button color="primary" type="submit">Register</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -12,30 +12,7 @@
     display: flex;
     justify-content: space-between;
     padding-bottom: map-get($spaces, s);
-    border-bottom: 1px solid map-get($border-colors, primary);
-    &--avatar {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      width: max-content;
-      max-height: 4.2rem;
-      img {
-        display: block;
-        width: 70px;
-      }
-    }
-    &--data--author {
-      color: map-get($text-colors, steel);
-      font-weight: 200;
-      span {
-        font-weight: 400;
-        color: map-get($text-colors, black);
-      }
-    }
-    &--data--date {
-      color: map-get($text-colors, steel);
-      font-size: 1.2rem;
-    }
+    border-bottom: 1px solid map-get($border-colors, default);
   }
   &__content {
     margin-top: map-get($spaces, m);
@@ -51,11 +28,37 @@
       margin-right: map-get($spaces, xs);
     }
     button {
-      padding: 0;
-      border: none;
-      background-color: transparent;
-      cursor: pointer;
-      outline: none;
+      &:hover {
+        span.material-symbols-outlined {
+          transform: scale(1.5);
+          transition: map-get($transitions, fast);
+        }
+      }
     }
   }
+}
+
+.note__header--avatar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: max-content;
+  max-height: 4.2rem;
+  img {
+    display: block;
+    width: 70px;
+  }
+}
+
+.note__header--data--author {
+  font-weight: 400;
+  span {
+    color: map-get($text-colors, steel);
+    font-weight: 200;
+  }
+}
+
+.note__header--data--date {
+  color: map-get($text-colors, steel);
+  font-size: 1.2rem;
 }

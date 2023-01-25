@@ -4,6 +4,7 @@ import { MaterialModule } from './material.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorService } from './_services/interceptor.service';
 import { ButtonBurgerComponent } from './button-burger/button-burger.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -18,6 +19,7 @@ import { ButtonBurgerComponent } from './button-burger/button-burger.component';
     CommonModule,
     MaterialModule,
     HttpClientModule,
+    ReactiveFormsModule,
     ButtonBurgerComponent
   ], 
   providers: [

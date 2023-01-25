@@ -2,6 +2,7 @@
 @import '../../../mixins';
 
 .header {
+  @include flex-rsbc;
   margin-top: map-get($spaces, l);
   margin-bottom: map-get($spaces, l);
   padding-top: map-get($spaces, m);
@@ -10,13 +11,5 @@
   padding-right: map-get($spaces, m);
   border-radius: map-get($radius, default);
   background-color: map-get($background-colors, white);
-}
-
-.header.container {
-  @include flex-rsbc;
-  .logo, span {
-    font-family: 'Source code pro', sans-serif;
-    font-weight: 200;
-  }
-  mat-icon {margin-right: 0.8rem};
+  &__nav {button:not(button:first-child) {margin-left: map-get($spaces, s)}};
 }

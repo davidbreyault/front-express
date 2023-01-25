@@ -11,6 +11,9 @@ import { BannerComponent } from './banner/banner.component';
 import { BannerDirective } from './_directives/banner.directive';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { RouterService } from './_services/router.service';
+import { NotesBestComponent } from './notes-best/notes-best.component';
+import { AuthenticationComponent } from './authentication/authentication.component';
+import { RegistrationComponent } from './registration/registration.component';
 
 
 @NgModule({
@@ -22,6 +25,9 @@ import { RouterService } from './_services/router.service';
     NotesListComponent,
     NoteComponent,
     SidenavComponent,
+    NotesBestComponent,
+    AuthenticationComponent,
+    RegistrationComponent,
     BannerDirective
   ],
   imports: [
