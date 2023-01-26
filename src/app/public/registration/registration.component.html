@@ -9,17 +9,20 @@
       <mat-form-field appearance="fill">
         <mat-label>Username</mat-label>
         <input matInput placeholder="Joe Dassin" formControlName="username">
+        <mat-error [innerHTML]="'Username' + getFormControlError(usernameControl, 3, 20) | sanitize"></mat-error>
       </mat-form-field>
       <!-- EMAIL -->
       <mat-form-field appearance="fill">
         <mat-label>Email</mat-label>
         <input matInput placeholder="joedassin@yahoo.fr" formControlName="email">
+        <mat-error [innerHTML]="'Email' + getFormControlError(emailControl, 3, 50) | sanitize"></mat-error>
       </mat-form-field>
       <!-- PASSWORD -->
       <mat-form-field appearance="fill">
         <mat-label>Enter your password</mat-label>
         <input matInput [type]="hidePasswordInput ? 'password' : 'text'" formControlName="password">
         <button 
+          type="button"
           matSuffix
           mat-icon-button  
           [attr.aria-label]="'Hide password'" 
@@ -27,12 +30,14 @@
           (click)="hidePasswordInput = !hidePasswordInput">
           <mat-icon>{{hidePasswordInput ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
+        <mat-error [innerHTML]="'Password' + getFormControlError(passwordControl, 6, 40) | sanitize"></mat-error>
       </mat-form-field>
       <!-- PASSWORD CONFIRMATION -->
       <mat-form-field appearance="fill">
         <mat-label>Confirm your password</mat-label>
         <input matInput [type]="hidePasswordConfirmationInput ? 'password' : 'text'" formControlName="confirmation">
         <button 
+          type="button"
           matSuffix
           mat-icon-button 
           [attr.aria-label]="'Hide password'" 
@@ -40,6 +45,7 @@
           (click)="hidePasswordConfirmationInput = !hidePasswordConfirmationInput" >
           <mat-icon>{{hidePasswordConfirmationInput ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
+        <mat-error [innerHTML]="'Password' + getFormControlError(confirmationControl, 6, 40) | sanitize"></mat-error>
       </mat-form-field>
       <!-- SUBMISSION -->
       <div class="form-submit">
@@ -47,7 +53,7 @@
           <mat-icon>arrow_back</mat-icon>
           <span>Log in</span>
         </button>
-        <button mat-raised-button color="primary" type="submit">Register</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!registrationForm.valid">Register</button>
       </div>
     </form>
   </div>

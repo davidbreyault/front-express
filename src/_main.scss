@@ -19,8 +19,16 @@ mat-spinner {
   margin: 0 auto;
 }
 
+mat-error {
+  font-size: 1rem;
+}
+
 mat-form-field {
   display: block !important;
+}
+
+.mat-form-field-subscript-wrapper {
+  margin-top: 0.35em;
 }
 
 button[mat-button] mat-icon,

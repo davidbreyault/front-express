@@ -14,6 +14,7 @@ import { RouterService } from './_services/router.service';
 import { NotesBestComponent } from './notes-best/notes-best.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
 import { RegistrationComponent } from './registration/registration.component';
+import { RegistrationService } from './_services/registration.service';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { RegistrationComponent } from './registration/registration.component';
   ],
   providers: [
     NotesService,
-    RouterService
+    RouterService,
+    RegistrationService
   ]
 })
 export class PublicModule { }
