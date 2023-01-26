@@ -1,7 +1,10 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { tap } from 'rxjs';
+import { catchError, take, tap, throwError } from 'rxjs';
+import { AlertType } from 'src/app/shared/_models/alert.model';
+import { AlertService } from 'src/app/shared/_services/alert.service';
 import { equalityValidator } from 'src/app/shared/_validators/equality.validator';
 import { AuthenticationComponent } from '../authentication/authentication.component';
 import { RegistrationCredentials } from '../_models/registration-credentials.model';
@@ -12,13 +15,12 @@ import { RegistrationService } from '../_services/registration.service';
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.scss']
 })
-export class RegistrationComponent implements OnInit {
+export class RegistrationComponent implements OnInit, OnDestroy {
 
   registrationForm!: FormGroup;
   hidePasswordInput: boolean = true;
   hidePasswordConfirmationInput: boolean = true;
   @Output() backToAuthentication = new EventEmitter();
-
   usernameControl!: FormControl;
   emailControl!: FormControl;
   passwordControl!: FormControl;
@@ -27,18 +29,13 @@ export class RegistrationComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private registrationService: RegistrationService,
-    private matDialogRef: MatDialogRef<AuthenticationComponent>) { }
+    private matDialogRef: MatDialogRef<AuthenticationComponent>,
+    private alertService: AlertService) { }
 
   ngOnInit(): void {
     this.initFormControls();
-    this.registrationForm = this.formBuilder.group({
-      username: this.usernameControl,
-      email: this.emailControl,
-      password: this.passwordControl,
-      confirmation: this.confirmationControl
-    }, {validators: equalityValidator()});
-
-    this.registrationForm.valueChanges.pipe(tap(value => console.log(this.registrationForm))).subscribe();
+    this.createRegistrationForm();
+    this.removeAlertsFromAuthentication();
   }
 
   private initFormControls(): void {
@@ -64,6 +61,64 @@ export class RegistrationComponent implements OnInit {
     ]);
   }
 
+  private createRegistrationForm(): void {
+    this.registrationForm = this.formBuilder.group(
+      {
+        username: this.usernameControl,
+        email: this.emailControl,
+        password: this.passwordControl,
+        confirmation: this.confirmationControl
+      }, 
+      {
+        validators: equalityValidator()
+      }
+    );
+  }
+
+  onCloseRegistrationDialog(): void {
+    this.matDialogRef.close();
+  }
+
+  onSwitchForAuthentication(): void {
+    this.backToAuthentication.emit();
+  }
+
+  onRegistrationSubmit(): void {
+    if (this.registrationForm.valid) {
+      const {username, email, password, confirmation} = this.registrationForm.value;
+      this.registrationService.registrate(new RegistrationCredentials(username, email, password, confirmation))
+        .pipe(
+          tap(response => {
+            if (response.status === 200) {
+              this.onSwitchForAuthentication();
+              this.alertService.addAlert(response.body.message, AlertType.success);
+            }
+          }),
+          catchError((httpErrorResponse: HttpErrorResponse) => {
+            this.alertService.addAlert(httpErrorResponse.error.errors.message, AlertType.error);
+            return throwError(() => httpErrorResponse)
+          })
+        )
+        .subscribe();
+    }
+  }
+
+  addNewAlert(): void {
+    this.alertService.addAlert("ALERTTTTTTT", AlertType.success);
+    this.onSwitchForAuthentication();
+  }
+
+  private removeAlertsFromAuthentication(): void {
+    this.alertService.alertsSubject.pipe(
+      take(1),
+      tap(alerts => {
+        if (alerts.length > 0) {
+          this.alertService.clearAllAlerts()
+        }
+      })
+    ).subscribe();
+  }
+
   getFormControlError(control: AbstractControl, min?: number, max?:number): string {
     if (control.hasError('required')) {
       return ' is <strong>required</strong>.';
@@ -83,27 +138,7 @@ export class RegistrationComponent implements OnInit {
     return 'is not valid.';
   }
 
-  onCloseRegistrationDialog(): void {
-    this.matDialogRef.close();
-  }
-
-  onSwitchForAuthentication(): void {
-    this.backToAuthentication.emit();
-  }
-
-  onRegistrationSubmit(): void {
-    if (this.registrationForm.valid) {
-      const {username, email, password, confirmation} = this.registrationForm.value;
-      this.registrationService.registrate(new RegistrationCredentials(username, email, password, confirmation))
-        .pipe(
-          tap(value => {
-            if (value.status === 200) {
-              this.onSwitchForAuthentication();
-              // TODO : Lancer une alerte de succès
-            }
-          })
-        )
-        .subscribe();
-    }
+  ngOnDestroy(): void {
+    this.alertService.clearErrorAlerts();
   }
 }

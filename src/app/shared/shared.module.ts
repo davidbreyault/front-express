@@ -6,12 +6,15 @@ import { InterceptorService } from './_services/interceptor.service';
 import { ButtonBurgerComponent } from './button-burger/button-burger.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SanitizePipe } from './_pipes/sanitize.pipe';
+import { AlertComponent } from './alert/alert.component';
+import { AlertService } from './_services/alert.service';
 
 
 
 @NgModule({
   declarations: [
     SanitizePipe,
+    AlertComponent,
     ButtonBurgerComponent
   ],
   imports: [
@@ -23,9 +26,11 @@ import { SanitizePipe } from './_pipes/sanitize.pipe';
     HttpClientModule,
     ReactiveFormsModule,
     SanitizePipe,
+    AlertComponent,
     ButtonBurgerComponent
   ], 
   providers: [
+    AlertService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: InterceptorService,
