@@ -1,0 +1,13 @@
+@import '../../../variables';
+
+form {
+  margin-top: map-get($spaces, m);
+  margin-bottom: map-get($spaces, m);
+  padding: 2rem;
+}
+
+.form-submit {
+  button:first-child {
+    margin-right: map-get($spaces, s)
+  };
+}

@@ -45,7 +45,9 @@ $text-colors: (
 );
 
 $border-colors: (
-  primary: #E4E4E4
+  default: #E4E4E4,
+  success: #00B490,
+  error: #F44336
 );
 
 // RADIUS
@@ -65,5 +67,6 @@ $shadows: (
 // TRANSITIONS
 
 $transitions: (
-  default: all 0.25s ease-in-out
+  default: all 0.25s ease-in-out,
+  fast: all 0.15s ease-in-out
 );

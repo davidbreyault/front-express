@@ -1,0 +1,39 @@
+<div *ngIf="authenticationSide" class="dialog">
+  <div class="dialog__header">
+    <h2>Log in</h2>
+    <button class="button" (click)="onCloseAuthenticationDialog()">X</button>
+  </div>
+  <div class="dialog__content">
+    <form [formGroup]="authenticationForm">
+      <!-- USERNAME -->
+      <mat-form-field appearance="fill">
+        <mat-label>Username</mat-label>
+        <input matInput placeholder="Joe Dassin">
+      </mat-form-field>
+      <!-- PASSWORD -->
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+      <!-- SUBMISSION -->
+      <div class="form-submit">
+        <button mat-raised-button color="primary">
+          <mat-icon>login</mat-icon>
+          <span>Log in</span>
+        </button>
+      </div>
+    </form>
+  </div>
+  <div class="dialog__footer">
+    <app-alert></app-alert>
+    <p>Don't have an account yet ?</p>
+    <button mat-button color="primary" (click)="onToggleAuthenticationRegistration()">Register</button>
+  </div>
+</div>
+
+<ng-container *ngIf="!authenticationSide">
+  <app-registration (backToAuthentication)="onToggleAuthenticationRegistration()"></app-registration>
+</ng-container>

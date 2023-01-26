@@ -11,12 +11,37 @@ body {
 }
 
 h2, .h2-like {
-  margin-bottom: map-get($spaces, l);
   font-family: 'Source Code Pro', sans-serif;
+}
+
+app-alert {
+  width: 100%;
 }
 
 mat-spinner {
   margin: 0 auto;
+}
+
+mat-error {
+  font-size: 1rem;
+}
+
+mat-form-field {
+  display: block !important;
+}
+
+.mat-form-field-subscript-wrapper {
+  margin-top: 0.35em;
+}
+
+button[mat-button] mat-icon,
+button[mat-raised-button] mat-icon {
+  margin-right: map-get($spaces, s)
+};
+
+.mat-button-wrapper, .mat-button-wrapper span {
+  font-weight: 200;
+  font-family: 'Source Code Pro', sans-serif;
 }
 
 .container {
@@ -28,6 +53,31 @@ mat-spinner {
   @include lg {max-width: calc($lg - map-get($spaces, l))};
   @include xl {max-width: calc($xl - map-get($spaces, l))};
   @include xxl {max-width: calc($xxl - map-get($spaces, l))};
+}
+
+.button {
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  font-family: 'Source Code Pro', sans-serif;
+  cursor: pointer;
+}
+
+.dialog {
+  &__header {
+    @include flex-rsbc;
+    padding-bottom: map-get($spaces, m);
+    border-bottom: 1px solid map-get($border-colors, default);
+  }
+  &__footer {
+    @include flex-ccc;
+    padding-top: map-get($spaces, m);
+    border-top: 1px solid map-get($border-colors, default);
+  }
+}
+
+.form-submit {
+  @include flex-rfec;
 }
 
 .material-icons {

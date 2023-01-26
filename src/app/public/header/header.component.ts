@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { AuthenticationComponent } from '../authentication/authentication.component';
 
 @Component({
   selector: 'app-header',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  constructor(public authDialog: MatDialog) { }
 
   ngOnInit(): void {
   }
 
+  onOpenAuthenticationDialog(): void {
+    const matDialogConfig: MatDialogConfig = {
+      minWidth: "450px"
+    }
+    this.authDialog.open(AuthenticationComponent, matDialogConfig);
+  }
 }

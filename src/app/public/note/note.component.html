@@ -1,31 +1,34 @@
 <div class="note">
+  <!-- Note Header -->
   <div class="note__header">
     <div class="note__header--data">
-      <p class="note__header--data--author">by <span>{{ note.author }}</span></p>
+      <p class="note__header--data--author"><span>by</span> {{ note.author }}</p>
       <p class="note__header--data--date">{{ note.createdAt | date: 'dd/MM/yy - HH:ss'  }}</p>
     </div>
     <div class="note__header--avatar">
       <img src="https://api.dicebear.com/5.x/croodles/svg?seed={{note.author}}"alt="author-avatar">
     </div>
   </div>
+  <!-- Note Content -->
   <div class="note__content">
     <p>{{ note.note }}</p>
   </div>
+  <!-- Note Footer -->
   <div class="note__footer">
     <div class="note__footer--likes">
-      <button>
+      <button class="button">
         <span class="material-symbols-outlined">favorite</span>
       </button>
       <span class="note__footer--data">{{ note.likes }}</span>
     </div>
     <div class="note__footer--dislikes">
-      <button>
+      <button class="button">
         <span class="material-symbols-outlined">thumb_down</span>
       </button>
       <span class="note__footer--data">{{ note.dislikes }}</span>
     </div>
     <div class="note__footer--comments">
-      <button>
+      <button class="button">
         <span class="material-symbols-outlined">comment</span>
       </button>
       <span class="note__footer--data">{{ note.totalNoteComments }}</span>

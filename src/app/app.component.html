@@ -1,6 +1,4 @@
 <app-header *ngIf="!onHomePage()"></app-header>
-
-
 <main [ngClass]="{'main container': !onHomePage()}">
   <ng-container *ngIf="!onHomePage()">
     <app-banner></app-banner>

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AlertType } from './shared/_models/alert.model';
+import { AlertService } from './shared/_services/alert.service';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +12,7 @@ export class AppComponent {
 
   sideNavOpened: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private alertService: AlertService) {}
 
   onHomePage(): boolean {
     return this.router.url.includes('home');
@@ -18,5 +20,9 @@ export class AppComponent {
 
   sideNavButtonClicked(): void {
     this.sideNavOpened = !this.sideNavOpened;
+  }
+
+  addNewAlert(): void {
+    this.alertService.addAlert('Whaaah la belle alerte !', AlertType.success);
   }
 }

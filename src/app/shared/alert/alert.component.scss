@@ -1,0 +1,21 @@
+@import '../../../variables';
+@import '../../../mixins';
+
+.alert {
+  @include flex-rsbc;
+  button {color: inherit};
+  margin-top: map-get($spaces, m);
+  margin-bottom: map-get($spaces, m);
+  padding: map-get($spaces, m);
+  border-radius: map-get($radius, default);
+  &.success {
+    color: map-get($text-colors, success);
+    border: 1px solid map-get($border-colors, success);
+    background-color: map-get($background-colors, success);
+  }
+  &.error {
+    color: map-get($text-colors, error);
+    border: 1px solid map-get($border-colors, error);
+    background-color: map-get($background-colors, error);
+  }
+}
