@@ -14,6 +14,10 @@ h2, .h2-like {
   font-family: 'Source Code Pro', sans-serif;
 }
 
+.pl-s {
+  padding-left: map-get($spaces, s);
+}
+
 app-alert {
   width: 100%;
 }

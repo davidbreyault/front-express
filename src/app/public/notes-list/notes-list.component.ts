@@ -14,8 +14,8 @@ import { RouterService } from '../_services/router.service';
 export class NotesListComponent implements OnInit, OnDestroy {
 
   notes!: Note[];
+  subscription!: Subscription;
   isLoadingWheelVisible: boolean = true;
-  subscription: Subscription = new Subscription;
 
   constructor(
     private notesService: NotesService, 

@@ -15,6 +15,8 @@ import { NotesBestComponent } from './notes-best/notes-best.component';
 import { AuthenticationComponent } from './authentication/authentication.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { RegistrationService } from './_services/registration.service';
+import { AuthenticationService } from './_services/authentication.service';
+import { BasicAuthenticationService } from './_services/basic-authentication.service';
 
 
 @NgModule({
@@ -43,7 +45,9 @@ import { RegistrationService } from './_services/registration.service';
   providers: [
     NotesService,
     RouterService,
-    RegistrationService
+    RegistrationService,
+    AuthenticationService,
+    BasicAuthenticationService
   ]
 })
 export class PublicModule { }

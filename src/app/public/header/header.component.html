@@ -1,13 +1,13 @@
 <div class="header container">
     <div class="logo">Express</div>
     <nav class="header__nav">
-      <button mat-button color="primary">
+      <button mat-button *ngIf="authentication?.isAuthenticated" color="primary">
         <mat-icon>edit_note</mat-icon>
         <span>New note</span>
       </button>
       <button mat-button color="primary" (click)="onOpenAuthenticationDialog()">
         <mat-icon>person</mat-icon>
-        <span>Log in / Sign up</span>
+        <span>{{ authentication.isAuthenticated ? authentication.usernameFromJwt : 'Log in / Sign up' }}</span>
       </button>
     </nav>
 </div>

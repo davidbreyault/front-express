@@ -4,16 +4,16 @@
     <button class="button" (click)="onCloseAuthenticationDialog()">X</button>
   </div>
   <div class="dialog__content">
-    <form [formGroup]="authenticationForm">
+    <form [formGroup]="authenticationForm" (ngSubmit)="onAuthenticationSubmit()">
       <!-- USERNAME -->
       <mat-form-field appearance="fill">
         <mat-label>Username</mat-label>
-        <input matInput placeholder="Joe Dassin">
+        <input matInput placeholder="Joe Dassin" formControlName="username">
       </mat-form-field>
       <!-- PASSWORD -->
       <mat-form-field appearance="fill">
         <mat-label>Password</mat-label>
-        <input matInput [type]="hide ? 'password' : 'text'">
+        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
           <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>

@@ -7,7 +7,7 @@ import { AlertType } from 'src/app/shared/_models/alert.model';
 import { AlertService } from 'src/app/shared/_services/alert.service';
 import { equalityValidator } from 'src/app/shared/_validators/equality.validator';
 import { AuthenticationComponent } from '../authentication/authentication.component';
-import { RegistrationCredentials } from '../_models/registration-credentials.model';
+import { CredentialsRegistration } from '../_models/credentials-registration.model';
 import { RegistrationService } from '../_services/registration.service';
 
 @Component({
@@ -30,7 +30,8 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private registrationService: RegistrationService,
     private matDialogRef: MatDialogRef<AuthenticationComponent>,
-    private alertService: AlertService) { }
+    private alertService: AlertService
+  ) {}
 
   ngOnInit(): void {
     this.initFormControls();
@@ -86,7 +87,12 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   onRegistrationSubmit(): void {
     if (this.registrationForm.valid) {
       const {username, email, password, confirmation} = this.registrationForm.value;
-      this.registrationService.registrate(new RegistrationCredentials(username, email, password, confirmation))
+      const credentialsRegistration: CredentialsRegistration = new CredentialsRegistration();
+      credentialsRegistration.username = username;
+      credentialsRegistration.email = email;
+      credentialsRegistration.password = password;
+      credentialsRegistration.confirmation = confirmation;
+      this.registrationService.registrate(credentialsRegistration)
         .pipe(
           tap(response => {
             if (response.status === 200) {
