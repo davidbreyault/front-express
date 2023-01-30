@@ -1,5 +1,5 @@
 export class Payload {
   sub!: string;
-  iat!: bigint;
-  exp!: bigint;
+  iat!: number;
+  exp!: number;
 }

@@ -27,7 +27,15 @@ export class TokenService {
     return JSON.parse(jwtPayload);
   }
 
-  getUsernameFromJwt(): string {
+  getJwtUsername(): string {
     return this.getJwtPayload()['sub'];
+  }
+
+  getJwtExpirationDate(): number {
+    return this.getJwtPayload()['exp'];
+  }
+
+  isTokenHasExpired(): boolean {
+    return this.getJwtExpirationDate() - Date.now() > 0;
   }
 }

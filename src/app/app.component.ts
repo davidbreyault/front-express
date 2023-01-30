@@ -27,6 +27,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.subscription = this.authenticationService.getAuthenticationDataSubject()
       .pipe(tap(authenticationData => this.authentication = authenticationData))
       .subscribe();
+    this.authenticationService.logInWithJwt();
   }
 
   onHomePage(): boolean {

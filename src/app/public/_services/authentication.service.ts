@@ -9,50 +9,68 @@ import { BasicAuthenticationService } from "./basic-authentication.service";
 @Injectable()
 export class AuthenticationService {
 
-  private authenticationData!: Authentication;
+  private authenticationData: Authentication = this.initAuthentication();
   private authenticationDataSubject: Subject<Authentication> = new Subject<Authentication>();
 
   constructor(
     private tokenService: TokenService, 
-    private basicAuthenticationService: BasicAuthenticationService) { }
-
-  getAuthenticationData(): Authentication {
-    return this.authenticationData;
+    private basicAuthenticationService: BasicAuthenticationService
+  ) {
+    this.emitAuthenticationDataSubject();
   }
 
   getAuthenticationDataSubject(): Observable<Authentication> {
     return this.authenticationDataSubject.asObservable();
   }
 
+  private initAuthentication(): Authentication {
+    const authentication = new Authentication();
+    authentication.isAuthenticated = false;
+    authentication.bearerToken = null;
+    authentication.usernameFromJwt = null;
+    return authentication;
+  }
+
+  private resetAuthentication(): Authentication {
+    return this.initAuthentication();
+  }
+
+  private createAuthenticationSession(token: string): void {
+    // Nouvelle instance d'authentification
+    this.authenticationData.isAuthenticated = true;
+    // Récupération et stockage du token
+    this.authenticationData.bearerToken = token;
+    this.tokenService.setToken(this.authenticationData.bearerToken);
+    // Stockage du nom d'utilisateur
+    this.authenticationData.usernameFromJwt = this.tokenService.getJwtUsername();
+    // Émission de l'instance d'authentification
+    this.emitAuthenticationDataSubject();
+  }
+
   logIn(credentials: CredentialsAuthentication): Observable<HttpResponse<any>> {
     return this.basicAuthenticationService.authenticate(credentials)
       .pipe(
-        tap(response => {
-          if (response.status === 200) {
-            this.createAuthenticationSession(response);
+        tap((httpResponse: HttpResponse<any>) => {
+          if (httpResponse.status === 200) {
+            this.createAuthenticationSession(httpResponse.headers.get('Authorization')!);
           }
         })
       );
   }
 
   logInWithJwt(): void {
-
+    // S'il y a un token dans le local storage
+    if (this.tokenService.getToken() !== null) {
+      // S'il est toujours valide
+      if (!this.tokenService.isTokenHasExpired()) {
+        this.createAuthenticationSession(this.tokenService.getToken()!);
+      }
+    }
   }
 
   logOut(): void {
-
-  }
-
-  private createAuthenticationSession(httpResponse: HttpResponse<any>): void {
-    // Nouvelle instance d'authentification
-    const authentication: Authentication = new Authentication();
-    authentication.isAuthenticated = true;
-    // Récupération et stockage du token
-    authentication.bearerToken = httpResponse.headers.get('Authorization')!;
-    this.tokenService.setToken(authentication.bearerToken);
-    // Stockage du nom d'utilisateur
-    authentication.usernameFromJwt = this.tokenService.getUsernameFromJwt();
-    this.authenticationData = authentication;
+    this.authenticationData = this.resetAuthentication();
+    this.tokenService.deleteToken();
     this.emitAuthenticationDataSubject();
   }
 
