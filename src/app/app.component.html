@@ -1,4 +1,5 @@
 <app-header [authentication]="authentication" *ngIf="!onHomePage()"></app-header>
+
 <main [ngClass]="{'main container': !onHomePage()}">
   <ng-container *ngIf="!onHomePage()">
     <app-button-burger [isOpen]="sideNavOpened" (clicked)="sideNavButtonClicked()"></app-button-burger>

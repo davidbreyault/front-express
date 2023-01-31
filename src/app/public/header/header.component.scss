@@ -11,5 +11,6 @@
   padding-right: map-get($spaces, m);
   border-radius: map-get($radius, default);
   background-color: map-get($background-colors, white);
+  box-shadow: map-get($shadows, fade);
   &__nav {button:not(button:first-child) {margin-left: map-get($spaces, s)}};
 }

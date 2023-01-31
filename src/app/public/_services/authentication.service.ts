@@ -1,6 +1,6 @@
 import { HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, Subject, tap } from "rxjs";
+import { BehaviorSubject, Observable, Subject, tap } from "rxjs";
 import { TokenService } from "src/app/shared/_services/token.service";
 import { Authentication } from "../_models/authentication.model";
 import { CredentialsAuthentication } from "../_models/credentials-authentication.model";
@@ -9,15 +9,13 @@ import { BasicAuthenticationService } from "./basic-authentication.service";
 @Injectable()
 export class AuthenticationService {
 
-  private authenticationData: Authentication = this.initAuthentication();
-  private authenticationDataSubject: Subject<Authentication> = new Subject<Authentication>();
+  private authenticationData!: Authentication;
+  private authenticationDataSubject = new BehaviorSubject<Authentication>(this.initAuthentication());
 
   constructor(
     private tokenService: TokenService, 
     private basicAuthenticationService: BasicAuthenticationService
-  ) {
-    this.emitAuthenticationDataSubject();
-  }
+  ) {}
 
   getAuthenticationDataSubject(): Observable<Authentication> {
     return this.authenticationDataSubject.asObservable();
@@ -28,11 +26,13 @@ export class AuthenticationService {
     authentication.isAuthenticated = false;
     authentication.bearerToken = null;
     authentication.usernameFromJwt = null;
-    return authentication;
+    this.authenticationData = authentication;
+    return authentication
   }
 
-  private resetAuthentication(): Authentication {
-    return this.initAuthentication();
+  private resetAuthentication(): void {
+    this.initAuthentication();
+    this.emitAuthenticationDataSubject();
   }
 
   private createAuthenticationSession(token: string): void {
@@ -69,7 +69,7 @@ export class AuthenticationService {
   }
 
   logOut(): void {
-    this.authenticationData = this.resetAuthentication();
+    this.resetAuthentication();
     this.tokenService.deleteToken();
     this.emitAuthenticationDataSubject();
   }

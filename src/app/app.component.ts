@@ -15,7 +15,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   subscription!: Subscription;
   sideNavOpened: boolean = false;
-  authentication: Authentication = new Authentication();
+  authentication!: Authentication;
 
   constructor(
     private router: Router, 
@@ -24,9 +24,14 @@ export class AppComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    // Récupération des données d'authentification
     this.subscription = this.authenticationService.getAuthenticationDataSubject()
-      .pipe(tap(authenticationData => this.authentication = authenticationData))
+      .pipe(tap(authenticationData => {
+        console.log('APP COMPONENT : ', authenticationData);
+        this.authentication = authenticationData;
+      }))
       .subscribe();
+    // Maintient la connection avec le token du local storage
     this.authenticationService.logInWithJwt();
   }
 

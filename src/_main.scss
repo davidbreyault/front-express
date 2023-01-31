@@ -38,6 +38,14 @@ mat-form-field {
   margin-top: 0.35em;
 }
 
+.mat-menu-panel {
+  min-height: 0 !important;
+}
+
+.mat-menu-panel .mat-raised-button {
+  border-radius: 0;
+}
+
 button[mat-button] mat-icon,
 button[mat-raised-button] mat-icon {
   margin-right: map-get($spaces, s)

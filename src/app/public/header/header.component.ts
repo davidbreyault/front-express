@@ -3,7 +3,6 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AuthenticationComponent } from '../authentication/authentication.component';
 import { Authentication } from '../_models/authentication.model';
 import { AuthenticationService } from '../_services/authentication.service';
-import { pipe, tap } from "rxjs";
 
 @Component({
   selector: 'app-header',
@@ -14,12 +13,19 @@ export class HeaderComponent {
 
   @Input() authentication!: Authentication;
 
-  constructor(public authDialog: MatDialog) {}
+  constructor(
+    public authDialog: MatDialog,
+    private authenticationService: AuthenticationService
+  ) {}
 
   onOpenAuthenticationDialog(): void {
     const matDialogConfig: MatDialogConfig = {
       minWidth: "450px"
     }
     this.authDialog.open(AuthenticationComponent, matDialogConfig);
+  }
+
+  onClickLogOut(): void {
+    this.authenticationService.logOut();
   }
 }

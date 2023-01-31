@@ -23,7 +23,8 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private alertService: AlertService,
     private authenticationService: AuthenticationService,
-    private matDialogRef: MatDialogRef<AuthenticationComponent>) { }
+    private matDialogRef: MatDialogRef<AuthenticationComponent>
+  ) {}
 
   ngOnInit(): void {
     this.authenticationForm = this.formBuilder.group({
@@ -40,7 +41,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     this.authenticationSide = !this.authenticationSide;
   }
 
-  onAuthenticationSubmit(): void {
+  onSubmitAuthentication(): void {
     if (this.authenticationForm.valid) {
       const {username, password} = this.authenticationForm.value;
       const credentialsAuthentication = new CredentialsAuthentication();

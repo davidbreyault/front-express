@@ -1,10 +1,12 @@
 @import '../variables';
 
 .main {
+  margin-bottom: map-get($spaces, l);
   padding-top: map-get($spaces, m);
   padding-bottom: map-get($spaces, m);
   border-radius: map-get($radius, default);
   background-color: map-get($background-colors, white);
+  box-shadow: map-get($shadows, fade);
 }
 
 .mat-drawer-side {

@@ -4,7 +4,7 @@
     <button class="button" (click)="onCloseAuthenticationDialog()">X</button>
   </div>
   <div class="dialog__content">
-    <form [formGroup]="authenticationForm" (ngSubmit)="onAuthenticationSubmit()">
+    <form [formGroup]="authenticationForm" (ngSubmit)="onSubmitAuthentication()">
       <!-- USERNAME -->
       <mat-form-field appearance="fill">
         <mat-label>Username</mat-label>
