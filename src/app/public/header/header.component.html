@@ -1,13 +1,34 @@
 <div class="header container">
     <div class="logo">Express</div>
     <nav class="header__nav">
-      <button mat-button color="primary">
+      <button mat-button *ngIf="authentication?.isAuthenticated" color="primary">
         <mat-icon>edit_note</mat-icon>
         <span>New note</span>
       </button>
-      <button mat-button color="primary" (click)="onOpenAuthenticationDialog()">
+      <button 
+        mat-button 
+        color="primary" 
+        *ngIf="!authentication?.isAuthenticated" 
+        (click)="onOpenAuthenticationDialog()">
         <mat-icon>person</mat-icon>
         <span>Log in / Sign up</span>
       </button>
+      <button 
+        mat-button 
+        color="primary"
+        *ngIf="authentication?.isAuthenticated" 
+        [matMenuTriggerFor]="beforeMenu">
+        <mat-icon>person</mat-icon>
+        <span>{{ authentication?.usernameFromJwt }}</span>
+        <mat-icon>expand_more</mat-icon>
+      </button>
     </nav>
+
+    <mat-menu #beforeMenu="matMenu" xPosition="before">
+      <button mat-raised-button color="primary" (click)="onClickLogOut()">
+        <mat-icon>logout</mat-icon>
+        <span>Log out</span>
+      </button>
+    </mat-menu>
 </div>
+

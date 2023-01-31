@@ -8,8 +8,8 @@ export class InterceptorService implements HttpInterceptor {
   intercept(httpRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const headerParams = {
       'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET',
-      'Access-Control-Allow-Headers': 'access-control-allow-origin, content-type',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
+      'Access-Control-Allow-Headers': '*',
       'Content-Type': 'application/json'
     };
     let interceptedHttpRequest = httpRequest.clone({setHeaders: headerParams});

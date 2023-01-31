@@ -1,15 +1,18 @@
-<app-header *ngIf="!onHomePage()"></app-header>
+<app-header [authentication]="authentication" *ngIf="!onHomePage()"></app-header>
+
 <main [ngClass]="{'main container': !onHomePage()}">
   <ng-container *ngIf="!onHomePage()">
-    <app-banner></app-banner>
     <app-button-burger [isOpen]="sideNavOpened" (clicked)="sideNavButtonClicked()"></app-button-burger>
   </ng-container>
+
   <mat-sidenav-container>
     <mat-sidenav mode="side" [opened]="!onHomePage() && sideNavOpened">
       <app-sidenav></app-sidenav>
     </mat-sidenav>
-    <mat-sidenav-content>
+
+    <mat-sidenav-content [ngClass]="{'pl-s': !onHomePage()}">
       <div [ngClass]="{'container': !onHomePage()}">
+        <app-banner *ngIf="!onHomePage() && !authentication?.isAuthenticated"></app-banner>
         <router-outlet></router-outlet>
       </div>
     </mat-sidenav-content>

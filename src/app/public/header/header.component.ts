@@ -1,23 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AuthenticationComponent } from '../authentication/authentication.component';
+import { Authentication } from '../_models/authentication.model';
+import { AuthenticationService } from '../_services/authentication.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
 
-  constructor(public authDialog: MatDialog) { }
+  @Input() authentication!: Authentication;
 
-  ngOnInit(): void {
-  }
+  constructor(
+    public authDialog: MatDialog,
+    private authenticationService: AuthenticationService
+  ) {}
 
   onOpenAuthenticationDialog(): void {
     const matDialogConfig: MatDialogConfig = {
       minWidth: "450px"
     }
     this.authDialog.open(AuthenticationComponent, matDialogConfig);
+  }
+
+  onClickLogOut(): void {
+    this.authenticationService.logOut();
   }
 }

@@ -1,5 +1,5 @@
 export class Authentication {
-  bearerToken!: string;
   isAuthenticated!: boolean;
-  usernameFromJwt!: string;
+  bearerToken!: string | null;
+  usernameFromJwt!: string | null;
 }

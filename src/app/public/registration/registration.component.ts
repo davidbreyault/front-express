@@ -5,9 +5,10 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { catchError, take, tap, throwError } from 'rxjs';
 import { AlertType } from 'src/app/shared/_models/alert.model';
 import { AlertService } from 'src/app/shared/_services/alert.service';
+import { ErrorValidatorService } from 'src/app/shared/_services/error-validator.service';
 import { equalityValidator } from 'src/app/shared/_validators/equality.validator';
 import { AuthenticationComponent } from '../authentication/authentication.component';
-import { RegistrationCredentials } from '../_models/registration-credentials.model';
+import { CredentialsRegistration } from '../_models/credentials-registration.model';
 import { RegistrationService } from '../_services/registration.service';
 
 @Component({
@@ -30,7 +31,9 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private registrationService: RegistrationService,
     private matDialogRef: MatDialogRef<AuthenticationComponent>,
-    private alertService: AlertService) { }
+    private alertService: AlertService,
+    public errorValidatorService: ErrorValidatorService
+  ) {}
 
   ngOnInit(): void {
     this.initFormControls();
@@ -86,7 +89,12 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   onRegistrationSubmit(): void {
     if (this.registrationForm.valid) {
       const {username, email, password, confirmation} = this.registrationForm.value;
-      this.registrationService.registrate(new RegistrationCredentials(username, email, password, confirmation))
+      const credentialsRegistration: CredentialsRegistration = new CredentialsRegistration();
+      credentialsRegistration.username = username;
+      credentialsRegistration.email = email;
+      credentialsRegistration.password = password;
+      credentialsRegistration.confirmation = confirmation;
+      this.registrationService.registrate(credentialsRegistration)
         .pipe(
           tap(response => {
             if (response.status === 200) {
@@ -117,25 +125,6 @@ export class RegistrationComponent implements OnInit, OnDestroy {
         }
       })
     ).subscribe();
-  }
-
-  getFormControlError(control: AbstractControl, min?: number, max?:number): string {
-    if (control.hasError('required')) {
-      return ' is <strong>required</strong>.';
-    }
-    if (control.hasError('minlength')) {
-      return ' <strong>must</strong> have <strong>at least ' + min + '</strong> characters.'
-    }
-    if (control.hasError('maxlength')) {
-      return ' <strong>must not</strong> be <strong>over ' + max + '</strong> characters.'
-    }
-    if (control.hasError('email')) {
-      return ' is  <strong>not valid</strong>.'
-    }
-    if (control.hasError('equality')) {
-      return ' <strong>and</strong> confirmation <strong>must</strong> be the <strong>same</strong>.'
-    }
-    return 'is not valid.';
   }
 
   ngOnDestroy(): void {

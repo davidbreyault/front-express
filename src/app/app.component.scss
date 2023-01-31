@@ -1,14 +1,20 @@
 @import '../variables';
 
 .main {
+  margin-bottom: map-get($spaces, l);
   padding-top: map-get($spaces, m);
   padding-bottom: map-get($spaces, m);
   border-radius: map-get($radius, default);
   background-color: map-get($background-colors, white);
+  box-shadow: map-get($shadows, fade);
 }
 
-mat-sidenav-container {min-height: 252px};
+.mat-drawer-side {
+  border: none;
+  box-shadow: 0px 2px 10px rgba(0,0,0,.05);
+}
 
-.mat-drawer-side {border: none};
-
-.mat-drawer-container {background-color: map-get($background-colors, white)};
+.mat-drawer-container {
+  min-height: 252px;
+  background-color: map-get($background-colors, white);
+}

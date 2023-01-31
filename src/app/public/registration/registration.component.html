@@ -9,13 +9,19 @@
       <mat-form-field appearance="fill">
         <mat-label>Username</mat-label>
         <input matInput placeholder="Joe Dassin" formControlName="username">
-        <mat-error [innerHTML]="'Username' + getFormControlError(usernameControl, 3, 20) | sanitize"></mat-error>
+        <mat-error 
+          [innerHTML]="'Username' + errorValidatorService.setFormControlErrorText(
+            usernameControl, 3, 20
+          ) | sanitize">
+        </mat-error>
       </mat-form-field>
       <!-- EMAIL -->
       <mat-form-field appearance="fill">
         <mat-label>Email</mat-label>
         <input matInput placeholder="joedassin@yahoo.fr" formControlName="email">
-        <mat-error [innerHTML]="'Email' + getFormControlError(emailControl, 3, 50) | sanitize"></mat-error>
+        <mat-error 
+          [innerHTML]="'Email' + errorValidatorService.setFormControlErrorText(emailControl) | sanitize">
+        </mat-error>
       </mat-form-field>
       <!-- PASSWORD -->
       <mat-form-field appearance="fill">
@@ -30,7 +36,11 @@
           (click)="hidePasswordInput = !hidePasswordInput">
           <mat-icon>{{hidePasswordInput ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
-        <mat-error [innerHTML]="'Password' + getFormControlError(passwordControl, 6, 40) | sanitize"></mat-error>
+        <mat-error 
+          [innerHTML]="'Password' + errorValidatorService.setFormControlErrorText(
+            passwordControl, 6, 40
+          ) | sanitize">
+        </mat-error>
       </mat-form-field>
       <!-- PASSWORD CONFIRMATION -->
       <mat-form-field appearance="fill">
@@ -45,7 +55,11 @@
           (click)="hidePasswordConfirmationInput = !hidePasswordConfirmationInput" >
           <mat-icon>{{hidePasswordConfirmationInput ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
-        <mat-error [innerHTML]="'Password' + getFormControlError(confirmationControl, 6, 40) | sanitize"></mat-error>
+        <mat-error 
+          [innerHTML]="'Password' + errorValidatorService.setFormControlErrorText(
+            confirmationControl, 6, 40
+          ) | sanitize">
+        </mat-error>
       </mat-form-field>
       <!-- SUBMISSION -->
       <div class="form-submit">
