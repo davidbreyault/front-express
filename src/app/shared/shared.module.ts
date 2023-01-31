@@ -9,6 +9,7 @@ import { SanitizePipe } from './_pipes/sanitize.pipe';
 import { AlertComponent } from './alert/alert.component';
 import { AlertService } from './_services/alert.service';
 import { TokenService } from './_services/token.service';
+import { ErrorValidatorService } from './_services/error-validator.service';
 
 
 
@@ -33,6 +34,7 @@ import { TokenService } from './_services/token.service';
   providers: [
     TokenService,
     AlertService,
+    ErrorValidatorService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: InterceptorService,

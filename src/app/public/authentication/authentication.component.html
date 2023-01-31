@@ -9,6 +9,11 @@
       <mat-form-field appearance="fill">
         <mat-label>Username</mat-label>
         <input matInput placeholder="Joe Dassin" formControlName="username">
+        <mat-error 
+          [innerHTML]="'Username' + errorValidatorService.setFormControlErrorText(
+            authenticationForm.controls['username'], 3, 20
+          ) | sanitize">
+        </mat-error>
       </mat-form-field>
       <!-- PASSWORD -->
       <mat-form-field appearance="fill">
@@ -17,6 +22,11 @@
         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
           <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
+        <mat-error 
+          [innerHTML]="'Password' + errorValidatorService.setFormControlErrorText(
+            authenticationForm.controls['password'], 6, 40
+          ) | sanitize">
+        </mat-error>
       </mat-form-field>
       <!-- SUBMISSION -->
       <div class="form-submit">

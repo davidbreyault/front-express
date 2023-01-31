@@ -7,6 +7,7 @@ import { AlertType } from 'src/app/shared/_models/alert.model';
 import { AlertService } from 'src/app/shared/_services/alert.service';
 import { CredentialsAuthentication } from '../_models/credentials-authentication.model';
 import { AuthenticationService } from '../_services/authentication.service';
+import { ErrorValidatorService } from 'src/app/shared/_services/error-validator.service';
 
 @Component({
   selector: 'app-authentication',
@@ -23,13 +24,26 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private alertService: AlertService,
     private authenticationService: AuthenticationService,
-    private matDialogRef: MatDialogRef<AuthenticationComponent>
+    private matDialogRef: MatDialogRef<AuthenticationComponent>,
+    public errorValidatorService: ErrorValidatorService
   ) {}
 
   ngOnInit(): void {
+    this.createAuthenticationForm();
+  }
+
+  private createAuthenticationForm(): void {
     this.authenticationForm = this.formBuilder.group({
-      username: [null, [Validators.required]],
-      password: [null, [Validators.required]]
+      username: [null, [
+        Validators.required, 
+        Validators.minLength(3),
+        Validators.maxLength(20)
+      ]],
+      password: [null, [
+        Validators.required,
+        Validators.minLength(6),
+        Validators.maxLength(40)
+      ]]
     });
   }
 

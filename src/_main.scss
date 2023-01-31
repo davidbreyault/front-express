@@ -14,6 +14,10 @@ h2, .h2-like {
   font-family: 'Source Code Pro', sans-serif;
 }
 
+.ml-s {
+  margin-left: map-get($spaces, s);
+}
+
 .pl-s {
   padding-left: map-get($spaces, s);
 }
@@ -46,14 +50,16 @@ mat-form-field {
   border-radius: 0;
 }
 
-button[mat-button] mat-icon,
-button[mat-raised-button] mat-icon {
-  margin-right: map-get($spaces, s)
-};
-
 .mat-button-wrapper, .mat-button-wrapper span {
   font-weight: 200;
   font-family: 'Source Code Pro', sans-serif;
+}
+
+button[mat-button], button[mat-raised-button] {
+  mat-icon {
+    &:first-child {margin-right: map-get($spaces, s)};
+    &:last-child {margin-left: map-get($spaces, s)};
+  }
 }
 
 .container {
