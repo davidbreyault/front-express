@@ -19,7 +19,7 @@
         *ngIf="authentication?.isAuthenticated" 
         [matMenuTriggerFor]="beforeMenu">
         <mat-icon>person</mat-icon>
-        <span>{{ authentication?.usernameFromJwt }}</span>
+        <span>{{ authentication.usernameFromJwt }}</span>
         <mat-icon>expand_more</mat-icon>
       </button>
     </nav>

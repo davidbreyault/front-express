@@ -15,18 +15,21 @@
   </div>
   <!-- Note Footer -->
   <div class="note__footer">
+    <!-- Likes -->
     <div class="note__footer--likes">
-      <button class="button">
+      <button class="button" (click)="onClickLike()">
         <span class="material-symbols-outlined">favorite</span>
       </button>
       <span class="note__footer--data">{{ note.likes }}</span>
     </div>
+    <!-- Dislikes -->
     <div class="note__footer--dislikes">
-      <button class="button">
+      <button class="button" (click)="onClickDislike()">
         <span class="material-symbols-outlined">thumb_down</span>
       </button>
       <span class="note__footer--data">{{ note.dislikes }}</span>
     </div>
+    <!-- Comments -->
     <div class="note__footer--comments">
       <button class="button">
         <span class="material-symbols-outlined">comment</span>
