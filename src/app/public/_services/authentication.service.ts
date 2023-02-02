@@ -17,6 +17,10 @@ export class AuthenticationService {
     private basicAuthenticationService: BasicAuthenticationService
   ) {}
 
+  getAuthenticationData(): Authentication {
+    return this.authenticationData;
+  }
+
   getAuthenticationDataSubject(): Observable<Authentication> {
     return this.authenticationDataSubject.asObservable();
   }
