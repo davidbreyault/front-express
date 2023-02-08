@@ -62,3 +62,16 @@
   color: map-get($text-colors, steel);
   font-size: 1.2rem;
 }
+
+.note.trend {
+  background-color: map-get($background-colors, primary-trend);
+  p { color: map-get($text-colors, blue-trend-light) !important};
+  .note__content {font-weight: 400};
+  .note__header {border-bottom: 1px solid map-get($border-colors, trend)};
+  .note__header--data--author {
+    span {
+      font-weight: 500;
+      color: map-get($text-colors, blue-trend-dark) !important;
+    }
+  }
+}

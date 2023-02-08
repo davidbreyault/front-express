@@ -1,1 +1,4 @@
-<p>notes-best works!</p>
+<h3>Best notes</h3>
+<div class="notes-list">
+  <app-note *ngFor="let n of bestNotes" [note]="n"></app-note>
+</div>

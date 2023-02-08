@@ -33,6 +33,8 @@ export class AppComponent implements OnInit, OnDestroy {
       .subscribe();
     // Maintient la connection avec le token du local storage
     this.authenticationService.logInWithJwt();
+    // Suppression des alertes à chaque changement de route
+    this.router.events.pipe(tap(() => this.alertService.clearAllAlerts())).subscribe();
   }
 
   onHomePage(): boolean {
