@@ -45,13 +45,11 @@ export class NotesListComponent implements OnInit, OnDestroy {
           if (this.notes && this.notes.length > 0) {
             // Si response.notes a une taille supérieur à this notes
             if (response.notes.length > this.notes.length) {
-              console.log(this.ts)
-              console.log(response.ts)
               // Récupère seulement les notes manquante pour mettre à jour this.notes
               let lastNotes: Note[] = response.notes
               .filter(n => new Date(n.createdAt).getTime() > this.ts)
               .sort((a: Note, b: Note) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
-              console.log(lastNotes);
+              // Ajout des dernières notes
               lastNotes.forEach(note => this.notes.unshift(note));
             }
           }

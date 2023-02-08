@@ -65,8 +65,8 @@ export class NotePostComponent implements OnInit {
             }
           }),
           catchError((httpErrorResponse: HttpErrorResponse) => {
-            console.log(httpErrorResponse)
-            this.alertService.addAlert('An error has occurred...', AlertType.error);
+            const message = httpErrorResponse.error ? httpErrorResponse.error : 'An error has occurred...';
+            this.alertService.addAlert(message, AlertType.error);
             return throwError(() => httpErrorResponse);
           })
         )
