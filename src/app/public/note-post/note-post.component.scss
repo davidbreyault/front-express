@@ -1,0 +1,9 @@
+@import '../../../variables';
+
+form {
+  margin-bottom: 0;
+}
+
+mat-form-field:first-child input {
+  color: lighten($color: map-get($text-colors, steel), $amount: 10)
+}

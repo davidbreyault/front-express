@@ -1,15 +1,11 @@
 <div class="header container">
     <div class="logo">Express</div>
     <nav class="header__nav">
-      <button mat-button *ngIf="authentication?.isAuthenticated" color="primary">
-        <mat-icon>edit_note</mat-icon>
-        <span>New note</span>
-      </button>
       <button 
         mat-button 
         color="primary" 
         *ngIf="!authentication?.isAuthenticated" 
-        (click)="onOpenAuthenticationDialog()">
+        (click)="onClickAuthenticationDialog()">
         <mat-icon>person</mat-icon>
         <span>Log in / Sign up</span>
       </button>
@@ -17,18 +13,26 @@
         mat-button 
         color="primary"
         *ngIf="authentication?.isAuthenticated" 
-        [matMenuTriggerFor]="beforeMenu">
+        [matMenuTriggerFor]="menu">
         <mat-icon>person</mat-icon>
         <span>{{ authentication.usernameFromJwt }}</span>
         <mat-icon>expand_more</mat-icon>
       </button>
     </nav>
-
-    <mat-menu #beforeMenu="matMenu" xPosition="before">
-      <button mat-raised-button color="primary" (click)="onClickLogOut()">
-        <mat-icon>logout</mat-icon>
-        <span>Log out</span>
-      </button>
-    </mat-menu>
 </div>
 
+<mat-menu #menu="matMenu" xPosition="before">
+  <button 
+    mat-menu-item 
+    *ngIf="authentication?.isAuthenticated" 
+    (click)="onClickNotePostDialog()">
+    <mat-icon>edit_note</mat-icon>
+    <div>New note</div>
+  </button>
+  <button 
+    mat-menu-item 
+    (click)="onClickLogOut()">
+    <mat-icon>logout</mat-icon>
+    <div>Log out</div>
+  </button>
+</mat-menu>

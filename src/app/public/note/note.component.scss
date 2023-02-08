@@ -51,10 +51,10 @@
 }
 
 .note__header--data--author {
-  font-weight: 400;
+  font-weight: 200;
   span {
-    color: map-get($text-colors, steel);
-    font-weight: 200;
+    font-weight: 400;
+    color: darken($color: map-get($text-colors, primary), $amount: 15);
   }
 }
 

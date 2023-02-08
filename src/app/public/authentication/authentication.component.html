@@ -1,7 +1,7 @@
 <div *ngIf="authenticationSide" class="dialog">
   <div class="dialog__header">
     <h2>Log in</h2>
-    <button class="button" (click)="onCloseAuthenticationDialog()">X</button>
+    <button class="button close" (click)="onClickCloseAuthenticationDialog()">X</button>
   </div>
   <div class="dialog__content">
     <form [formGroup]="authenticationForm" (ngSubmit)="onSubmitAuthentication()">

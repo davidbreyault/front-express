@@ -10,8 +10,19 @@ body {
   background-color: map-get($background-colors, tin);
 }
 
+div, p, h2 {
+  color: map-get($text-colors, primary);
+}
+
 h2, .h2-like {
   font-family: 'Source Code Pro', sans-serif;
+}
+
+form {
+  margin-top: map-get($spaces, m);
+  margin-bottom: map-get($spaces, m);
+  padding-top: map-get($spaces, m);
+  padding-bottom: map-get($spaces, m);
 }
 
 .ml-s {
@@ -55,11 +66,9 @@ mat-form-field {
   font-family: 'Source Code Pro', sans-serif;
 }
 
-button[mat-button], button[mat-raised-button] {
-  mat-icon {
-    &:first-child {margin-right: map-get($spaces, s)};
-    &:last-child {margin-left: map-get($spaces, s)};
-  }
+mat-icon {
+  &:first-child {margin-right: map-get($spaces, s)};
+  &:last-child {margin-left: map-get($spaces, s)};
 }
 
 .container {
@@ -79,6 +88,10 @@ button[mat-button], button[mat-raised-button] {
   background-color: transparent;
   font-family: 'Source Code Pro', sans-serif;
   cursor: pointer;
+}
+
+button.close {
+  color: map-get($text-colors, error)
 }
 
 .dialog {

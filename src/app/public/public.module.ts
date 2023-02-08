@@ -17,6 +17,7 @@ import { RegistrationComponent } from './registration/registration.component';
 import { RegistrationService } from './_services/registration.service';
 import { AuthenticationService } from './_services/authentication.service';
 import { BasicAuthenticationService } from './_services/basic-authentication.service';
+import { NotePostComponent } from './note-post/note-post.component';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { BasicAuthenticationService } from './_services/basic-authentication.ser
     NotesBestComponent,
     AuthenticationComponent,
     RegistrationComponent,
+    NotePostComponent,
     BannerDirective
   ],
   imports: [

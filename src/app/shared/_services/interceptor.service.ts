@@ -7,7 +7,7 @@ import { AuthenticationService } from "src/app/public/_services/authentication.s
 export class InterceptorService implements HttpInterceptor {
 
   securedApiPoints: string[] = [
-    'like','dislike'
+    'like','dislike', 'notes'
   ];
 
   constructor(private authenticationService: AuthenticationService) {}
@@ -26,6 +26,7 @@ export class InterceptorService implements HttpInterceptor {
         'Authorization': 'Bearer ' + this.authenticationService.getAuthenticationData().bearerToken
       });
       const securedHttpRequest = interceptedHttpRequest.clone({setHeaders: securedHttpHeaders});
+      console.log(securedHttpRequest)
       return next.handle(securedHttpRequest);
     }
     return next.handle(interceptedHttpRequest);

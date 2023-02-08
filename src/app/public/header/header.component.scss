@@ -14,3 +14,22 @@
   box-shadow: map-get($shadows, fade);
   &__nav {button:not(button:first-child) {margin-left: map-get($spaces, s)}};
 }
+
+button[mat-menu-item] {
+  @include flex-rsbc;
+  div {
+    font-family: 'Source Code Pro', sans-serif;
+    font-weight: 200;
+  }
+  &:last-child {
+    color: map-get($background-colors, white);
+    background-color: map-get($background-colors, primary);
+    mat-icon, div {color: map-get($text-colors, white)};
+    &:hover {background-color: darken($color: map-get($background-colors, primary), $amount: 5)};
+  }
+}
+
+.logo {
+  font-weight: 200;
+  font-family: 'Source Code Pro', sans-serif;
+}

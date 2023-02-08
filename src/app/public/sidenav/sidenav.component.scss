@@ -13,20 +13,24 @@ a {
   padding-right: map-get($spaces, xl);
   color: inherit;
   text-decoration: none;
-  span.material-symbols-outlined {margin-right: map-get($spaces, m)};
-  span:not(.material-symbols-outlined) {
-    font-family: 'Source Code Pro', sans-serif;
-    font-weight: 200;
-  }
   &.active {
     background-color: map-get($background-colors, primary-light);
-    color: map-get($background-colors, primary);
     border-right-width: 3px;
     border-right-color: map-get($background-colors, primary);
     border-right-style: solid;
+    mat-icon, span {color: map-get($text-colors, blue-default)};
   }
   &:hover {
     background-color: map-get($background-colors, primary-light);
     transition: map-get($transitions, default);
   }
+}
+
+a span {
+  font-weight: 200;
+  font-family: 'Source Code Pro', sans-serif;
+}
+
+a mat-icon, a span {
+  color: map-get($text-colors, primary);
 }

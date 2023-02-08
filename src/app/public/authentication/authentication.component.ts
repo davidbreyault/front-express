@@ -47,7 +47,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     });
   }
 
-  onCloseAuthenticationDialog(): void {
+  onClickCloseAuthenticationDialog(): void {
     this.matDialogRef.close();
   }
 
@@ -66,7 +66,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
           take(1),
           tap((httpResponse: HttpResponse<any>) => {
             if (httpResponse.status === 200) {
-              this.onCloseAuthenticationDialog();
+              this.onClickCloseAuthenticationDialog();
             }
           }),
           catchError((httpErrorResponse: HttpErrorResponse) => {

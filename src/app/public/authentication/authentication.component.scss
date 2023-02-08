@@ -1,11 +1,5 @@
 @import '../../../variables';
 
-form {
-  margin-top: map-get($spaces, m);
-  margin-bottom: map-get($spaces, m);
-  padding: 2rem;
-}
-
 .dialog {
   &__footer {
     p {padding: map-get($spaces, m) 0};
