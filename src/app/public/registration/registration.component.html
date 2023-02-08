@@ -1,7 +1,7 @@
 <div class="dialog">
   <div class="dialog__header">
     <h2>Sign up</h2>
-    <button class="button" (click)="onCloseRegistrationDialog()">X</button>
+    <button class="button close" (click)="onCloseRegistrationDialog()">X</button>
   </div>
   <div class="dialog__content">
     <form [formGroup]="registrationForm" (ngSubmit)="onRegistrationSubmit()">
@@ -71,6 +71,5 @@
       </div>
     </form>
     <app-alert></app-alert>
-    <button class="button" (click)="addNewAlert()">alert</button>
   </div>
 </div>

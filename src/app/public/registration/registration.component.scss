@@ -1,9 +1,7 @@
 @import '../../../variables';
 
 form {
-  margin-top: map-get($spaces, m);
-  margin-bottom: map-get($spaces, m);
-  padding: 2rem;
+  margin-bottom: 0;
 }
 
 .form-submit {

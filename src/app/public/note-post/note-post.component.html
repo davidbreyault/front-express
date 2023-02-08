@@ -1,0 +1,28 @@
+<div class="dialog">
+  <div class="dialog__header">
+    <h2>New note</h2>
+    <button class="button close" (click)="onClickCloseDialog()">X</button>
+  </div>
+  <div class="dialog__content">
+    <form [formGroup]="notePostForm" (ngSubmit)="onSubmitNotePostForm()">
+      <!-- Username -->
+      <mat-form-field appearance="fill">
+        <mat-label>Username</mat-label>
+        <input matInput [readonly]="true" [formControl]="usernameControl">
+      </mat-form-field>
+      <!-- Note -->
+      <mat-form-field appearance="fill">
+        <mat-label>Note</mat-label>
+        <textarea matInput [formControl]="noteControl"></textarea>
+      </mat-form-field>
+      <!-- SUBMISSION -->
+      <div class="form-submit">
+        <button mat-raised-button color="primary" type="submit" [disabled]="!notePostForm.valid">
+          <mat-icon>send</mat-icon>
+          <span>Send</span>
+        </button>
+      </div>
+    </form>
+    <app-alert></app-alert>
+  </div>
+</div>

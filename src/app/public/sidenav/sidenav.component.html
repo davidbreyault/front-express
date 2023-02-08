@@ -1,19 +1,19 @@
 <nav>
   <li>
     <a routerLink="/notes/all" [ngClass]="{'active': isAllNotesRoute}">
-      <span class="material-symbols-outlined">notes</span>
+      <mat-icon>notes</mat-icon>
       <span>All notes</span>
     </a>
   </li>
   <li>
     <a routerLink="/notes/best" [ngClass]="{'active': isBestNotesRoute}">
-      <span class="material-symbols-outlined">star</span>
+      <mat-icon>star</mat-icon>
       <span>Best notes</span>
     </a>
   </li>
   <li>
     <a href="">
-      <span class="material-symbols-outlined">trending_up</span>
+      <mat-icon>trending_up</mat-icon>
       <span>Trending</span>
     </a>
   </li>

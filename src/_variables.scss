@@ -24,19 +24,21 @@ $spaces: (
 // COLORS
 
 $background-colors: (
-  primary: #4994EC,
+  primary: #2196f3,
   primary-light: #F7FBFD,
   primary-dark: #0D3C61,
   white: #FFFFFF,
   tin: #F5F5F5,
   success: #EDFFF9,
-  error: #FFF6F6
+  error: #FFF6F6,
+  hover: rgba(0, 0, 0, 0.04)
 );
 
 $text-colors: (
-  primary: #4994EC,
-  primary-light: #F7FBFD,
-  primary-dark: #0D3C61,
+  primary: #757575,
+  blue-default: #2196f3,
+  blue-light: #F7FBFD,
+  blue-dark: #0D3C61,
   steel: #a4a4a4,
   success: #00B490,
   error: #F44336,

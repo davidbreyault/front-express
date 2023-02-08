@@ -32,10 +32,10 @@ export class TokenService {
   }
 
   getJwtExpirationDate(): number {
-    return this.getJwtPayload()['exp'];
+    return this.getJwtPayload()['exp'] * 1000;
   }
 
   isTokenHasExpired(): boolean {
-    return this.getJwtExpirationDate() - Date.now() > 0;
+    return this.getJwtExpirationDate() - Date.now() < 0;
   }
 }
