@@ -99,11 +99,11 @@ export class RegistrationComponent implements OnInit, OnDestroy {
           tap(response => {
             if (response.status === 200) {
               this.onSwitchForAuthentication();
-              this.alertService.addAlert(response.body.message, AlertType.success);
+              this.alertService.addAlert(response.body.message, AlertType.success, true);
             }
           }),
           catchError((httpErrorResponse: HttpErrorResponse) => {
-            this.alertService.addAlert(httpErrorResponse.error.errors.message, AlertType.error);
+            this.alertService.addAlert(httpErrorResponse.error.errors.message, AlertType.error, true);
             return throwError(() => httpErrorResponse)
           })
         )
@@ -111,17 +111,12 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     }
   }
 
-  addNewAlert(): void {
-    this.alertService.addAlert("ALERTTTTTTT", AlertType.success);
-    this.onSwitchForAuthentication();
-  }
-
   private removeAlertsFromAuthentication(): void {
     this.alertService.alertsSubject.pipe(
       take(1),
       tap(alerts => {
         if (alerts.length > 0) {
-          this.alertService.clearAllAlerts()
+          this.alertService.clearErrorAlerts()
         }
       })
     ).subscribe();

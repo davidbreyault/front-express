@@ -45,10 +45,6 @@ export class AppComponent implements OnInit, OnDestroy {
     this.sideNavOpened = !this.sideNavOpened;
   }
 
-  addNewAlert(): void {
-    this.alertService.addAlert('Whaaah la belle alerte !', AlertType.success);
-  }
-
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
   }
