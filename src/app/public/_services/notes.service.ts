@@ -9,6 +9,7 @@ import { ResponseSuccess } from "../_models/response-success.model";
 @Injectable()
 export class NotesService {
 
+  notesApiPoint: string = '/notes';
   refreshSubject = new Subject<boolean>();
 
   constructor(private http: HttpClient) {}
@@ -18,23 +19,27 @@ export class NotesService {
   }
 
   getAllNotes(): Observable<ResponseNotes> {
-    return this.http.get<ResponseNotes>(environment.apiRootUrl + '/notes');
+    return this.http.get<ResponseNotes>(environment.apiRootUrl + this.notesApiPoint);
+  }
+
+  getBestNotes(): Observable<ResponseNotes> {
+    return this.http.get<ResponseNotes>(environment.apiRootUrl + this.notesApiPoint + '/trending?top=5');
   }
 
   likeNote(id: number): Observable<HttpResponse<ResponseSuccess>> {
     return this.http.put<ResponseSuccess>(
-      environment.apiRootUrl + '/notes/like/' + id, id, {observe: 'response'}
+      environment.apiRootUrl + this.notesApiPoint + '/like/' + id, id, {observe: 'response'}
     );
   }
 
   dislikeNote(id: number): Observable<HttpResponse<ResponseSuccess>> {
     return this.http.put<ResponseSuccess>(
-      environment.apiRootUrl + '/notes/dislike/' + id, id, {observe: 'response'}
+      environment.apiRootUrl + this.notesApiPoint + '/dislike/' + id, id, {observe: 'response'}
     )
   }
 
   postNote(note: Note): Observable<any> {
-    return this.http.post(environment.apiRootUrl + '/notes', note, {observe: 'response'});
+    return this.http.post(environment.apiRootUrl + this.notesApiPoint, note, {observe: 'response'});
   }
 
   emitRefreshSubject(): void {

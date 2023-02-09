@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { interval, take, takeWhile, tap } from 'rxjs';
+import { AlertService } from 'src/app/shared/_services/alert.service';
 import { Note } from '../_models/note.model';
 import { ResponseNotes } from '../_models/response-notes.model';
 import { NotesService } from '../_services/notes.service';
@@ -15,19 +16,23 @@ export class NotesListComponent implements OnInit, OnDestroy {
 
   ts: number = 0;
   notes!: Note[];
-  isAlive: boolean = true;
+  isComponentAlive: boolean = true;
   isLoadingWheelVisible: boolean = true;
+  isAnyDialogOpenned: boolean = false;
 
   constructor(
     private notesService: NotesService, 
     private router: Router, 
-    private routerService: RouterService) { }
+    private routerService: RouterService,
+    private alertService: AlertService) 
+  {}
 
   ngOnInit(): void {
     this.routerService.setActualRouteUrl(this.router.url)
     this.getNotes();
     this.updateNotesList();
-    this.updateNotesListAfterEvent(); 
+    this.updateNotesListAfterEvent();
+    this.checkDialogOpeningStatus();
   }
 
   private getNotes(): void {
@@ -66,24 +71,32 @@ export class NotesListComponent implements OnInit, OnDestroy {
   private updateNotesList(): void {
     interval(10000)
       .pipe(
-        takeWhile(() => this.isAlive), 
+        takeWhile(() => this.isComponentAlive), 
         tap(() => this.getNotes())
       ).subscribe();
   }
 
   /**
    * Mise à jour instantanée de la liste des notes à partir d'un évènement particulier
+   * (refreshSubject lance une nouvelle émission à chaque nouvelle publication de note)
    */
   private updateNotesListAfterEvent(): void {
-    // refreshSubject émet à chaque publication d'une nouvelle note
     this.notesService.getRefreshSubject()
       .pipe(
-        takeWhile(() => this.isAlive),
+        takeWhile(() => this.isComponentAlive),
         tap(() => this.getNotes())
       ).subscribe();
   }
 
+  private checkDialogOpeningStatus(): void {
+    this.alertService.isAnyDialogOpenedSubject
+      .pipe(
+        takeWhile(() => this.isComponentAlive), 
+        tap(boolean => this.isAnyDialogOpenned = boolean)
+      ).subscribe();
+  }
+
   ngOnDestroy(): void {
-    this.isAlive = false;
+    this.isComponentAlive = false;
   }
 }

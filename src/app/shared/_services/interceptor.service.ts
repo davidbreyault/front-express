@@ -26,7 +26,6 @@ export class InterceptorService implements HttpInterceptor {
         'Authorization': 'Bearer ' + this.authenticationService.getAuthenticationData().bearerToken
       });
       const securedHttpRequest = interceptedHttpRequest.clone({setHeaders: securedHttpHeaders});
-      console.log(securedHttpRequest)
       return next.handle(securedHttpRequest);
     }
     return next.handle(interceptedHttpRequest);

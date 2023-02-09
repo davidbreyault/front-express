@@ -1,6 +1,8 @@
 <ng-container *ngIf="alerts.length > 0">
-  <div *ngFor="let alert of alerts" class="{{ setAlertClasses(alert) }}">
-    <p>{{ alert.notification }}</p>
-    <button class="button" (click)="onDeleteAlert(alert)">X</button>
-  </div>
+  <ng-container *ngFor="let alert of alerts">
+    <div *ngIf="alert.isVisible" class="{{ setAlertClasses(alert) }}">
+      <p>{{ alert.notification }}</p>
+      <button class="button" (click)="onDeleteAlert(alert)">X</button>
+    </div>
+  </ng-container>
 </ng-container>

@@ -1,5 +1,5 @@
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { catchError, take, tap, throwError } from 'rxjs';
@@ -14,7 +14,7 @@ import { ErrorValidatorService } from 'src/app/shared/_services/error-validator.
   templateUrl: './authentication.component.html',
   styleUrls: ['./authentication.component.scss']
 })
-export class AuthenticationComponent implements OnInit, OnDestroy {
+export class AuthenticationComponent implements OnInit {
 
   hide: boolean = true;
   authenticationSide: boolean = true;
@@ -70,15 +70,11 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
             }
           }),
           catchError((httpErrorResponse: HttpErrorResponse) => {
-            this.alertService.addAlert('Invalid credentials', AlertType.error);
+            this.alertService.addAlert('Invalid credentials', AlertType.error, true);
             return throwError(() => httpErrorResponse);
           })
         )
         .subscribe();
     }
-  }
-
-  ngOnDestroy(): void {
-    this.alertService.clearAllAlerts();
   }
 }

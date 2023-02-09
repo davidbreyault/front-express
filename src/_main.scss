@@ -14,7 +14,12 @@ div, p, h2 {
   color: map-get($text-colors, primary);
 }
 
-h2, .h2-like {
+h3, .h3-like {
+  font-weight: 100;
+}
+
+h2, .h2-like,
+h3, .h3-like {
   font-family: 'Source Code Pro', sans-serif;
 }
 
@@ -109,6 +114,11 @@ button.close {
 
 .form-submit {
   @include flex-rfec;
+}
+
+.notes-list {
+  @include flex-rcc;
+  flex-wrap: wrap;
 }
 
 .material-icons {

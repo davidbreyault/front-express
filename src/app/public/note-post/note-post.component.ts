@@ -33,7 +33,7 @@ export class NotePostComponent implements OnInit {
     this.createPostNoteForm();
   }
 
-  initPostNoteControls(): void {
+  private initPostNoteControls(): void {
     this.usernameControl = new FormControl(
       this.authenticationService.getAuthenticationData().usernameFromJwt
     );
@@ -44,7 +44,7 @@ export class NotePostComponent implements OnInit {
     ]);
   }
 
-  createPostNoteForm(): void {
+  private createPostNoteForm(): void {
     this.notePostForm = this.formBuilder.group({
       username: this.usernameControl,
       note: this.noteControl
@@ -62,11 +62,12 @@ export class NotePostComponent implements OnInit {
             if (response.status === 201) {
               this.notesService.emitRefreshSubject();
               this.matDialogRef.close();
+              this.alertService.addAlert('Your note has been posted successfully !', AlertType.success, false);
             }
           }),
           catchError((httpErrorResponse: HttpErrorResponse) => {
             const message = httpErrorResponse.error ? httpErrorResponse.error : 'An error has occurred...';
-            this.alertService.addAlert(message, AlertType.error);
+            this.alertService.addAlert(message, AlertType.error, true);
             return throwError(() => httpErrorResponse);
           })
         )
