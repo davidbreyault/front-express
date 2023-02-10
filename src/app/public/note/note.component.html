@@ -31,7 +31,7 @@
     </div>
     <!-- Comments -->
     <div class="note__footer--comments">
-      <button class="button">
+      <button class="button" (click)="onClickComment()">
         <span class="material-symbols-outlined">comment</span>
       </button>
       <span class="note__footer--data">{{ note.totalNoteComments }}</span>

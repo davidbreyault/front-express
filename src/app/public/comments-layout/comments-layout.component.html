@@ -1,0 +1,24 @@
+<div class="dialog">
+  <div class="dialog__header">
+    <h2>React to this note</h2>
+    <button class="button close" (click)="onClickCloseCommentsDialog()">X</button>
+  </div>
+  <div class="dialog__content">
+    <form [formGroup]="commentPostForm" (ngSubmit)="onSubmitComment()">
+      <!-- COMMENT -->
+      <mat-form-field appearance="fill">
+        <mat-label>Comment</mat-label>
+        <textarea matInput [formControl]="commentControl"></textarea>
+        <mat-error [innerHTML]="'Comment ' + errorValidatorService.setFormControlErrorText(commentControl, 3, 255)"></mat-error>
+      </mat-form-field>
+      <!-- SUBMISSION -->
+      <div class="form-submit">
+        <button mat-raised-button color="primary" [disabled]="!commentPostForm.valid">
+          <mat-icon>send</mat-icon>
+          <span>Send</span>
+        </button>
+      </div>
+    </form>
+    <h3>Comments (0)</h3>
+  </div>
+</div>

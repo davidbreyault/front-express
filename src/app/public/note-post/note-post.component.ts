@@ -5,6 +5,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { catchError, take, tap, throwError } from 'rxjs';
 import { AlertType } from 'src/app/shared/_models/alert.model';
 import { AlertService } from 'src/app/shared/_services/alert.service';
+import { ErrorValidatorService } from 'src/app/shared/_services/error-validator.service';
 import { Note } from '../_models/note.model';
 import { AuthenticationService } from '../_services/authentication.service';
 import { NotesService } from '../_services/notes.service';
@@ -25,12 +26,13 @@ export class NotePostComponent implements OnInit {
     private alertService: AlertService,
     private notesService: NotesService,
     private authenticationService: AuthenticationService,
-    private matDialogRef: MatDialogRef<NotePostComponent>
+    private matDialogRef: MatDialogRef<NotePostComponent>,
+    public errorValidatorService: ErrorValidatorService
   ) {}
 
   ngOnInit(): void {
     this.initPostNoteControls();
-    this.createPostNoteForm();
+    this.createNotePostForm();
   }
 
   private initPostNoteControls(): void {
@@ -44,7 +46,7 @@ export class NotePostComponent implements OnInit {
     ]);
   }
 
-  private createPostNoteForm(): void {
+  private createNotePostForm(): void {
     this.notePostForm = this.formBuilder.group({
       username: this.usernameControl,
       note: this.noteControl
