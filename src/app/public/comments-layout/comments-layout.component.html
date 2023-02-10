@@ -4,6 +4,7 @@
     <button class="button close" (click)="onClickCloseCommentsDialog()">X</button>
   </div>
   <div class="dialog__content">
+    <app-note [note]="data.note" [showCommentButton]="false"></app-note>
     <form [formGroup]="commentPostForm" (ngSubmit)="onSubmitComment()">
       <!-- COMMENT -->
       <mat-form-field appearance="fill">
@@ -19,6 +20,9 @@
         </button>
       </div>
     </form>
-    <h3>Comments (0)</h3>
+    <h3>
+      Comment<span>{{ data.note.comments > 1 ? "s" : "" }}</span> (<span>{{ data.note.comments }}</span>)
+    </h3>
+    <app-comment *ngFor="let c of data.comments" [comment]="c"></app-comment>
   </div>
 </div>

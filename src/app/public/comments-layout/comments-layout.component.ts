@@ -1,7 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ErrorValidatorService } from 'src/app/shared/_services/error-validator.service';
+import { Comment } from '../_models/comment.model';
+import { Note } from '../_models/note.model';
+
+interface Data {
+  note: Note,
+  comments: Comment[]
+}
 
 @Component({
   selector: 'app-comments-layout',
@@ -16,12 +23,14 @@ export class CommentsLayoutComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private matDialogRef: MatDialogRef<CommentsLayoutComponent>,
-    public errorValidatorService: ErrorValidatorService
+    public errorValidatorService: ErrorValidatorService,
+    @Inject(MAT_DIALOG_DATA) public data: Data 
   ) {}
 
   ngOnInit(): void {
     this.initFormControl();
     this.createCommentPostForm();
+    console.log(this.data);
   }
 
   private initFormControl(): void {

@@ -19,6 +19,8 @@ import { AuthenticationService } from './_services/authentication.service';
 import { BasicAuthenticationService } from './_services/basic-authentication.service';
 import { NotePostComponent } from './note-post/note-post.component';
 import { CommentsLayoutComponent } from './comments-layout/comments-layout.component';
+import { CommentComponent } from './comment/comment.component';
+import { CommentsService } from './_services/comments.service';
 
 
 @NgModule({
@@ -35,6 +37,7 @@ import { CommentsLayoutComponent } from './comments-layout/comments-layout.compo
     RegistrationComponent,
     NotePostComponent,
     CommentsLayoutComponent,
+    CommentComponent,
     BannerDirective,
   ],
   imports: [
@@ -49,6 +52,7 @@ import { CommentsLayoutComponent } from './comments-layout/comments-layout.compo
   providers: [
     NotesService,
     RouterService,
+    CommentsService,
     RegistrationService,
     AuthenticationService,
     BasicAuthenticationService

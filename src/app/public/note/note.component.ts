@@ -5,6 +5,7 @@ import { take, tap } from 'rxjs';
 import { CommentsLayoutComponent } from '../comments-layout/comments-layout.component';
 import { Note } from '../_models/note.model';
 import { ResponseSuccess } from '../_models/response-success.model';
+import { CommentsService } from '../_services/comments.service';
 import { NotesService } from '../_services/notes.service';
 
 @Component({
@@ -15,11 +16,14 @@ import { NotesService } from '../_services/notes.service';
 export class NoteComponent implements OnInit {
 
   @Input() note!: Note;
+  @Input() showCommentButton!: boolean;
   commentsDialogConfig!: MatDialogConfig;
+  hideCommentButton: boolean = false;
 
   constructor(
     private notesService: NotesService,
-    private commentDialog: MatDialog
+    private commentsService: CommentsService,
+    private commentDialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
@@ -54,11 +58,25 @@ export class NoteComponent implements OnInit {
 
   private initCommentsDialogConfig(): void {
     this.commentsDialogConfig = {
-      minWidth: "450px"
+      minWidth: '500px',
+      maxWidth: '600px',
+      maxHeight: '85vh',
+      data: {
+        note: null,
+        comments: null
+      }
     }
   }
 
   onClickComment(): void {
-    const commentDialog = this.commentDialog.open(CommentsLayoutComponent, this.commentsDialogConfig);
+    this.commentsDialogConfig.data.note = this.note;
+    if (this.note.comments > 0) {
+      this.commentsService.getNoteComments(this.note.id)
+        .pipe(
+          take(1),
+          tap(response => this.commentsDialogConfig.data.comments = response['comments'])
+        ).subscribe();
+    }
+    this.commentDialog.open(CommentsLayoutComponent, this.commentsDialogConfig);
   }
 }
