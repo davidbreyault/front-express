@@ -38,20 +38,16 @@ export class HeaderComponent implements OnInit {
     const authDialog = this.authenticationDialog.open(AuthenticationComponent, this.matDialogConfig);
     this.alertService.noticeDialogOpenning();
     authDialog.afterClosed()
-      .pipe(
-        take(1), 
-        tap(() => this.alertService.noticeDialogClosing())
-      ).subscribe();
+      .pipe(take(1), tap(() => this.alertService.noticeDialogClosing()))
+      .subscribe();
   }
 
   onClickNotePostDialog(): void {
     const postDialog = this.notePostDialog.open(NotePostComponent, this.matDialogConfig);
     this.alertService.noticeDialogOpenning();
     postDialog.afterClosed()
-      .pipe(
-        take(1),
-        tap(() => this.alertService.noticeDialogClosing())
-      ).subscribe();
+      .pipe(take(1), tap(() => this.alertService.noticeDialogClosing()))
+      .subscribe();
   }
 
   onClickLogOut(): void {
