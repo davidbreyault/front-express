@@ -7,7 +7,7 @@ import { AuthenticationService } from "src/app/public/_services/authentication.s
 export class InterceptorService implements HttpInterceptor {
 
   securedApiPoints: string[] = [
-    'like','dislike', 'notes'
+    'like','dislike', 'notes', 'comments'
   ];
 
   constructor(private authenticationService: AuthenticationService) {}

@@ -12,7 +12,10 @@
 
     <mat-sidenav-content [ngClass]="{'pl-s': !onHomePage()}">
       <div [ngClass]="{'container': !onHomePage()}">
-        <app-banner *ngIf="!onHomePage() && !authentication?.isAuthenticated"></app-banner>
+        <app-banner 
+          *ngIf="!onHomePage() && !authentication?.isAuthenticated" 
+          [message]="'Register an account to share your mood by writing notes and interact with people !'">
+        </app-banner>
         <router-outlet></router-outlet>
       </div>
     </mat-sidenav-content>

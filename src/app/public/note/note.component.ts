@@ -1,5 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { take, tap } from 'rxjs';
 import { AlertService } from 'src/app/shared/_services/alert.service';
@@ -69,7 +69,12 @@ export class NoteComponent implements OnInit {
     const commentDialog = this.commentDialog.open(CommentsLayoutComponent, this.commentsDialogConfig);
     this.alertService.noticeDialogOpenning();
     commentDialog.afterClosed()
-      .pipe(take(1), tap(() => this.alertService.noticeDialogClosing()))
+      .pipe(take(1), tap((updatedCommentsNumber: number) => {
+        this.alertService.noticeDialogClosing();
+        if (updatedCommentsNumber) {
+          this.note.comments = updatedCommentsNumber;
+        }
+      }))
       .subscribe();
   }
 }

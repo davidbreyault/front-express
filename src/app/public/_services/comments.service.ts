@@ -1,6 +1,6 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { Observable, tap } from "rxjs";
 import { environment } from "src/environments/environment";
 import { Comment } from "../_models/comment.model";
 
@@ -9,7 +9,13 @@ export class CommentsService {
 
   constructor(private http: HttpClient) {}
 
-  getNoteComments(noteId: number): Observable<{comments: Comment[]}> {
-    return this.http.get<{comments: Comment[]}>(environment.apiRootUrl + '/notes/' + noteId + '/comments');
+  getCommentsNote(noteId: number): Observable<{comments: Comment[]}> {
+    return this.http.get<{comments: Comment[]}>(environment.apiRootUrl + '/notes/' + noteId + '/comments')
+      .pipe(tap(response => response['comments'].sort((a: Comment, b: Comment) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())));
+  }
+
+  postCommentNote(noteId: number, comment: Comment): Observable<HttpResponse<any>> {
+    return this.http.post<HttpResponse<any>>(environment.apiRootUrl + '/notes/' + noteId + '/comments', comment, {observe: "response"});
   }
 }
