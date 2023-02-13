@@ -1,0 +1,15 @@
+<form *ngIf="isAuthenticated" [formGroup]="commentPostForm" (ngSubmit)="onSubmitComment()">
+  <!-- COMMENT -->
+  <mat-form-field appearance="fill">
+    <mat-label>Comment</mat-label>
+    <textarea matInput [formControl]="commentControl"></textarea>
+    <mat-error [innerHTML]="'Comment ' + errorValidatorService.setFormControlErrorText(commentControl, 3, 255)"></mat-error>
+  </mat-form-field>
+  <!-- SUBMISSION -->
+  <div class="form-submit">
+    <button mat-raised-button color="primary" [disabled]="!commentPostForm.valid">
+      <mat-icon>send</mat-icon>
+      <span>Send</span>
+    </button>
+  </div>
+</form>

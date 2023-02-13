@@ -18,6 +18,10 @@ import { RegistrationService } from './_services/registration.service';
 import { AuthenticationService } from './_services/authentication.service';
 import { BasicAuthenticationService } from './_services/basic-authentication.service';
 import { NotePostComponent } from './note-post/note-post.component';
+import { CommentsLayoutComponent } from './comments-layout/comments-layout.component';
+import { CommentComponent } from './comment/comment.component';
+import { CommentsService } from './_services/comments.service';
+import { CommentPostComponent } from './comment-post/comment-post.component';
 
 
 @NgModule({
@@ -33,7 +37,10 @@ import { NotePostComponent } from './note-post/note-post.component';
     AuthenticationComponent,
     RegistrationComponent,
     NotePostComponent,
-    BannerDirective
+    CommentsLayoutComponent,
+    CommentComponent,
+    BannerDirective,
+    CommentPostComponent,
   ],
   imports: [
     SharedModule,
@@ -47,6 +54,7 @@ import { NotePostComponent } from './note-post/note-post.component';
   providers: [
     NotesService,
     RouterService,
+    CommentsService,
     RegistrationService,
     AuthenticationService,
     BasicAuthenticationService

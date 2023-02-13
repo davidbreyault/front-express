@@ -14,6 +14,7 @@
       <mat-form-field appearance="fill">
         <mat-label>Note</mat-label>
         <textarea matInput [formControl]="noteControl"></textarea>
+        <mat-error [innerHTML]="'Note ' + errorValidatorService.setFormControlErrorText(noteControl, 10, 255)"></mat-error>
       </mat-form-field>
       <!-- SUBMISSION -->
       <div class="form-submit">

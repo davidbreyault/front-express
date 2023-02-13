@@ -3,7 +3,8 @@
 .note {
   margin: map-get($spaces, m);
   padding: map-get($spaces, m);
-  max-width: max-content;
+  min-width: 29rem;
+  max-width: 61rem;
   border-radius: map-get($radius, default);
   box-shadow: map-get($shadows, default);
   background-color: map-get($background-colors, tin);
@@ -24,13 +25,13 @@
     display: flex;
     justify-content: flex-end;
     .note__footer--data {
-      margin-left: map-get($spaces, xs);
-      margin-right: map-get($spaces, xs);
+      margin-left: 2px;
+      margin-right: 5px;
     }
     button {
       &:hover {
         span.material-symbols-outlined {
-          transform: scale(1.5);
+          transform: scale(1.15);
           transition: map-get($transitions, fast);
         }
       }
@@ -65,13 +66,13 @@
 
 .note.trend {
   background-color: map-get($background-colors, primary-trend);
-  p { color: map-get($text-colors, blue-trend-light) !important};
+  p { color: map-get($text-colors, blue-trend-light)};
   .note__content {font-weight: 400};
-  .note__header {border-bottom: 1px solid map-get($border-colors, trend)};
-  .note__header--data--author {
+  .note__header {
+    border-bottom: 1px solid map-get($border-colors, trend);
     span {
       font-weight: 500;
-      color: map-get($text-colors, blue-trend-dark) !important;
+      color: map-get($text-colors, blue-trend-dark);
     }
   }
 }

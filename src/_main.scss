@@ -142,3 +142,27 @@ button.close {
   // Support for IE.
   font-feature-settings: 'liga';
 }
+
+.cdk-overlay-pane {
+  .dialog {
+    .note {
+      min-width: 100%;
+      margin: 0;
+      padding-top: map-get($spaces, m);
+      padding-bottom: map-get($spaces, xxs);
+      padding-left: 0;
+      padding-right: 0;
+      background-color: map-get($background-colors, white) !important;
+      box-shadow: none;
+      opacity: 0.85;
+    }
+    .note__header {
+      border-bottom: none !important;
+    }
+    .note.trend {
+      .note__header, .note__content {
+        p, span {color: map-get($text-colors, primary) !important};
+      }
+    }
+  }
+}

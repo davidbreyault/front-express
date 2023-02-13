@@ -30,11 +30,11 @@
       <span class="note__footer--data">{{ note.dislikes }}</span>
     </div>
     <!-- Comments -->
-    <div class="note__footer--comments">
-      <button class="button">
+    <div *ngIf="showCommentButton" class="note__footer--comments">
+      <button class="button" (click)="onClickComment()">
         <span class="material-symbols-outlined">comment</span>
       </button>
-      <span class="note__footer--data">{{ note.totalNoteComments }}</span>
+      <span class="note__footer--data">{{ note.comments }}</span>
     </div>
   </div>
 </div>

@@ -5,5 +5,5 @@ export class Note {
   createdAt!: Date;
   likes!: number;
   dislikes!: number;
-  totalNoteComments!: number;
+  comments!: number;
 }

@@ -1,0 +1,22 @@
+@import '../../../mixins';
+@import '../../../variables';
+
+.comment {
+  margin-top: map-get($spaces, xs);
+  margin-bottom: map-get($spaces, xs);
+  padding: map-get($spaces, s);
+  border-radius: map-get($radius, default);
+  background-color: map-get($background-colors, tin);
+  font-weight: 200;
+  &__header {
+    @include flex-rsbc;
+    p {
+      font-weight: 400;
+      color: darken($color: map-get($text-colors, primary), $amount: 15);
+    }
+    span {
+      font-size: 1.2rem;
+      color: map-get($text-colors, steel);
+    }
+  }
+}
