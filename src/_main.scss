@@ -160,7 +160,7 @@ button.close {
       border-bottom: none !important;
     }
     .note.trend {
-      .note__header, .note__content {
+      .note__header, .note__content, .note__footer {
         p, span {color: map-get($text-colors, primary) !important};
       }
     }

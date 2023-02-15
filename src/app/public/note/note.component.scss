@@ -65,14 +65,10 @@
 }
 
 .note.trend {
-  background-color: map-get($background-colors, primary-trend);
-  p { color: map-get($text-colors, blue-trend-light)};
-  .note__content {font-weight: 400};
-  .note__header {
-    border-bottom: 1px solid map-get($border-colors, trend);
-    span {
-      font-weight: 500;
-      color: map-get($text-colors, blue-trend-dark);
-    }
-  }
+  background-color: map-get($background-colors, primary);
+  p, span { color: map-get($text-colors, blue-light)};
+  .note__header {border-bottom: 1px solid map-get($border-colors, trend)};
+  .note__content {font-weight: 500};
+  .note__header--data--author span {color: map-get($text-colors, white); font-weight: 500}
+  .note__header--data--date {color: darken($color: map-get($text-colors, blue-light), $amount: 15)};
 }
