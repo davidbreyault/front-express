@@ -1,0 +1,8 @@
+<h2>Trending</h2>
+<mat-spinner *ngIf="isLoadingWheelVisible" strokeWidth="2" diameter="50"></mat-spinner>
+<app-alert *ngIf="!isAnyDialogOpenned"></app-alert>
+<ul *ngIf="trending">
+  <li *ngFor="let word of trending | keyvalue: mapValueDescOrder" [ngStyle]="{'font-size': ((3 * word.value) + 13) + 'px'}">
+    {{ word.key }}  <span>{{ word.value }}</span>
+  </li>
+</ul>

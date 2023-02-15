@@ -13,6 +13,7 @@ export class SidenavComponent implements OnInit {
   activatedRoute!: string;
   isAllNotesRoute!: boolean;
   isBestNotesRoute!: boolean;
+  isTrendingRoute!: boolean;
 
   constructor(private routerService: RouterService) { }
 
@@ -28,5 +29,6 @@ export class SidenavComponent implements OnInit {
   toggleActivatedTab(): void {
     this.isAllNotesRoute = this.activatedRoute.startsWith('/notes/all');
     this.isBestNotesRoute = this.activatedRoute.startsWith('/notes/best');
+    this.isTrendingRoute = this.activatedRoute.startsWith('/trending');
   }
 }

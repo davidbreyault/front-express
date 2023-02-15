@@ -23,7 +23,7 @@ export class NotesService {
   }
 
   getBestNotes(): Observable<ResponseNotes> {
-    return this.http.get<ResponseNotes>(environment.apiRootUrl + this.notesApiPoint + '/trending?top=5');
+    return this.http.get<ResponseNotes>(environment.apiRootUrl + this.notesApiPoint + '/best?top=5');
   }
 
   likeNote(id: number): Observable<HttpResponse<ResponseSuccess>> {

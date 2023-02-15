@@ -10,10 +10,6 @@ export class RouterService {
 
   constructor(private router: Router) { }
 
-  test(): void {
-    console.log(this.router.url)
-  }
-
   setActualRouteUrl(url: string): void {
     this.actualRouteUrl = url;
     this.emitActualRouteUrlSubject();
