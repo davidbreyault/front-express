@@ -1,0 +1,30 @@
+@import '../../../mixins';
+@import '../../../variables';
+
+h2 {
+  margin-bottom: map-get($spaces, s);
+}
+
+ul {
+  @include flex-rcc;
+  flex-wrap: wrap;
+}
+
+li {
+  position: relative;
+  width: max-content;
+  margin: map-get($spaces, xxs);
+  padding: calc(map-get($spaces, xxs) / 2) map-get($spaces, s);
+  border-radius: map-get($radius, half);
+  background-color: map-get($background-colors, tin);
+  word-break: break-word;
+  text-align: center;
+  font-weight: 100;
+  font-family: 'Source Code Pro', sans-serif;
+  span {
+    display: inline-block;
+    padding: .25rem 0 .25rem 0.5rem;
+    font-weight: 500;
+    font-family: 'Source Code Pro', sans-serif;
+  }
+}
