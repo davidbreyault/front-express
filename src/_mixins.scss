@@ -37,13 +37,6 @@
   align-items: center;
 }
 
-@mixin flex-ccc {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
 @mixin flex-rsbc {
   display: flex;
   flex-direction: row;
@@ -58,9 +51,23 @@
   align-items: center;
 }
 
+@mixin flex-rfsfs {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
 @mixin flex-rfec {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
+  align-items: center;
+}
+
+@mixin flex-ccc {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
 }

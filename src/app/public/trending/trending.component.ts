@@ -36,7 +36,7 @@ export class TrendingComponent implements OnInit, OnDestroy {
   }
 
   private getTrending(): void {
-    this.trendingService.getTrendingWords()
+    this.trendingService.getAllTrendingWords()
       .pipe(
         take(1), 
         tap((response: ResponseTrending) => {
@@ -47,9 +47,11 @@ export class TrendingComponent implements OnInit, OnDestroy {
           this.isLoadingWheelVisible = false;
         }),
         catchError((httpErrorResponse: HttpErrorResponse) => {
-          const message = httpErrorResponse.error ? httpErrorResponse.error : 'Cannot get trending...';
-          this.isLoadingWheelVisible = false;
-          this.alertService.addAlert(message, AlertType.error, false);
+          const message = httpErrorResponse.error ? httpErrorResponse.error : 'An error occured, cannot get trending...';
+          setTimeout(() => {
+            this.isLoadingWheelVisible = false;
+            this.alertService.addAlert(message, AlertType.error, false);
+          }, 1500);
           return throwError(() => httpErrorResponse);
         }))
       .subscribe();
@@ -59,8 +61,8 @@ export class TrendingComponent implements OnInit, OnDestroy {
     this.alertService.isAnyDialogOpenedSubject
       .pipe(
         takeWhile(() => this.isComponentAlive), 
-        tap(boolean => this.isAnyDialogOpenned = boolean)
-      ).subscribe();
+        tap(boolean => this.isAnyDialogOpenned = boolean))
+      .subscribe();
   }
 
   ngOnDestroy(): void {

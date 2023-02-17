@@ -1,0 +1,8 @@
+@import '../../../variables';
+
+ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: map-get($spaces, l);
+  padding-left: 0;
+}

@@ -43,11 +43,11 @@ export class NotesBestComponent implements OnInit, OnDestroy {
           this.isLoadingSpinnerVisible = false;
         }),
         catchError((httpErrorResponse: HttpErrorResponse) => {
-          const message = httpErrorResponse.error ? httpErrorResponse.error : 'An error occured...';
+          const message = httpErrorResponse.error ? httpErrorResponse.error : 'An error occured, cannot get best notes...';
           setTimeout(() => {
             this.isLoadingSpinnerVisible = false;
             this.alertService.addAlert(message, AlertType.error, false);
-          }, 2000);
+          }, 1500);
           return throwError(() => httpErrorResponse);
         })
       ).subscribe();

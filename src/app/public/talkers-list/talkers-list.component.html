@@ -1,0 +1,12 @@
+<h2>Talkers</h2>
+<mat-spinner *ngIf="isLoadingSpinnerVisible" strokeWidth="2" diameter="50"></mat-spinner>
+<app-alert *ngIf="!isAnyDialogOpenned"></app-alert>
+<ul>
+  <app-talker 
+    *ngFor="let t of talkers | keyvalue: mapValueDescOrder" 
+    [username]="t.key"
+    [notes]="t.value.notes"
+    [comments]="t.value.comments">
+  </app-talker>
+</ul>
+
