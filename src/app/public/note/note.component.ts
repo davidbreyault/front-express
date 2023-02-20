@@ -77,4 +77,8 @@ export class NoteComponent implements OnInit {
       }))
       .subscribe();
   }
+
+  isPopular(): boolean {
+    return this.note.likes >= 50;
+  }
 }

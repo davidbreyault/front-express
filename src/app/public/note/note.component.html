@@ -1,9 +1,9 @@
-<div class="note" [ngClass]="{'trend': note.likes > 50}">
+<div class="note" [ngClass]="{'popular': note.likes > 50}">
   <!-- Note Header -->
   <div class="note__header">
     <div class="note__header--data">
-      <p class="note__header--data--author">by <span>{{ note.author }}</span></p>
-      <p class="note__header--data--date">{{ note.createdAt | date: 'dd/MM/yy - HH:ss'  }}</p>
+      <p class="note__header--author">by <span>{{ note.author }}</span></p>
+      <p class="note__header--date">{{ note.createdAt | date: 'dd/MM/yy - HH:ss'  }}</p>
     </div>
     <div class="note__header--avatar">
       <img src="https://api.dicebear.com/5.x/croodles/svg?seed={{note.author}}"alt="author-avatar">
@@ -18,23 +18,51 @@
     <!-- Likes -->
     <div class="note__footer--likes">
       <button class="button" (click)="onClickLike()">
-        <span class="material-symbols-outlined">favorite</span>
+        <ng-container [ngTemplateOutlet]="likes"></ng-container>
       </button>
       <span class="note__footer--data">{{ note.likes }}</span>
     </div>
     <!-- Dislikes -->
     <div class="note__footer--dislikes">
       <button class="button" (click)="onClickDislike()">
-        <span class="material-symbols-outlined">thumb_down</span>
+        <ng-container [ngTemplateOutlet]="dislikes"></ng-container>
       </button>
       <span class="note__footer--data">{{ note.dislikes }}</span>
     </div>
     <!-- Comments -->
     <div *ngIf="showCommentButton" class="note__footer--comments">
       <button class="button" (click)="onClickComment()">
-        <span class="material-symbols-outlined">comment</span>
+        <ng-container [ngTemplateOutlet]="comments"></ng-container>
       </button>
       <span class="note__footer--data">{{ note.comments }}</span>
     </div>
   </div>
 </div>
+
+<!-- Templates -->
+<ng-template #likes>
+  <ng-container *ngIf="isPopular()">
+    <mat-icon color="white">favorite</mat-icon>
+  </ng-container>
+  <ng-container *ngIf="!isPopular()">
+    <span class="material-symbols-outlined">favorite</span>
+  </ng-container>
+</ng-template>
+
+<ng-template #dislikes>
+  <ng-container *ngIf="isPopular()">
+    <mat-icon color="white">thumb_down</mat-icon>
+  </ng-container>
+  <ng-container *ngIf="!isPopular()">
+    <span class="material-symbols-outlined">thumb_down</span>
+  </ng-container>
+</ng-template>
+
+<ng-template #comments>
+  <ng-container *ngIf="isPopular()">
+    <mat-icon color="white">comment</mat-icon>
+  </ng-container>
+  <ng-container *ngIf="!isPopular()">
+    <span class="material-symbols-outlined">comment</span>
+  </ng-container>
+</ng-template>

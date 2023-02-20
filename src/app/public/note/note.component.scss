@@ -1,4 +1,5 @@
 @import '../../../variables';
+@import '../../../mixins';
 
 .note {
   margin: map-get($spaces, m);
@@ -10,16 +11,18 @@
   background-color: map-get($background-colors, tin);
   font-weight: 300;
   &__header {
+    position: relative;
     display: flex;
     justify-content: space-between;
     padding-bottom: map-get($spaces, s);
-    border-bottom: 1px solid map-get($border-colors, default);
   }
   &__content {
     margin-top: map-get($spaces, m);
     margin-bottom: map-get($spaces, m);
+    padding-bottom: map-get($spaces, m);
     word-wrap: break-word;
     word-break: break-word;
+    border-bottom: 1px solid map-get($border-colors, default);
   }
   &__footer {
     display: flex;
@@ -30,7 +33,7 @@
     }
     button {
       &:hover {
-        span.material-symbols-outlined {
+        mat-icon, span.material-symbols-outlined {
           transform: scale(1.15);
           transition: map-get($transitions, fast);
         }
@@ -39,36 +42,45 @@
   }
 }
 
-.note__header--avatar {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  width: max-content;
-  max-height: 4.2rem;
-  img {
-    display: block;
+.note__header {
+  &--avatar {
+    position: absolute;
+    @include flex-rcc;
+    top: -1rem;
+    right: -1rem;
     width: 70px;
+    height: 70px;
+    border-radius: map-get($radius, half);
+    img {
+      display: block;
+      object-fit: cover;
+      object-position: 50% 50%;
+      width: 90px;
+      height: 90px;
+    }
+  }
+  &--author {
+    font-weight: 200;
+    span {
+      font-weight: 400;
+      color: darken($color: map-get($text-colors, primary), $amount: 15);
+    }
+  }
+  &--date {
+    font-size: 1rem;
+    color: map-get($text-colors, steel);
   }
 }
 
-.note__header--data--author {
-  font-weight: 200;
-  span {
-    font-weight: 400;
-    color: darken($color: map-get($text-colors, primary), $amount: 15);
-  }
-}
-
-.note__header--data--date {
-  color: map-get($text-colors, steel);
-  font-size: 1.2rem;
-}
-
-.note.trend {
+.popular.note {
   background-color: map-get($background-colors, primary);
-  p, span { color: map-get($text-colors, blue-light)};
-  .note__header {border-bottom: 1px solid map-get($border-colors, trend)};
-  .note__content {font-weight: 500};
-  .note__header--data--author span {color: map-get($text-colors, white); font-weight: 500}
-  .note__header--data--date {color: darken($color: map-get($text-colors, blue-light), $amount: 15)};
+  mat-icon {margin: 0; color: map-get($text-colors, white);}
+  p, span { color: map-get($text-colors, white)};
+  .note__header--avatar {background-color: lighten($color: map-get($background-colors, primary), $amount: 35)};
+  .note__header--date {color: map-get($text-colors, blue-light)};
+  .note__content {border-bottom: 1px solid map-get($border-colors, best)};
+  .note__header--author {
+    color: map-get($text-colors, blue-light);
+    span {color: map-get($text-colors, white)};
+  }
 }

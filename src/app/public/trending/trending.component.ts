@@ -2,9 +2,10 @@ import { KeyValue } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, take, takeWhile, tap, throwError } from 'rxjs';
+import { catchError, Subject, take, tap, throwError } from 'rxjs';
 import { AlertType } from 'src/app/shared/_models/alert.model';
 import { AlertService } from 'src/app/shared/_services/alert.service';
+import { DialogInspector } from '../dialog-inspector';
 import { ResponseTrending } from '../_models/response-trending.model';
 import { RouterService } from '../_services/router.service';
 import { TrendingService } from '../_services/trending.service';
@@ -14,24 +15,26 @@ import { TrendingService } from '../_services/trending.service';
   templateUrl: './trending.component.html',
   styleUrls: ['./trending.component.scss']
 })
-export class TrendingComponent implements OnInit, OnDestroy {
+export class TrendingComponent extends DialogInspector implements OnInit, OnDestroy {
 
   trending!: Map<string, number>;
-  isComponentAlive: boolean = true;
-  isAnyDialogOpenned: boolean = false;
+  destroyComponent$!: Subject<boolean>;
   isLoadingWheelVisible: boolean = true;
   mapValueDescOrder = (a: KeyValue<string, number>, b: KeyValue<string, number>): number => b.value - a.value;
 
   constructor(
     private router: Router, 
     private routerService: RouterService,
-    private alertService: AlertService,
-    private trendingService: TrendingService
-  ) {}
+    private trendingService: TrendingService,
+    protected override alertService: AlertService
+  ) {
+    super(alertService);
+  }
 
   ngOnInit(): void {
+    this.destroyComponent$ = new Subject<boolean>();
     this.routerService.setActualRouteUrl(this.router.url);
-    this.checkDialogOpeningStatus();
+    this.checkDialogOpeningStatus(this.destroyComponent$);
     this.getTrending();
   }
 
@@ -57,15 +60,7 @@ export class TrendingComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  private checkDialogOpeningStatus(): void {
-    this.alertService.isAnyDialogOpenedSubject
-      .pipe(
-        takeWhile(() => this.isComponentAlive), 
-        tap(boolean => this.isAnyDialogOpenned = boolean))
-      .subscribe();
-  }
-
   ngOnDestroy(): void {
-    this.isComponentAlive = false;
+    this.destroyComponent$.next(true);
   }
 }
