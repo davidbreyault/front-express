@@ -1,6 +1,8 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { interval, Subject, take, takeUntil, tap } from 'rxjs';
+import { catchError, interval, Subject, take, takeUntil, tap, throwError } from 'rxjs';
+import { AlertType } from 'src/app/shared/_models/alert.model';
 import { AlertService } from 'src/app/shared/_services/alert.service';
 import { DialogInspector } from '../dialog-inspector';
 import { Note } from '../_models/note.model';
@@ -17,7 +19,7 @@ export class NotesListComponent extends DialogInspector implements OnInit, OnDes
 
   ts: number = 0;
   notes!: Note[];
-  isLoadingWheelVisible: boolean = true;
+  isLoadingSpinnerVisible: boolean = true;
   destroyComponent$!: Subject<boolean>;
 
   constructor(
@@ -63,7 +65,15 @@ export class NotesListComponent extends DialogInspector implements OnInit, OnDes
           }
           // Mise à jour du timestamp
           this.ts = response.ts;
-          this.isLoadingWheelVisible = false;
+          this.isLoadingSpinnerVisible = false;
+        }),
+        catchError((httpErrorResponse: HttpErrorResponse) => {
+          const message = httpErrorResponse.error ? httpErrorResponse.error : 'An error occured, cannot get notes...';
+          setTimeout(() => {
+            this.isLoadingSpinnerVisible = false;
+            this.alertService.addAlert(message, AlertType.error, false);
+          }, 1500);
+          return throwError(() => httpErrorResponse);
         }))
       .subscribe();
   }

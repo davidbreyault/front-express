@@ -74,9 +74,9 @@
 
 .popular.note {
   background-color: map-get($background-colors, primary);
-  mat-icon {margin: 0; color: map-get($text-colors, white);}
+  mat-icon {margin: 0; color: map-get($text-colors, blue-light);}
   p, span { color: map-get($text-colors, white)};
-  .note__header--avatar {background-color: lighten($color: map-get($background-colors, primary), $amount: 35)};
+  .note__header--avatar {background-color: lighten($color: map-get($background-colors, primary), $amount: 40)};
   .note__header--date {color: map-get($text-colors, blue-light)};
   .note__content {border-bottom: 1px solid map-get($border-colors, best)};
   .note__header--author {

@@ -10,7 +10,7 @@ body {
   background-color: map-get($background-colors, tin);
 }
 
-h2, div, p, span, mat-icon {
+h2, div, p {
   color: map-get($text-colors, primary);
 }
 
