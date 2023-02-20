@@ -1,7 +1,10 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { interval, take, takeWhile, tap } from 'rxjs';
+import { catchError, interval, Subject, take, takeUntil, tap, throwError } from 'rxjs';
+import { AlertType } from 'src/app/shared/_models/alert.model';
 import { AlertService } from 'src/app/shared/_services/alert.service';
+import { DialogInspector } from '../dialog-inspector';
 import { Note } from '../_models/note.model';
 import { ResponseNotes } from '../_models/response-notes.model';
 import { NotesService } from '../_services/notes.service';
@@ -12,27 +15,29 @@ import { RouterService } from '../_services/router.service';
   templateUrl: './notes-list.component.html',
   styleUrls: ['./notes-list.component.scss']
 })
-export class NotesListComponent implements OnInit, OnDestroy {
+export class NotesListComponent extends DialogInspector implements OnInit, OnDestroy {
 
   ts: number = 0;
   notes!: Note[];
-  isComponentAlive: boolean = true;
-  isLoadingWheelVisible: boolean = true;
-  isAnyDialogOpenned: boolean = false;
+  isLoadingSpinnerVisible: boolean = true;
+  destroyComponent$!: Subject<boolean>;
 
   constructor(
     private notesService: NotesService, 
     private router: Router, 
     private routerService: RouterService,
-    private alertService: AlertService) 
-  {}
+    protected override alertService: AlertService) 
+  {
+    super(alertService);
+  }
 
   ngOnInit(): void {
-    this.routerService.setActualRouteUrl(this.router.url)
+    this.destroyComponent$ = new Subject<boolean>();
+    this.routerService.setActualRouteUrl(this.router.url);
     this.getNotes();
     this.updateNotesList();
     this.updateNotesListAfterEvent();
-    this.checkDialogOpeningStatus();
+    this.checkDialogOpeningStatus(this.destroyComponent$);
   }
 
   private getNotes(): void {
@@ -60,9 +65,17 @@ export class NotesListComponent implements OnInit, OnDestroy {
           }
           // Mise à jour du timestamp
           this.ts = response.ts;
-          this.isLoadingWheelVisible = false;
-        })
-      ).subscribe();
+          this.isLoadingSpinnerVisible = false;
+        }),
+        catchError((httpErrorResponse: HttpErrorResponse) => {
+          const message = httpErrorResponse.error ? httpErrorResponse.error : 'An error occured, cannot get notes...';
+          setTimeout(() => {
+            this.isLoadingSpinnerVisible = false;
+            this.alertService.addAlert(message, AlertType.error, false);
+          }, 1500);
+          return throwError(() => httpErrorResponse);
+        }))
+      .subscribe();
   }
 
   /**
@@ -71,9 +84,9 @@ export class NotesListComponent implements OnInit, OnDestroy {
   private updateNotesList(): void {
     interval(10000)
       .pipe(
-        takeWhile(() => this.isComponentAlive), 
-        tap(() => this.getNotes())
-      ).subscribe();
+        takeUntil(this.destroyComponent$), 
+        tap(() => this.getNotes()))
+      .subscribe();
   }
 
   /**
@@ -83,20 +96,12 @@ export class NotesListComponent implements OnInit, OnDestroy {
   private updateNotesListAfterEvent(): void {
     this.notesService.getRefreshSubject()
       .pipe(
-        takeWhile(() => this.isComponentAlive),
-        tap(() => this.getNotes())
-      ).subscribe();
-  }
-
-  private checkDialogOpeningStatus(): void {
-    this.alertService.isAnyDialogOpenedSubject
-      .pipe(
-        takeWhile(() => this.isComponentAlive), 
-        tap(boolean => this.isAnyDialogOpenned = boolean)
-      ).subscribe();
+        takeUntil(this.destroyComponent$),
+        tap(() => this.getNotes()))
+      .subscribe();
   }
 
   ngOnDestroy(): void {
-    this.isComponentAlive = false;
+    this.destroyComponent$.next(true);
   }
 }

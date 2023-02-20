@@ -14,6 +14,7 @@ export class SidenavComponent implements OnInit {
   isAllNotesRoute!: boolean;
   isBestNotesRoute!: boolean;
   isTrendingRoute!: boolean;
+  isTalkersRoute!: boolean;
 
   constructor(private routerService: RouterService) { }
 
@@ -30,5 +31,6 @@ export class SidenavComponent implements OnInit {
     this.isAllNotesRoute = this.activatedRoute.startsWith('/notes/all');
     this.isBestNotesRoute = this.activatedRoute.startsWith('/notes/best');
     this.isTrendingRoute = this.activatedRoute.startsWith('/trending');
+    this.isTalkersRoute = this.activatedRoute.startsWith('/talkers');
   }
 }

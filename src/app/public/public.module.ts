@@ -28,6 +28,9 @@ import { CommentsService } from './_services/comments.service';
 import { TrendingService } from './_services/trending.service';
 // Directives
 import { BannerDirective } from './_directives/banner.directive';
+import { TalkersListComponent } from './talkers-list/talkers-list.component';
+import { TalkersService } from './_services/talkers.service';
+import { TalkerComponent } from './talker/talker.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +50,8 @@ import { BannerDirective } from './_directives/banner.directive';
     BannerDirective,
     CommentPostComponent,
     TrendingComponent,
+    TalkersListComponent,
+    TalkerComponent,
   ],
   imports: [
     SharedModule,
@@ -62,6 +67,7 @@ import { BannerDirective } from './_directives/banner.directive';
     RouterService,
     CommentsService,
     TrendingService,
+    TalkersService,
     RegistrationService,
     AuthenticationService,
     BasicAuthenticationService

@@ -10,7 +10,7 @@ body {
   background-color: map-get($background-colors, tin);
 }
 
-div, p, h2 {
+h2, div, p {
   color: map-get($text-colors, primary);
 }
 
@@ -155,13 +155,12 @@ button.close {
       background-color: map-get($background-colors, white) !important;
       box-shadow: none;
       opacity: 0.85;
-    }
-    .note__header {
-      border-bottom: none !important;
-    }
-    .note.trend {
-      .note__header, .note__content, .note__footer {
-        p, span {color: map-get($text-colors, primary) !important};
+      &__content {border-bottom: none !important};
+      &__header--avatar {background-color: map-get($background-colors, tin)};
+      &.popular {
+        .note__header, .note__content, .note__footer {
+          p, span, mat-icon {color: map-get($text-colors, primary) !important};
+        }
       }
     }
   }

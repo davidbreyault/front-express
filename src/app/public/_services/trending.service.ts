@@ -9,7 +9,7 @@ export class TrendingService {
 
   constructor(private http: HttpClient) {}
 
-  getTrendingWords(): Observable<ResponseTrending> {
+  getAllTrendingWords(): Observable<ResponseTrending> {
     return this.http.get<ResponseTrending>(environment.apiRootUrl + '/trending');
   }
 }

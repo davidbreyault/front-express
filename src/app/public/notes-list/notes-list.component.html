@@ -1,6 +1,6 @@
 <h3>All notes</h3>
 <app-alert *ngIf="!isAnyDialogOpenned"></app-alert>
-<mat-spinner *ngIf="isLoadingWheelVisible" strokeWidth="2" diameter="50"></mat-spinner>
+<mat-spinner *ngIf="isLoadingSpinnerVisible" strokeWidth="2" diameter="50"></mat-spinner>
 <div class="notes-list">
   <app-note 
     *ngFor="let n of notes" 
