@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, Subject, take, takeWhile, tap, throwError } from 'rxjs';
+import { catchError, Subject, take, tap, throwError } from 'rxjs';
 import { AlertType } from 'src/app/shared/_models/alert.model';
 import { AlertService } from 'src/app/shared/_services/alert.service';
 import { DialogInspector } from '../dialog-inspector';
@@ -20,6 +20,8 @@ export class NotesBestComponent extends DialogInspector implements OnInit, OnDes
   bestNotes!: Note[];
   isLoadingSpinnerVisible: boolean = true;
   destroyComponent$!: Subject<boolean>;
+  topParameter!: number;
+  topParameterCustomizer: number[] = [5, 10, 20, 50];
 
   constructor(
     private router: Router, 
@@ -31,14 +33,15 @@ export class NotesBestComponent extends DialogInspector implements OnInit, OnDes
   }
 
   ngOnInit(): void {
+    this.topParameter = this.topParameterCustomizer[0];
     this.destroyComponent$ = new Subject<boolean>();
     this.routerService.setActualRouteUrl(this.router.url);
-    this.getBestNotes();
+    this.getBestNotes(this.topParameter);
     this.checkDialogOpeningStatus(this.destroyComponent$);
   }
 
-  getBestNotes(): void {
-    this.notesService.getBestNotes()
+  getBestNotes(topParameter: number): void {
+    this.notesService.getBestNotes(topParameter)
       .pipe(
         take(1),
         tap((response: ResponseNotes) => {
@@ -54,6 +57,10 @@ export class NotesBestComponent extends DialogInspector implements OnInit, OnDes
           return throwError(() => httpErrorResponse);
         })
       ).subscribe();
+  }
+
+  onChangeBestNotesParameter(): void {
+    this.getBestNotes(this.topParameter);
   }
 
   ngOnDestroy(): void {

@@ -4,7 +4,7 @@ import { MaterialModule } from './material.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorService } from './_services/interceptor.service';
 import { ButtonBurgerComponent } from './button-burger/button-burger.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SanitizePipe } from './_pipes/sanitize.pipe';
 import { AlertComponent } from './alert/alert.component';
 import { AlertService } from './_services/alert.service';
@@ -26,6 +26,7 @@ import { ErrorValidatorService } from './_services/error-validator.service';
     CommonModule,
     MaterialModule,
     HttpClientModule,
+    FormsModule,
     ReactiveFormsModule,
     SanitizePipe,
     AlertComponent,
