@@ -3,8 +3,14 @@
 <mat-spinner *ngIf="isLoadingSpinnerVisible" strokeWidth="2" diameter="50"></mat-spinner>
 <div class="notes-list">
   <app-note 
-    *ngFor="let n of notes" 
+    *ngFor="let n of pagedNotes" 
     [note]="n" 
     [showCommentButton]="true">
   </app-note>
 </div>
+<mat-paginator 
+  (page)="handlePageEvent($event)"
+  [length]="notes?.length"
+  [pageSize]="paginatorData?.pageSize"
+  [pageSizeOptions]="[5, 10, 25, 100]">
+</mat-paginator>

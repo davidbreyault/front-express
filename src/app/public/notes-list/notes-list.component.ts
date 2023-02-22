@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { catchError, interval, Subject, take, takeUntil, tap, throwError } from 'rxjs';
 import { AlertType } from 'src/app/shared/_models/alert.model';
@@ -19,8 +20,10 @@ export class NotesListComponent extends DialogInspector implements OnInit, OnDes
 
   ts: number = 0;
   notes!: Note[];
+  pagedNotes!: Note[];
   isLoadingSpinnerVisible: boolean = true;
   destroyComponent$!: Subject<boolean>;
+  paginatorData: PageEvent = new PageEvent();
 
   constructor(
     private notesService: NotesService, 
@@ -50,6 +53,10 @@ export class NotesListComponent extends DialogInspector implements OnInit, OnDes
             // Récupère toutes les notes
             this.notes = response.notes.sort((a: Note, b: Note) => 
               new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+            setTimeout(() => {
+              this.initPaginatorData(this.notes);
+              this.isLoadingSpinnerVisible = false;
+            }, 200);
           }
           // Si this.notes n'est pas vide
           if (this.notes && this.notes.length > 0) {
@@ -65,7 +72,6 @@ export class NotesListComponent extends DialogInspector implements OnInit, OnDes
           }
           // Mise à jour du timestamp
           this.ts = response.ts;
-          this.isLoadingSpinnerVisible = false;
         }),
         catchError((httpErrorResponse: HttpErrorResponse) => {
           const message = httpErrorResponse.error ? httpErrorResponse.error : 'An error occured, cannot get notes...';
@@ -99,6 +105,25 @@ export class NotesListComponent extends DialogInspector implements OnInit, OnDes
         takeUntil(this.destroyComponent$),
         tap(() => this.getNotes()))
       .subscribe();
+  }
+
+  initPaginatorData(notes: Note[]): void {
+    this.paginatorData.pageIndex = 0;
+    this.paginatorData.previousPageIndex = 0;
+    this.paginatorData.pageSize = 10;
+    this.paginatorData.length = notes?.length;
+    this.pagedNotes = notes.slice(this.paginatorData.pageIndex, this.paginatorData.pageSize);
+  }
+
+  handlePageEvent(event: PageEvent) {
+    let indexStart = event.pageSize * event.pageIndex;
+    let indexEnd = (event.pageSize * event.pageIndex) + event.pageSize;
+    this.pagedNotes = this.notes.slice(indexStart, indexEnd);
+    window.scroll({ 
+      top: 0, 
+      left: 0, 
+      behavior: 'smooth' 
+    });
   }
 
   ngOnDestroy(): void {
