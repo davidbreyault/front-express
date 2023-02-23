@@ -4,14 +4,12 @@
     <span>{{ comment.createdAt | date: 'dd/MM/yy - HH:ss' }}</span>
   </div>
   <p class="comment__content">{{ comment.message }}</p>
-  <div class="comment__footer" *ngIf="postedByLoggedUser()">
-    <button mat-stroked-button color="primary">
+  <div class="comment__footer" *ngIf="isPostedByLoggedUser(comment)">
+    <button class="button update">
       <mat-icon>edit</mat-icon>
-      <span>Update</span>
     </button>
-    <button mat-stroked-button color="warn">
+    <button class="button delete">
       <mat-icon>delete</mat-icon>
-      <span>Delete</span>
     </button>
   </div>
 </div>

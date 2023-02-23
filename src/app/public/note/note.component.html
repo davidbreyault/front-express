@@ -36,33 +36,46 @@
       </button>
       <span class="note__footer--data">{{ note.comments }}</span>
     </div>
+    <!-- Actions -->
+    <div *ngIf="showActionButtons && isPostedByLoggedUser(note)" class="note__footer--actions">
+      <ng-container [ngTemplateOutlet]="actions"></ng-container>
+    </div>
   </div>
 </div>
 
 <!-- Templates -->
 <ng-template #likes>
-  <ng-container *ngIf="isPopular()">
-    <mat-icon color="white">favorite</mat-icon>
+  <ng-container *ngIf="isPopular(); else classicLike">
+    <mat-icon>favorite</mat-icon>
   </ng-container>
-  <ng-container *ngIf="!isPopular()">
+  <ng-template #classicLike>
     <span class="material-symbols-outlined">favorite</span>
-  </ng-container>
+  </ng-template>
 </ng-template>
 
 <ng-template #dislikes>
-  <ng-container *ngIf="isPopular()">
-    <mat-icon color="white">thumb_down</mat-icon>
+  <ng-container *ngIf="isPopular(); else classicDislike">
+    <mat-icon>thumb_down</mat-icon>
   </ng-container>
-  <ng-container *ngIf="!isPopular()">
+  <ng-template #classicDislike>
     <span class="material-symbols-outlined">thumb_down</span>
-  </ng-container>
+  </ng-template>
 </ng-template>
 
 <ng-template #comments>
-  <ng-container *ngIf="isPopular()">
-    <mat-icon color="white">comment</mat-icon>
+  <ng-container *ngIf="isPopular(); else classicComment">
+    <mat-icon>comment</mat-icon>
   </ng-container>
-  <ng-container *ngIf="!isPopular()">
+  <ng-template #classicComment>
     <span class="material-symbols-outlined">comment</span>
-  </ng-container>
+  </ng-template>
+</ng-template>
+
+<ng-template #actions>
+  <button class="button update">
+    <mat-icon>edit</mat-icon>
+  </button>
+  <button class="button delete">
+    <mat-icon>delete</mat-icon>
+  </button>
 </ng-template>

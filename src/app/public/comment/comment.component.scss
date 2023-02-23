@@ -21,12 +21,12 @@
   }
   &__footer {
     @include flex-rfec;
-    margin-top: map-get($spaces, s);
-    span {font-family: 'Source Code Pro'};
+    margin-top: map-get($spaces, xxs);
     button {
       @include flex-rsbc;
-      margin-left: map-get($spaces, s);
-      background-color: map-get($text-colors, white);
+      mat-icon {margin: 0};
+      &.update mat-icon {color: map-get($text-colors, primary)};
+      &.delete mat-icon {color: map-get($text-colors, delete)};
     }
   }
 }

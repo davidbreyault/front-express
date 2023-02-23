@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { TokenService } from 'src/app/shared/_services/token.service';
+import { Affiliations } from '../affiliations';
 import { Comment } from '../_models/comment.model';
 import { AuthenticationService } from '../_services/authentication.service';
 
@@ -8,21 +9,18 @@ import { AuthenticationService } from '../_services/authentication.service';
   templateUrl: './comment.component.html',
   styleUrls: ['./comment.component.scss']
 })
-export class CommentComponent {
+export class CommentComponent extends Affiliations implements OnInit {
 
   @Input() comment!: Comment;
 
   constructor(
-    private tokenService: TokenService, 
-    private authenticationService: AuthenticationService
-  ) {}
+    protected override tokenService: TokenService, 
+    protected override authenticationService: AuthenticationService
+  ) {
+    super(tokenService, authenticationService);
+  }
 
-  postedByLoggedUser(): boolean {
-    if (this.authenticationService.getAuthenticationData().isAuthenticated) {
-      if (this.comment.username === this.tokenService.getJwtUsername()) {
-        return true;
-      }
-    }
-    return false;
+  ngOnInit(): void {
+    this.isPostedByLoggedUser(this.comment)
   }
 }

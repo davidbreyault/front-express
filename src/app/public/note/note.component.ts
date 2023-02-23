@@ -1,11 +1,14 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { take, tap } from 'rxjs';
 import { AlertService } from 'src/app/shared/_services/alert.service';
+import { TokenService } from 'src/app/shared/_services/token.service';
+import { Affiliations } from '../affiliations';
 import { CommentsLayoutComponent } from '../comments-layout/comments-layout.component';
 import { Note } from '../_models/note.model';
 import { ResponseSuccess } from '../_models/response-success.model';
+import { AuthenticationService } from '../_services/authentication.service';
 import { NotesService } from '../_services/notes.service';
 
 @Component({
@@ -13,21 +16,26 @@ import { NotesService } from '../_services/notes.service';
   templateUrl: './note.component.html',
   styleUrls: ['./note.component.scss']
 })
-export class NoteComponent implements OnInit {
+export class NoteComponent extends Affiliations implements OnInit {
 
   @Input() note!: Note;
   @Input() showCommentButton!: boolean;
+  @Input() showActionButtons!: boolean;
   commentsDialogConfig!: MatDialogConfig;
-  hideCommentButton: boolean = false;
 
   constructor(
     private notesService: NotesService,
     private commentDialog: MatDialog,
-    private alertService: AlertService
-  ) {}
+    private alertService: AlertService,
+    protected override tokenService: TokenService,
+    protected override authenticationService: AuthenticationService
+  ) {
+    super(tokenService, authenticationService);
+  }
 
   ngOnInit(): void {
     this.initCommentsDialogConfig();
+    this.isPostedByLoggedUser(this.note);
   }
 
   private initCommentsDialogConfig(): void {
