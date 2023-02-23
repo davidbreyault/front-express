@@ -107,7 +107,7 @@ export class NotesListComponent extends DialogInspector implements OnInit, OnDes
       .subscribe();
   }
 
-  initPaginatorData(notes: Note[]): void {
+  private initPaginatorData(notes: Note[]): void {
     this.paginatorData.pageIndex = 0;
     this.paginatorData.previousPageIndex = 0;
     this.paginatorData.pageSize = 10;

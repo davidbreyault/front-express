@@ -19,4 +19,14 @@
       color: map-get($text-colors, steel);
     }
   }
+  &__footer {
+    @include flex-rfec;
+    margin-top: map-get($spaces, s);
+    span {font-family: 'Source Code Pro'};
+    button {
+      @include flex-rsbc;
+      margin-left: map-get($spaces, s);
+      background-color: map-get($text-colors, white);
+    }
+  }
 }
