@@ -24,9 +24,10 @@
     margin-top: map-get($spaces, xxs);
     button {
       @include flex-rsbc;
-      mat-icon {margin: 0};
-      &.update mat-icon {color: map-get($text-colors, primary)};
-      &.delete mat-icon {color: map-get($text-colors, delete)};
+      mat-icon {
+        margin: 0;
+        color: map-get($text-colors, primary);
+      }
     }
   }
 }

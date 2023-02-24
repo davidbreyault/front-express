@@ -30,7 +30,11 @@ export class HeaderComponent implements OnInit {
 
   initDialogConfig(): void {
     this.matDialogConfig = {
-      minWidth: "450px"
+      minWidth: "450px",
+      data: {
+        isPosted: true,
+        isUpdated: false
+      }
     }
   }
 

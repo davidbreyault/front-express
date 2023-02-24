@@ -6,6 +6,7 @@ import { AlertService } from 'src/app/shared/_services/alert.service';
 import { TokenService } from 'src/app/shared/_services/token.service';
 import { Affiliations } from '../affiliations';
 import { CommentsLayoutComponent } from '../comments-layout/comments-layout.component';
+import { NotePostComponent } from '../note-post/note-post.component';
 import { Note } from '../_models/note.model';
 import { ResponseSuccess } from '../_models/response-success.model';
 import { AuthenticationService } from '../_services/authentication.service';
@@ -22,11 +23,13 @@ export class NoteComponent extends Affiliations implements OnInit {
   @Input() showCommentButton!: boolean;
   @Input() showActionButtons!: boolean;
   commentsDialogConfig!: MatDialogConfig;
+  noteUpdateDialogConfig!: MatDialogConfig;
 
   constructor(
     private notesService: NotesService,
     private commentDialog: MatDialog,
     private alertService: AlertService,
+    private noteUpdateDialog: MatDialog,
     protected override tokenService: TokenService,
     protected override authenticationService: AuthenticationService
   ) {
@@ -35,6 +38,7 @@ export class NoteComponent extends Affiliations implements OnInit {
 
   ngOnInit(): void {
     this.initCommentsDialogConfig();
+    this.initNoteUpdateDialogConfig();
     this.isPostedByLoggedUser(this.note);
   }
 
@@ -44,6 +48,17 @@ export class NoteComponent extends Affiliations implements OnInit {
       maxWidth: '600px',
       maxHeight: '85vh',
       data: this.note
+    }
+  }
+
+  private initNoteUpdateDialogConfig(): void {
+    this.noteUpdateDialogConfig = {
+      minWidth: "450px",
+      data: {
+        note: this.note,
+        isPosted: false,
+        isUpdated: true
+      }
     }
   }
 
@@ -83,6 +98,19 @@ export class NoteComponent extends Affiliations implements OnInit {
           this.note.comments = updatedCommentsNumber;
         }
       }))
+      .subscribe();
+  }
+
+  onClickUpdateNote(): void {
+    const updateDialog = this.noteUpdateDialog.open(NotePostComponent, this.noteUpdateDialogConfig);
+    updateDialog.afterClosed()
+      .pipe(
+        take(1), 
+        tap((updatedContent: string) => {
+          if (updatedContent && updatedContent.length > 0) {
+            this.note.note = updatedContent;
+          }
+        }))
       .subscribe();
   }
 

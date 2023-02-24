@@ -42,6 +42,10 @@ export class NotesService {
     return this.http.post(environment.apiRootUrl + this.notesApiPoint, note, {observe: 'response'});
   }
 
+  updateNote(note: Note): Observable<any> {
+    return this.http.put(environment.apiRootUrl + this.notesApiPoint + '/' + note.id, note, {observe: 'response'});
+  }
+
   emitRefreshSubject(): void {
     this.refreshSubject.next(true);
   }
