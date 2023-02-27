@@ -1,11 +1,12 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { take, tap } from 'rxjs';
 import { AlertService } from 'src/app/shared/_services/alert.service';
 import { TokenService } from 'src/app/shared/_services/token.service';
 import { Affiliations } from '../affiliations';
 import { CommentsLayoutComponent } from '../comments-layout/comments-layout.component';
+import { DeleteConfirmComponent } from '../delete-confirm/delete-confirm.component';
 import { NotePostComponent } from '../note-post/note-post.component';
 import { Note } from '../_models/note.model';
 import { ResponseSuccess } from '../_models/response-success.model';
@@ -24,12 +25,15 @@ export class NoteComponent extends Affiliations implements OnInit {
   @Input() showActionButtons!: boolean;
   commentsDialogConfig!: MatDialogConfig;
   noteUpdateDialogConfig!: MatDialogConfig;
+  noteDeleteDialogConfig!: MatDialogConfig;
+  @Output() noteDeletionEvent: EventEmitter<Note> = new EventEmitter<Note>();
 
   constructor(
     private notesService: NotesService,
     private commentDialog: MatDialog,
     private alertService: AlertService,
     private noteUpdateDialog: MatDialog,
+    private noteDeleteDialog: MatDialog,
     protected override tokenService: TokenService,
     protected override authenticationService: AuthenticationService
   ) {
@@ -39,6 +43,7 @@ export class NoteComponent extends Affiliations implements OnInit {
   ngOnInit(): void {
     this.initCommentsDialogConfig();
     this.initNoteUpdateDialogConfig();
+    this.initNoteDeleteDialogConfig();
     this.isPostedByLoggedUser(this.note);
   }
 
@@ -59,6 +64,13 @@ export class NoteComponent extends Affiliations implements OnInit {
         isPosted: false,
         isUpdated: true
       }
+    }
+  }
+
+  private initNoteDeleteDialogConfig(): void {
+    this.noteDeleteDialogConfig = {
+      minWidth: "450px",
+      data: this.note
     }
   }
 
@@ -103,14 +115,32 @@ export class NoteComponent extends Affiliations implements OnInit {
 
   onClickUpdateNote(): void {
     const updateDialog = this.noteUpdateDialog.open(NotePostComponent, this.noteUpdateDialogConfig);
+    this.alertService.noticeDialogOpenning();
     updateDialog.afterClosed()
       .pipe(
         take(1), 
         tap((updatedContent: string) => {
+          this.alertService.noticeDialogClosing();
           if (updatedContent && updatedContent.length > 0) {
             this.note.note = updatedContent;
           }
         }))
+      .subscribe();
+  }
+
+  onClickDeleteConfirmNote(): void {
+    const deleteDialog = this.noteDeleteDialog.open(DeleteConfirmComponent, this.noteDeleteDialogConfig);
+    this.alertService.noticeDialogOpenning();
+    deleteDialog.afterClosed()
+      .pipe(
+        take(1),
+        tap((noteBeingDeleted: Note) => {
+          this.alertService.noticeDialogClosing();
+          if (noteBeingDeleted) {
+            this.noteDeletionEvent.emit(noteBeingDeleted);
+          }
+        })
+      )
       .subscribe();
   }
 

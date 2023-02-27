@@ -68,6 +68,8 @@ export class NotesListComponent extends DialogInspector implements OnInit, OnDes
               .sort((a: Note, b: Note) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
               // Ajout des dernières notes
               lastNotes.forEach(note => this.notes.unshift(note));
+              // Déplacement des notes en fonction d'où l'on se trouve sur la pagination
+              this.pageNotesUpdate();
             }
           }
           // Mise à jour du timestamp
@@ -112,18 +114,30 @@ export class NotesListComponent extends DialogInspector implements OnInit, OnDes
     this.paginatorData.previousPageIndex = 0;
     this.paginatorData.pageSize = 10;
     this.paginatorData.length = notes?.length;
-    this.pagedNotes = notes.slice(this.paginatorData.pageIndex, this.paginatorData.pageSize);
+    this.pageNotesUpdate();
   }
 
   handlePageEvent(event: PageEvent) {
-    let indexStart = event.pageSize * event.pageIndex;
-    let indexEnd = (event.pageSize * event.pageIndex) + event.pageSize;
-    this.pagedNotes = this.notes.slice(indexStart, indexEnd);
+    this.paginatorData.pageIndex = event.pageIndex;
+    this.paginatorData.pageSize = event.pageSize;
+    this.pageNotesUpdate();
     window.scroll({ 
       top: 0, 
       left: 0, 
       behavior: 'smooth' 
     });
+  }
+
+  updateNotesListAfterDeletion(note: Note) {
+    this.notes = this.notes.filter(n => n.id !== note.id);
+    this.pageNotesUpdate();
+  }
+
+  private pageNotesUpdate(): void {
+    this.pagedNotes = this.notes.slice(
+      this.paginatorData.pageSize * this.paginatorData.pageIndex, 
+      (this.paginatorData.pageSize * this.paginatorData.pageIndex) + this.paginatorData.pageSize
+    );
   }
 
   ngOnDestroy(): void {

@@ -38,12 +38,16 @@ export class NotesService {
     )
   }
 
-  postNote(note: Note): Observable<any> {
+  postNote(note: Note): Observable<HttpResponse<any>> {
     return this.http.post(environment.apiRootUrl + this.notesApiPoint, note, {observe: 'response'});
   }
 
-  updateNote(note: Note): Observable<any> {
+  updateNote(note: Note): Observable<HttpResponse<any>> {
     return this.http.put(environment.apiRootUrl + this.notesApiPoint + '/' + note.id, note, {observe: 'response'});
+  }
+
+  deleteNote(note: Note): Observable<HttpResponse<any>> {
+    return this.http.delete(environment.apiRootUrl + this.notesApiPoint + '/' + note.id, {observe: 'response'});
   }
 
   emitRefreshSubject(): void {

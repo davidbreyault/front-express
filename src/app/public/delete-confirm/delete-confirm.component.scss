@@ -1,0 +1,14 @@
+@import "../../../mixins";
+
+.dialog {
+  &__content {
+    padding-top: map-get($spaces, l);
+    margin-bottom: map-get($spaces, l);
+  };
+  &__footer {
+    @include flex-rfec;
+    padding-top: 0;
+    border-top: none;
+    button {margin-left: map-get($spaces, s)};
+  }
+}
