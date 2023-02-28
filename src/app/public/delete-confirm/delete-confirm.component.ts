@@ -35,7 +35,7 @@ export class DeleteConfirmComponent implements OnInit {
           }
         }),
         catchError((httpErrorResponse: HttpErrorResponse) => {
-          const message = httpErrorResponse.error ? httpErrorResponse.error : 'An error occured, Cannot delete this note...';
+          const message = httpErrorResponse.error ? httpErrorResponse.error : 'An error occured, cannot delete this note...';
           this.alertService.addAlert(message, AlertType.error, true);
           return throwError(() => httpErrorResponse);
         })

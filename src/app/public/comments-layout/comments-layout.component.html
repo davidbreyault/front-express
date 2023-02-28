@@ -20,7 +20,8 @@
     <app-alert></app-alert>
     <app-comment 
       *ngFor="let c of noteComments" 
-      [comment]="c">
+      [comment]="c"
+      (deletionCommentEvent)="updateCommentsListAfterDeletion($event)">
     </app-comment>
   </div>
 </div>
