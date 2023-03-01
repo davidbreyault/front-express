@@ -27,10 +27,6 @@
   &__footer {
     display: flex;
     justify-content: flex-end;
-    .note__footer--data {
-      margin-left: 2px;
-      margin-right: 5px;
-    }
     button {
       &:hover {
         mat-icon, span.material-symbols-outlined {
@@ -38,6 +34,22 @@
           transition: map-get($transitions, fast);
         }
       }
+    }
+  }
+}
+
+.note__footer {
+  &--data {
+    margin-left: 2px;
+    margin-right: 5px;
+  }
+  &--actions {
+    margin-left: map-get($spaces, s);
+    padding-left: map-get($spaces, s);
+    border-left: 1px solid map-get($border-colors, default);
+    mat-icon {
+      margin: 0;
+      color: map-get($text-colors, primary);
     }
   }
 }
@@ -78,7 +90,8 @@
   p, span { color: map-get($text-colors, white)};
   .note__header--avatar {background-color: lighten($color: map-get($background-colors, primary), $amount: 40)};
   .note__header--date {color: map-get($text-colors, blue-light)};
-  .note__content {border-bottom: 1px solid map-get($border-colors, best)};
+  .note__content {border-bottom-color: map-get($border-colors, best)};
+  .note__footer--actions {border-left-color: map-get($border-colors, best)};
   .note__header--author {
     color: map-get($text-colors, blue-light);
     span {color: map-get($text-colors, white)};

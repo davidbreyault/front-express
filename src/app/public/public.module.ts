@@ -31,6 +31,7 @@ import { BannerDirective } from './_directives/banner.directive';
 import { TalkersListComponent } from './talkers-list/talkers-list.component';
 import { TalkersService } from './_services/talkers.service';
 import { TalkerComponent } from './talker/talker.component';
+import { DeleteConfirmComponent } from './delete-confirm/delete-confirm.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { TalkerComponent } from './talker/talker.component';
     TrendingComponent,
     TalkersListComponent,
     TalkerComponent,
+    DeleteConfirmComponent,
   ],
   imports: [
     SharedModule,

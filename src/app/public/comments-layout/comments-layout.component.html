@@ -4,8 +4,16 @@
     <button class="button close" (click)="onClickCloseCommentsDialog()">X</button>
   </div>
   <div class="dialog__content">
-    <app-note [note]="data" [showCommentButton]="false"></app-note>
-    <app-comment-post [noteId]="data.id" (updateCommentsList)="refreshCommentsList($event)"></app-comment-post>
+    <app-note 
+      [note]="data" 
+      [showCommentButton]="false"
+      [showActionButtons]="false">
+    </app-note>
+    <app-comment-post 
+      [noteId]="data.id"
+      [isUpdated]="false" 
+      (updateCommentsList)="refreshCommentsList($event)">
+    </app-comment-post>
     <h3>
       Comment<span>{{ data.comments > 1 ? "s" : "" }}</span> (<span>{{ noteComments?.length }}</span>)
     </h3>
@@ -13,7 +21,8 @@
     <app-alert></app-alert>
     <app-comment 
       *ngFor="let c of noteComments" 
-      [comment]="c">
+      [comment]="c"
+      (deletionCommentEvent)="updateCommentsListAfterDeletion($event)">
     </app-comment>
   </div>
 </div>

@@ -1,6 +1,10 @@
+@import '../../../variables';
+
 h3 span {font-family: 'Source Code Pro'};
 
 form {
   margin: 0;
   padding: 0;
 }
+
+button {margin-left: map-get($spaces, s)};

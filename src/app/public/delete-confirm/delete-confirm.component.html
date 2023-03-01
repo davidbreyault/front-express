@@ -1,0 +1,14 @@
+<div class="dialog">
+  <div class="dialog__header">
+    <h2>Are you sure ?</h2>
+    <button class="button close" (click)="onClickCloseDialog()">X</button>
+  </div>
+  <div class="dialog__content">
+    <p>Deleting this note will also delete its comments.</p>
+    <app-alert></app-alert>
+  </div>
+  <div class="dialog__footer">
+    <button mat-raised-button color="warn" (click)="onClickDeleteNote()">OK</button>
+    <button mat-button color="warn" (click)="onClickCloseDialog()">Cancel</button>
+  </div>
+</div>

@@ -2,10 +2,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { catchError, map, take, tap, throwError } from 'rxjs';
+import { catchError, take, tap, throwError } from 'rxjs';
 import { AlertType } from 'src/app/shared/_models/alert.model';
 import { AlertService } from 'src/app/shared/_services/alert.service';
 import { ErrorValidatorService } from 'src/app/shared/_services/error-validator.service';
+import { CommentDeletionData } from '../_models/comment-deletion-data.model';
 import { Comment } from '../_models/comment.model';
 import { Note } from '../_models/note.model';
 import { CommentsService } from '../_services/comments.service';
@@ -63,5 +64,12 @@ export class CommentsLayoutComponent implements OnInit {
 
   private closeDialog(updatedCommentsNumber: number): void {
     this.matDialogRef.close(updatedCommentsNumber);
+  }
+
+  updateCommentsListAfterDeletion(commentDeletionData: CommentDeletionData): void {
+    if (commentDeletionData.deletionSuccess) {
+      this.noteComments = this.noteComments.filter(c => c.id !== commentDeletionData.comment.id);
+    }
+    this.alertService.addAlert(commentDeletionData.deleteMessage, commentDeletionData.alertType, true);
   }
 }

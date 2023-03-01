@@ -5,7 +5,9 @@
   <app-note 
     *ngFor="let n of pagedNotes" 
     [note]="n" 
-    [showCommentButton]="true">
+    [showCommentButton]="true"
+    [showActionButtons]="true"
+    (noteDeletionEvent)="updateNotesListAfterDeletion($event)">
   </app-note>
 </div>
 <mat-paginator 

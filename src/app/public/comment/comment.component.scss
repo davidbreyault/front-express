@@ -10,6 +10,7 @@
   font-weight: 200;
   &__header {
     @include flex-rsbc;
+    margin-bottom: map-get($spaces, xxs);
     p {
       font-weight: 400;
       color: darken($color: map-get($text-colors, primary), $amount: 15);
@@ -17,6 +18,17 @@
     span {
       font-size: 1.2rem;
       color: map-get($text-colors, steel);
+    }
+  }
+  &__footer {
+    @include flex-rfec;
+    margin-top: map-get($spaces, xxs);
+    button {
+      @include flex-rsbc;
+      mat-icon {
+        margin: 0;
+        color: map-get($text-colors, primary);
+      }
     }
   }
 }

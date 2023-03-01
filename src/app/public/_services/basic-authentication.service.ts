@@ -11,9 +11,7 @@ export class BasicAuthenticationService {
   constructor(private http: HttpClient) { }
 
   authenticate(credentials: CredentialsAuthentication): Observable<HttpResponse<any>> {
-    console.log(credentials);
     const encodedCredentials = this.b64Encoder(credentials.username + ':' + credentials.password);
-    console.log(encodedCredentials);
     const httpHeaders= new HttpHeaders().append('Authorization', 'Basic ' + encodedCredentials);
     return this.http.post(
       environment.apiRootUrl + '/auth/authenticate', 

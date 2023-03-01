@@ -3,5 +3,23 @@
     <p>{{ comment.username }}</p>
     <span>{{ comment.createdAt | date: 'dd/MM/yy - HH:ss' }}</span>
   </div>
-  <p class="comment__content">{{ comment.message }}</p>
+  <ng-container *ngIf="!isBeingUpdated">
+    <p class="comment__content">{{ comment.message }}</p>
+    <div class="comment__footer" *ngIf="isPostedByLoggedUser(comment)">
+      <button class="button update" (click)="onClickUpdateComment()">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button class="button delete" (click)="onClickDeleteComment()">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="isBeingUpdated">
+    <app-comment-post
+      *ngIf="isPostedByLoggedUser(comment)"
+      [isUpdated]="true"
+      [commentToUpdate]="comment"
+      (commentUpdateEvent)="renderCommentViewAfterUpdateAction($event)">
+    </app-comment-post>
+  </ng-container>
 </div>
