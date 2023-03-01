@@ -49,8 +49,7 @@ export class NoteComponent extends Affiliations implements OnInit {
 
   private initCommentsDialogConfig(): void {
     this.commentsDialogConfig = {
-      minWidth: '500px',
-      maxWidth: '600px',
+      width: '600px',
       maxHeight: '85vh',
       data: this.note
     }

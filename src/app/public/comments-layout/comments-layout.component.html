@@ -10,7 +10,8 @@
       [showActionButtons]="false">
     </app-note>
     <app-comment-post 
-      [noteId]="data.id" 
+      [noteId]="data.id"
+      [isUpdated]="false" 
       (updateCommentsList)="refreshCommentsList($event)">
     </app-comment-post>
     <h3>

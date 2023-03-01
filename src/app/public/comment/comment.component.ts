@@ -5,6 +5,7 @@ import { AlertType } from 'src/app/shared/_models/alert.model';
 import { TokenService } from 'src/app/shared/_services/token.service';
 import { Affiliations } from '../affiliations';
 import { CommentDeletionData } from '../_models/comment-deletion-data.model';
+import { CommentUpdatingData } from '../_models/comment-updating-data.model';
 import { Comment } from '../_models/comment.model';
 import { AuthenticationService } from '../_services/authentication.service';
 import { CommentsService } from '../_services/comments.service';
@@ -17,6 +18,7 @@ import { CommentsService } from '../_services/comments.service';
 export class CommentComponent extends Affiliations implements OnInit {
 
   @Input() comment!: Comment;
+  isBeingUpdated!: boolean;
   @Output() deletionCommentEvent: EventEmitter<CommentDeletionData> = new EventEmitter<CommentDeletionData>();
 
   constructor(
@@ -28,7 +30,18 @@ export class CommentComponent extends Affiliations implements OnInit {
   }
 
   ngOnInit(): void {
-    this.isPostedByLoggedUser(this.comment)
+    this.isBeingUpdated = false;
+    this.isPostedByLoggedUser(this.comment);
+  }
+
+  onClickUpdateComment(): void {
+    this.isBeingUpdated = true;
+  }
+
+  renderCommentViewAfterUpdateAction(commentUpdatingData: CommentUpdatingData): void {
+    if (commentUpdatingData.isCancelled || commentUpdatingData.isSuccessful) {
+      this.isBeingUpdated = false;
+    }
   }
 
   onClickDeleteComment(): void {

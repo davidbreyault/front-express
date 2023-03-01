@@ -19,6 +19,10 @@ export class CommentsService {
     return this.http.post<HttpResponse<any>>(environment.apiRootUrl + '/notes/' + noteId + '/comments', comment, {observe: "response"});
   }
 
+  updateComment(comment: Comment): Observable<HttpResponse<any>> {
+    return this.http.put<HttpResponse<any>>(environment.apiRootUrl + '/comments/' + comment.id, comment, {observe: 'response'});
+  }
+
   deleteComment(commentId: number): Observable<HttpResponse<any>> {
     return this.http.delete<HttpResponse<any>>(environment.apiRootUrl + '/comments/' + commentId, {observe: 'response'});
   }

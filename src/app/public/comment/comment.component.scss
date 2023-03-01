@@ -10,6 +10,7 @@
   font-weight: 200;
   &__header {
     @include flex-rsbc;
+    margin-bottom: map-get($spaces, xxs);
     p {
       font-weight: 400;
       color: darken($color: map-get($text-colors, primary), $amount: 15);
