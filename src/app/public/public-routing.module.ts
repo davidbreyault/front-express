@@ -8,16 +8,17 @@ import { TalkersListComponent } from './talkers-list/talkers-list.component';
 import { TrendingComponent } from './trending/trending.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'talkers', component: TalkersListComponent },
   { path: 'trending', component: TrendingComponent },
   { path: 'notes', component: NotesLayoutComponent, children: 
     [
-      { path: 'all', component: NotesListComponent },
+      { path: '', component: NotesListComponent },
       { path: 'best', component: NotesBestComponent }
     ]
-  }
+  },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '**', redirectTo: '/notes', pathMatch: 'full' }
 ];
 
 @NgModule({

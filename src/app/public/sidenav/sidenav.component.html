@@ -1,24 +1,24 @@
 <nav>
   <li>
-    <a routerLink="/notes/all" [ngClass]="{'active': isAllNotesRoute}">
+    <a routerLink="/notes" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
       <mat-icon>notes</mat-icon>
       <span>All notes</span>
     </a>
   </li>
   <li>
-    <a routerLink="/notes/best" [ngClass]="{'active': isBestNotesRoute}">
+    <a routerLink="/notes/best" routerLinkActive="active" >
       <mat-icon>star</mat-icon>
       <span>Best notes</span>
     </a>
   </li>
   <li>
-    <a routerLink="/trending" [ngClass]="{'active': isTrendingRoute}">
+    <a routerLink="/trending" routerLinkActive="active">
       <mat-icon>trending_up</mat-icon>
       <span>Trending</span>
     </a>
   </li>
   <li>
-    <a routerLink="/talkers" [ngClass]="{'active': isTalkersRoute}">
+    <a routerLink="/talkers" routerLinkActive="active">
       <mat-icon>group</mat-icon>
       <span>Talkers</span>
     </a>
