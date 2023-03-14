@@ -1,7 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { Router } from '@angular/router';
 import { catchError, interval, Subject, take, takeUntil, tap, throwError } from 'rxjs';
 import { AlertType } from 'src/app/shared/_models/alert.model';
 import { AlertService } from 'src/app/shared/_services/alert.service';
@@ -9,7 +8,6 @@ import { DialogInspector } from '../dialog-inspector';
 import { Note } from '../_models/note.model';
 import { ResponseNotes } from '../_models/response-notes.model';
 import { NotesService } from '../_services/notes.service';
-import { RouterService } from '../_services/router.service';
 
 @Component({
   selector: 'app-notes-list',
@@ -26,9 +24,7 @@ export class NotesListComponent extends DialogInspector implements OnInit, OnDes
   paginatorData: PageEvent = new PageEvent();
 
   constructor(
-    private notesService: NotesService, 
-    private router: Router, 
-    private routerService: RouterService,
+    private notesService: NotesService,
     protected override alertService: AlertService) 
   {
     super(alertService);
@@ -36,7 +32,6 @@ export class NotesListComponent extends DialogInspector implements OnInit, OnDes
 
   ngOnInit(): void {
     this.destroyComponent$ = new Subject<boolean>();
-    this.routerService.setActualRouteUrl(this.router.url);
     this.getNotes();
     this.updateNotesList();
     this.updateNotesListAfterEvent();

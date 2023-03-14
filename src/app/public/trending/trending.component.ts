@@ -1,13 +1,11 @@
 import { KeyValue } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { catchError, Subject, take, tap, throwError } from 'rxjs';
 import { AlertType } from 'src/app/shared/_models/alert.model';
 import { AlertService } from 'src/app/shared/_services/alert.service';
 import { DialogInspector } from '../dialog-inspector';
 import { ResponseTrending } from '../_models/response-trending.model';
-import { RouterService } from '../_services/router.service';
 import { TrendingService } from '../_services/trending.service';
 
 @Component({
@@ -23,8 +21,6 @@ export class TrendingComponent extends DialogInspector implements OnInit, OnDest
   mapValueDescOrder = (a: KeyValue<string, number>, b: KeyValue<string, number>): number => b.value - a.value;
 
   constructor(
-    private router: Router, 
-    private routerService: RouterService,
     private trendingService: TrendingService,
     protected override alertService: AlertService
   ) {
@@ -33,7 +29,6 @@ export class TrendingComponent extends DialogInspector implements OnInit, OnDest
 
   ngOnInit(): void {
     this.destroyComponent$ = new Subject<boolean>();
-    this.routerService.setActualRouteUrl(this.router.url);
     this.checkDialogOpeningStatus(this.destroyComponent$);
     this.getTrending();
   }

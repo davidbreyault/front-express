@@ -1,14 +1,12 @@
 import { KeyValue } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { catchError, Subject, take, tap, throwError } from 'rxjs';
 import { AlertType } from 'src/app/shared/_models/alert.model';
 import { AlertService } from 'src/app/shared/_services/alert.service';
 import { DialogInspector } from '../dialog-inspector';
 import { ResponseTalkers } from '../_models/response-talkers.model';
 import { TalkerActivity } from '../_models/talker-activity.model';
-import { RouterService } from '../_services/router.service';
 import { TalkersService } from '../_services/talkers.service';
 
 @Component({
@@ -25,8 +23,6 @@ export class TalkersListComponent extends DialogInspector implements OnInit, OnD
     (b.value.notes + b.value.comments) - (a.value.notes + a.value.comments);
 
   constructor(
-    private router: Router,
-    private routerService: RouterService,
     private talkersService: TalkersService,
     protected override alertService: AlertService
   ) {
@@ -35,7 +31,6 @@ export class TalkersListComponent extends DialogInspector implements OnInit, OnD
 
   ngOnInit(): void {
     this.destroyComponent$ = new Subject<boolean>;
-    this.routerService.setActualRouteUrl(this.router.url);
     this.getTalkers();
     this.checkDialogOpeningStatus(this.destroyComponent$);
   }

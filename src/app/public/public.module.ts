@@ -19,7 +19,6 @@ import { CommentComponent } from './comment/comment.component';
 import { CommentPostComponent } from './comment-post/comment-post.component';
 import { TrendingComponent } from './trending/trending.component';
 // Services
-import { RouterService } from './_services/router.service';
 import { RegistrationService } from './_services/registration.service';
 import { AuthenticationService } from './_services/authentication.service';
 import { BasicAuthenticationService } from './_services/basic-authentication.service';
@@ -66,7 +65,6 @@ import { DeleteConfirmComponent } from './delete-confirm/delete-confirm.componen
   ],
   providers: [
     NotesService,
-    RouterService,
     CommentsService,
     TrendingService,
     TalkersService,
