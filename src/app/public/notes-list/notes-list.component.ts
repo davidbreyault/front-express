@@ -3,6 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { catchError, interval, Subject, take, takeUntil, tap, throwError } from 'rxjs';
 import { AlertType } from 'src/app/shared/_models/alert.model';
+import { PagingData } from 'src/app/shared/_models/paging-data.model';
 import { AlertService } from 'src/app/shared/_services/alert.service';
 import { DialogInspector } from '../dialog-inspector';
 import { Note } from '../_models/note.model';
@@ -16,12 +17,10 @@ import { NotesService } from '../_services/notes.service';
 })
 export class NotesListComponent extends DialogInspector implements OnInit, OnDestroy {
 
-  ts: number = 0;
   notes!: Note[];
-  pagedNotes!: Note[];
   isLoadingSpinnerVisible: boolean = true;
   destroyComponent$!: Subject<boolean>;
-  paginatorData: PageEvent = new PageEvent();
+  pagingData!: PagingData;
 
   constructor(
     private notesService: NotesService,
@@ -31,44 +30,23 @@ export class NotesListComponent extends DialogInspector implements OnInit, OnDes
   }
 
   ngOnInit(): void {
+    this.initPagingData();
     this.destroyComponent$ = new Subject<boolean>();
-    this.getNotes();
+    this.getNotes(this.pagingData.pageNumber, this.pagingData.pageSize);
     this.updateNotesList();
     this.updateNotesListAfterEvent();
     this.checkDialogOpeningStatus(this.destroyComponent$);
   }
 
-  private getNotes(): void {
-    this.notesService.getAllNotes()
+  private getNotes(pageNumber: number, pageSize: number): void {
+    this.notesService.getAllNotes(pageNumber, pageSize)
       .pipe(
         take(1),
         tap((response: ResponseNotes) => {
-          // Si this.notes est vide
-          if (!this.notes) {
-            // Récupère toutes les notes
-            this.notes = response.notes.sort((a: Note, b: Note) => 
-              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-            setTimeout(() => {
-              this.initPaginatorData(this.notes);
-              this.isLoadingSpinnerVisible = false;
-            }, 200);
-          }
-          // Si this.notes n'est pas vide
-          if (this.notes && this.notes.length > 0) {
-            // Si response.notes a une taille supérieur à this notes
-            if (response.notes.length > this.notes.length) {
-              // Récupère seulement les notes manquante pour mettre à jour this.notes
-              let lastNotes: Note[] = response.notes
-              .filter(n => new Date(n.createdAt).getTime() > this.ts)
-              .sort((a: Note, b: Note) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
-              // Ajout des dernières notes
-              lastNotes.forEach(note => this.notes.unshift(note));
-              // Déplacement des notes en fonction d'où l'on se trouve sur la pagination
-              this.pageNotesUpdate();
-            }
-          }
-          // Mise à jour du timestamp
-          this.ts = response.ts;
+          this.notes = response.notes;
+          this.pagingData.totalItems = response.totalItems;
+          this.pagingData.totalPages = response.totalPages;
+          this.isLoadingSpinnerVisible = false;
         }),
         catchError((httpErrorResponse: HttpErrorResponse) => {
           const message = httpErrorResponse.error ? httpErrorResponse.error : 'An error occured, cannot get notes...';
@@ -88,7 +66,7 @@ export class NotesListComponent extends DialogInspector implements OnInit, OnDes
     interval(10000)
       .pipe(
         takeUntil(this.destroyComponent$), 
-        tap(() => this.getNotes()))
+        tap(() => this.getNotes(this.pagingData.pageNumber, this.pagingData.pageSize)))
       .subscribe();
   }
 
@@ -100,22 +78,20 @@ export class NotesListComponent extends DialogInspector implements OnInit, OnDes
     this.notesService.getRefreshSubject()
       .pipe(
         takeUntil(this.destroyComponent$),
-        tap(() => this.getNotes()))
+        tap(() => this.getNotes(this.pagingData.pageNumber, this.pagingData.pageSize)))
       .subscribe();
   }
 
-  private initPaginatorData(notes: Note[]): void {
-    this.paginatorData.pageIndex = 0;
-    this.paginatorData.previousPageIndex = 0;
-    this.paginatorData.pageSize = 10;
-    this.paginatorData.length = notes?.length;
-    this.pageNotesUpdate();
+  private initPagingData(): void {
+    this.pagingData = new PagingData();
+    this.pagingData.pageNumber = 0;
+    this.pagingData.pageSize = 10;
   }
 
   handlePageEvent(event: PageEvent) {
-    this.paginatorData.pageIndex = event.pageIndex;
-    this.paginatorData.pageSize = event.pageSize;
-    this.pageNotesUpdate();
+    this.pagingData.pageSize = event.pageSize;
+    this.pagingData.pageNumber = event.pageIndex;
+    this.getNotes(this.pagingData.pageNumber, this.pagingData.pageSize);
     window.scroll({ 
       top: 0, 
       left: 0, 
@@ -125,14 +101,6 @@ export class NotesListComponent extends DialogInspector implements OnInit, OnDes
 
   updateNotesListAfterDeletion(note: Note) {
     this.notes = this.notes.filter(n => n.id !== note.id);
-    this.pageNotesUpdate();
-  }
-
-  private pageNotesUpdate(): void {
-    this.pagedNotes = this.notes.slice(
-      this.paginatorData.pageSize * this.paginatorData.pageIndex, 
-      (this.paginatorData.pageSize * this.paginatorData.pageIndex) + this.paginatorData.pageSize
-    );
   }
 
   ngOnDestroy(): void {
