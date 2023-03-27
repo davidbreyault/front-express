@@ -1,0 +1,12 @@
+form {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  mat-form-field {
+    margin-right: 1rem;
+    &:first-child {flex: 1};
+  }
+  .form-submit {
+    margin-top: 10px;
+  }
+}

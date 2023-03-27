@@ -1,26 +1,33 @@
+// Modules
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from './material.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { InterceptorService } from './_services/interceptor.service';
-import { ButtonBurgerComponent } from './button-burger/button-burger.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+// Pipes
 import { SanitizePipe } from './_pipes/sanitize.pipe';
-import { AlertComponent } from './alert/alert.component';
+// Services
 import { AlertService } from './_services/alert.service';
 import { TokenService } from './_services/token.service';
+import { InterceptorService } from './_services/interceptor.service';
 import { ErrorValidatorService } from './_services/error-validator.service';
-
-
+// Components
+import { AlertComponent } from './alert/alert.component';
+import { SearchComponent } from './search/search.component';
+import { ButtonBurgerComponent } from './button-burger/button-burger.component';
 
 @NgModule({
   declarations: [
     SanitizePipe,
     AlertComponent,
+    SearchComponent,
     ButtonBurgerComponent
   ],
   imports: [
     CommonModule,
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   exports: [
     CommonModule,
@@ -30,6 +37,7 @@ import { ErrorValidatorService } from './_services/error-validator.service';
     ReactiveFormsModule,
     SanitizePipe,
     AlertComponent,
+    SearchComponent,
     ButtonBurgerComponent
   ], 
   providers: [

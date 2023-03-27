@@ -1,4 +1,5 @@
 <h3>All notes</h3>
+<app-search (searchEvent)="filterNotes($event)"></app-search>
 <app-alert *ngIf="!isAnyDialogOpenned"></app-alert>
 <mat-spinner *ngIf="isLoadingSpinnerVisible" strokeWidth="2" diameter="50"></mat-spinner>
 <div class="notes-list">

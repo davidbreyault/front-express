@@ -3,7 +3,7 @@
   <div class="note__header">
     <div class="note__header--data">
       <p class="note__header--author">by <span>{{ note.author }}</span></p>
-      <p class="note__header--date">{{ note.createdAt | date: 'dd/MM/yy - HH:ss'  }}</p>
+      <p class="note__header--date">{{ note.createdAt | date: 'dd/MM/yy - HH:mm'  }}</p>
     </div>
     <div class="note__header--avatar">
       <img src="https://api.dicebear.com/5.x/croodles/svg?seed={{note.author}}"alt="author-avatar">

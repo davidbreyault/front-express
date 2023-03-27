@@ -1,6 +1,7 @@
 import { HttpClient, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, Subject } from "rxjs";
+import { SearchingData } from "src/app/shared/_models/searching-data.model";
 import { environment } from "src/environments/environment";
 import { Note } from "../_models/note.model";
 import { ResponseNotes } from "../_models/response-notes.model";
@@ -18,8 +19,12 @@ export class NotesService {
     return this.refreshSubject.asObservable();
   }
 
-  getAllNotes(pageNumber: number, pageSize: number): Observable<ResponseNotes> {
-    return this.http.get<ResponseNotes>(`${environment.apiRootUrl}/${this.notesApiPoint}?page=${pageNumber}&size=${pageSize}`);
+  getAllNotes(pageNumber: number, pageSize: number, searchingParams?: SearchingData): Observable<ResponseNotes> {
+    let url: string = `${environment.apiRootUrl}/${this.notesApiPoint}?page=${pageNumber}&size=${pageSize}`;
+    if (searchingParams && searchingParams.searchingTerm.length > 0) {
+      url = url.concat('', `&${searchingParams.searchingType}=${searchingParams.searchingTerm}`);
+    }
+    return this.http.get<ResponseNotes>(url);
   }
 
   getBestNotes(topParameter: number): Observable<ResponseNotes> {

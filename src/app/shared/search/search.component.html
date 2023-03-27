@@ -1,0 +1,18 @@
+<form [formGroup]="searchForm" (ngSubmit)="onClickSearch()">
+  <mat-form-field appearance="fill">
+    <mat-label>Search</mat-label>
+    <input matInput placeholder="Something to research" formControlName="searchingTerm">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Search by</mat-label>
+    <mat-select [(ngModel)]="selectTypeDefault" formControlName="searchingType">
+      <mat-option *ngFor="let type of selectTypes" [value]="type.value" [disabled]="type.value !== 'username'">{{ type.name }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div class="form-submit">
+    <button mat-raised-button color="primary">
+      <mat-icon>search</mat-icon>
+      <span>Search</span>
+    </button>
+  </div>
+</form>
