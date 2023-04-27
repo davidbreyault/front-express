@@ -6,7 +6,7 @@
   <mat-form-field appearance="fill">
     <mat-label>Search by</mat-label>
     <mat-select [(ngModel)]="selectTypeDefault" formControlName="searchingType">
-      <mat-option *ngFor="let type of selectTypes" [value]="type.value" [disabled]="type.value !== 'username'">{{ type.name }}</mat-option>
+      <mat-option *ngFor="let type of selectTypes" [value]="type.value" [disabled]="type.value === 'createdAt'">{{ type.name }}</mat-option>
     </mat-select>
   </mat-form-field>
   <div class="form-submit">

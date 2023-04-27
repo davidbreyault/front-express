@@ -29,13 +29,13 @@ export class DeleteConfirmComponent implements OnInit {
       .pipe(
         take(1),
         tap((response: HttpResponse<any>) => {
-          if (response.status === 200) {
-            this.alertService.addAlert(response.body.message, AlertType.success, false);
+          if (response.status === 204) {
+            this.alertService.addAlert('Your note has been deleted sucessfully !', AlertType.success, false);
             this.matDialogRef.close(this.data);
           }
         }),
         catchError((httpErrorResponse: HttpErrorResponse) => {
-          const message = httpErrorResponse.error ? httpErrorResponse.error : 'An error occured, cannot delete this note...';
+          const message = httpErrorResponse.error ? httpErrorResponse.error.errors.message : 'An error occured, cannot delete this note...';
           this.alertService.addAlert(message, AlertType.error, true);
           return throwError(() => httpErrorResponse);
         })

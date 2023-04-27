@@ -17,7 +17,7 @@ export class SearchComponent implements OnInit {
   @Output() searchEvent: EventEmitter<SearchingData> = new EventEmitter<SearchingData>();
   searchForm!: FormGroup;
   selectTypes: SelectValues[] = [
-    {name: 'Keyword', value: 'note'},
+    {name: 'Keyword', value: 'keyword'},
     {name: 'Publication date', value: 'createdAt'},
     {name: 'Username', value: 'username'}
   ];

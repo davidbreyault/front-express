@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { BehaviorSubject, catchError, interval, Observable, Subject, take, takeUntil, takeWhile, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, delay, interval, Observable, Subject, take, takeUntil, takeWhile, tap, throwError } from 'rxjs';
 import { AlertType } from 'src/app/shared/_models/alert.model';
 import { PagingData } from 'src/app/shared/_models/paging-data.model';
 import { SearchingData } from 'src/app/shared/_models/searching-data.model';
@@ -23,10 +23,9 @@ export class NotesListComponent extends DialogInspector implements OnInit, OnDes
   destroyComponent$!: Subject<boolean>;
   pagingData!: PagingData;
   searchingData!: SearchingData;
-  $searchingData: BehaviorSubject<SearchingData> = new BehaviorSubject<SearchingData>({
-    searchingTerm: '',
-    searchingType: ''
-  });
+  isSearchingProcess!: boolean;
+  isSearchingProcess$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
 
   constructor(
     private notesService: NotesService,
@@ -41,28 +40,15 @@ export class NotesListComponent extends DialogInspector implements OnInit, OnDes
     this.getNotes(this.pagingData.pageNumber, this.pagingData.pageSize);
     this.updateNotesListAfterEvent();
     this.checkDialogOpeningStatus(this.destroyComponent$);
-    this.getSearchingData()
-      .pipe(
-        takeUntil(this.destroyComponent$),
-        tap((data: SearchingData) => {
-          console.log('Searching data changed !!!');
-          this.searchingData = data;
-          console.log(this.searchingData)
-          if (this.searchingData.searchingTerm.length === 0) {
-            this.updateNotesList();
-            console.log('Aucune recherche')
-          }
-        })
-      )
-      .subscribe();
+    this.watchNotesSearchingProcess();
   }
 
-  private getSearchingData(): Observable<SearchingData> {
-    return this.$searchingData.asObservable();
+  private getIsSearchingProcess(): Observable<boolean> {
+    return this.isSearchingProcess$.asObservable();
   }
 
   private getNotes(pageNumber: number, pageSize: number, searchingParams?: SearchingData): void {
-    console.log('test1');
+    console.log('GET NOTES');
     this.notesService.getAllNotes(pageNumber, pageSize, searchingParams)
       .pipe(
         take(1),
@@ -71,6 +57,14 @@ export class NotesListComponent extends DialogInspector implements OnInit, OnDes
           this.pagingData.totalItems = response.totalItems;
           this.pagingData.totalPages = response.totalPages;
           this.isLoadingSpinnerVisible = false;
+          if (this.notes.length === 0) {
+            if (searchingParams?.searchingType === 'username') {
+              this.alertService.addAlert(searchingParams.searchingTerm + ' has not posted note yet.', AlertType.error, false);
+            }
+            if (searchingParams?.searchingType === 'keyword') {
+              this.alertService.addAlert('No note contain this term.', AlertType.error, false);
+            }
+          }
         }),
         catchError((httpErrorResponse: HttpErrorResponse) => {
           const message = httpErrorResponse.error ? httpErrorResponse.error : 'An error occured, cannot get notes...';
@@ -87,11 +81,11 @@ export class NotesListComponent extends DialogInspector implements OnInit, OnDes
    * Mise à jour de la liste des notes toutes les 10 secondes
    */
   private updateNotesList(): void {
-    interval(3000)
+    interval(10000)
       .pipe(
-        takeWhile(() => this.searchingData.searchingTerm === ''), 
+        takeWhile(() => !this.isSearchingProcess), 
         tap(() => {
-          console.log('test2');
+          console.log('UPDATE NOTES (watch new note appearance)');
           this.getNotes(this.pagingData.pageNumber, this.pagingData.pageSize);
         }))
       .subscribe();
@@ -118,7 +112,7 @@ export class NotesListComponent extends DialogInspector implements OnInit, OnDes
   handlePageEvent(event: PageEvent) {
     this.pagingData.pageSize = event.pageSize;
     this.pagingData.pageNumber = event.pageIndex;
-    this.getNotes(this.pagingData.pageNumber, this.pagingData.pageSize);
+    this.getNotes(this.pagingData.pageNumber, this.pagingData.pageSize, this.searchingData);
     window.scroll({ 
       top: 0, 
       left: 0, 
@@ -131,14 +125,29 @@ export class NotesListComponent extends DialogInspector implements OnInit, OnDes
   }
 
   filterNotes(searchingData: SearchingData): void {
-    this.$searchingData.next(searchingData);
-    this.getSearchingData()
+    this.searchingData = searchingData;
+    this.alertService.clearErrorAlerts();
+    if (searchingData.searchingTerm === '') {
+      this.isSearchingProcess$.next(false);
+      this.getNotes(this.pagingData.pageNumber, this.pagingData.pageSize);
+    } else {
+      this.isSearchingProcess$.next(true);
+      this.getNotes(this.pagingData.pageNumber, this.pagingData.pageSize, this.searchingData);
+    }
+  }
+
+  private watchNotesSearchingProcess(): void {
+    this.getIsSearchingProcess()
       .pipe(
-        take(1), 
-        tap((data: SearchingData) => this.getNotes(this.pagingData.pageNumber, this.pagingData.pageSize, data)))
+        takeUntil(this.destroyComponent$),
+        tap(data => {
+          this.isSearchingProcess = data;
+          // Si aucune recherche n'est en cours, continu d'observer l'apparission de nouvelles notes
+          if (!this.isSearchingProcess) {
+            this.updateNotesList();
+          }
+        }))
       .subscribe();
-    // this.searchingData = searchingData;
-    // this.getNotes(this.pagingData.pageNumber, this.pagingData.pageSize, this.searchingData);
   }
 
   ngOnDestroy(): void {
