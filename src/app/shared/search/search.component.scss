@@ -1,7 +1,16 @@
+@import "../../../variables";
+
+h3 {
+  margin-top: map-get($spaces, m);
+  padding-top: map-get($spaces, m);
+}
+
 form {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
+  margin-top: 0;
+  padding-top: 0;
   mat-form-field {
     margin-right: 1rem;
     &:first-child {flex: 1};

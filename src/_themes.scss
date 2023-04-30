@@ -3,7 +3,7 @@
 @include mat-core();
 
 $primary: mat-palette($mat-blue, 500);
-$accent: mat-palette($mat-orange, 300);
+$accent: mat-palette($mat-orange, 100);
 $warn: mat-palette($mat-red, 500);
 
 $express-theme: mat-light-theme($primary, $accent, $warn);

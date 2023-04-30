@@ -1,0 +1,10 @@
+@import '../../../mixins';
+
+.sorting {
+  @include flex-rsbc;
+  margin-bottom: 3rem;
+}
+
+.chip {
+  cursor: pointer;
+}

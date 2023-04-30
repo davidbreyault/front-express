@@ -7,8 +7,8 @@ type BannerType = 'small' | 'medium' | 'large';
 })
 export class BannerDirective implements AfterViewInit {
 
-  @Input() textColor = "#FE9063";
-  @Input() backgroundColor = "#FDF0E7";
+  @Input() textColor = "#EF6C00";
+  @Input() backgroundColor = "#FFE0B2";
   @Input() size!: BannerType;
 
   constructor(private elementRef: ElementRef, private renderer: Renderer2) { }

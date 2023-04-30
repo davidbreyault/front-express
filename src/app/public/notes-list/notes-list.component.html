@@ -1,5 +1,29 @@
 <h3>All notes</h3>
 <app-search (searchEvent)="filterNotes($event)"></app-search>
+
+<h3>Sort by</h3>
+<div class="sorting">
+  <mat-chip-list>
+    <mat-chip 
+      *ngFor="let chip of chips" 
+      (click)="onClickChip(chip)" 
+      [selected]="chip.isSelected" 
+      color="accent"
+      class="chip">
+        {{ chip.label }}
+        <ng-container *ngIf="chip.isSelected">
+          <mat-icon *ngIf="chip.isAscendingSorted">north</mat-icon>
+          <mat-icon *ngIf="chip.isDescendingSorted">south</mat-icon>
+        </ng-container>
+    </mat-chip>
+  </mat-chip-list>
+  <button *ngIf="isSortingProcess" mat-raised-button color="primary" (click)="resetSorting()">
+    <mat-icon>cancel</mat-icon>
+    <span>Reset sorting</span>
+  </button>
+</div>
+
+
 <app-alert *ngIf="!isAnyDialogOpenned"></app-alert>
 <mat-spinner *ngIf="isLoadingSpinnerVisible" strokeWidth="2" diameter="50"></mat-spinner>
 <div class="notes-list">

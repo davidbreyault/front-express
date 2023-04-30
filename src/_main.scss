@@ -76,6 +76,10 @@ mat-icon {
   &:last-child {margin-left: map-get($spaces, s)};
 }
 
+.mat-chip.mat-standard-chip::after {
+  background: transparent;
+}
+
 .container {
   width: 100%;
   margin-left: auto;

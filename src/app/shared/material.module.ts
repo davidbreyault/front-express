@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatChipsModule } from '@angular/material/chips';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatInputModule,
     MatSelectModule,
     MatMenuModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatChipsModule
   ]
 })
 export class MaterialModule {}
