@@ -5,5 +5,5 @@ form {
 }
 
 mat-form-field:first-child input {
-  color: lighten($color: map-get($text-colors, steel), $amount: 10)
+  color: lighten($color: map-get($text-colors, grey-500), $amount: 15);
 }

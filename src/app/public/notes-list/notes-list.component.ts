@@ -1,16 +1,16 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { BehaviorSubject, catchError, interval, Observable, Subject, take, takeUntil, takeWhile, tap, throwError } from 'rxjs';
 import { AlertType } from 'src/app/shared/_models/alert.model';
 import { PagingData } from 'src/app/shared/_models/paging-data.model';
-import { SearchingData } from 'src/app/shared/_models/searching-data.model';
 import { AlertService } from 'src/app/shared/_services/alert.service';
 import { DialogInspector } from '../dialog-inspector';
 import { Note } from '../_models/note.model';
 import { ResponseNotes } from '../_models/response-notes.model';
 import { NotesService } from '../_services/notes.service';
 import { SortingData } from 'src/app/shared/_models/sorting-data.model';
+import { NoteSearchingData } from 'src/app/shared/_models/note-searching-data';
 
 interface Chip {
   label: string,
@@ -32,13 +32,15 @@ export class NotesListComponent extends DialogInspector implements OnInit, OnDes
   destroyComponent$!: Subject<boolean>;
   pagingData!: PagingData;
   sortingData!: SortingData;
-  searchingData!: SearchingData;
+  searchingData!: NoteSearchingData;
   isSortingProcess!: boolean;
   isSortingProcess$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   isSearchingProcess!: boolean;
   isSearchingProcess$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   chips!: Chip[];
   previousSelectedChip!: Chip;
+  panelOpenState: boolean = false;
+  @ViewChild('paginator') paginator!: MatPaginator;
 
   constructor(
     private notesService: NotesService,
@@ -66,7 +68,7 @@ export class NotesListComponent extends DialogInspector implements OnInit, OnDes
     return this.isSearchingProcess$.asObservable();
   }
 
-  private getNotes(pageNumber: number, pageSize: number, searchingParams?: SearchingData, sortParams?: SortingData): void {
+  private getNotes(pageNumber: number, pageSize: number, searchingParams?: NoteSearchingData, sortParams?: SortingData): void {
     console.log('GET NOTES');
     this.notesService.getAllNotes(pageNumber, pageSize, searchingParams, sortParams)
       .pipe(
@@ -77,12 +79,7 @@ export class NotesListComponent extends DialogInspector implements OnInit, OnDes
           this.pagingData.totalPages = response.totalPages;
           this.isLoadingSpinnerVisible = false;
           if (this.notes.length === 0) {
-            if (searchingParams?.searchingType === 'username') {
-              this.alertService.addAlert(searchingParams.searchingTerm + ' has not posted note yet.', AlertType.error, false);
-            }
-            if (searchingParams?.searchingType === 'keyword') {
-              this.alertService.addAlert('No note contain this term.', AlertType.error, false);
-            }
+            this.alertService.addAlert('No notes has been found with these criteria.', AlertType.error, false);
           }
         }),
         catchError((httpErrorResponse: HttpErrorResponse) => {
@@ -144,15 +141,20 @@ export class NotesListComponent extends DialogInspector implements OnInit, OnDes
     this.notes = this.notes.filter(n => n.id !== note.id);
   }
 
-  filterNotes(searchingData: SearchingData): void {
-    this.searchingData = searchingData;
+  filterNotesBySearching(noteSearchingData: NoteSearchingData): void {
+    this.searchingData = noteSearchingData;
+    // Pour chaque nouvelle recherche, retourne à la première page
+    this.paginator.firstPage();
     this.alertService.clearErrorAlerts();
-    if (searchingData.searchingTerm === '') {
-      this.isSearchingProcess$.next(false);
-      this.getNotes(this.pagingData.pageNumber, this.pagingData.pageSize);
-    } else {
-      this.isSearchingProcess$.next(true);
-      this.getNotes(this.pagingData.pageNumber, this.pagingData.pageSize, this.searchingData);
+    if (noteSearchingData) {
+      const {username, noteKeyword, dateStart, dateEnd} = noteSearchingData;
+      if (username || noteKeyword || dateStart || dateEnd) {
+        this.isSearchingProcess$.next(true);
+        this.getNotes(this.pagingData.pageNumber, this.pagingData.pageSize, this.searchingData);
+      } else {
+        this.isSearchingProcess$.next(false);
+        this.getNotes(this.pagingData.pageNumber, this.pagingData.pageSize);
+      }
     }
   }
 
@@ -183,44 +185,6 @@ export class NotesListComponent extends DialogInspector implements OnInit, OnDes
         }))
       .subscribe();
   }
-  
-  // onClickChip(clickedLabel: string): void {
-  //   this.isSortingProcess$.next(true);
-  //   // Récupération du chip sur lequel on a cliqué
-  //   let chip = this.chips.find(c => c.label === clickedLabel)!
-  //   // Si un chip a déjà été sélectionné auparavant 
-  //   if (this.previousSelectedChip) {
-  //     if (this.previousSelectedChip.label !== clickedLabel) {
-  //       this.chips.forEach(c => {
-  //         c.isSelected = false;
-  //         c.isAscendingSorted = false;
-  //       });
-  //       chip.isSelected = true;
-  //       chip.isAscendingSorted = true;
-  //       chip.isDescendingSorted = false;
-  //       this.chips.forEach(c => c.previousLabel = this.previousSelectedChip.label);
-  //       this.previousSelectedChip = this.chips.find(c => c.label === clickedLabel)!;
-  //       this.sortingData = {field: chip.name, direction: 'asc'};
-  //       this.getNotes(this.pagingData.pageNumber, this.pagingData.pageSize, this.searchingData, this.sortingData);
-  //     } else {
-  //       chip.isSelected = true;
-  //       chip.isAscendingSorted = !this.previousSelectedChip.isAscendingSorted;
-  //       chip.isDescendingSorted = !this.previousSelectedChip.isDescendingSorted;
-  //       this.chips.forEach(c => c.previousLabel = this.previousSelectedChip.label);
-  //       const direction = chip.isDescendingSorted ? 'desc' : 'asc';
-  //       this.sortingData = {field: chip.name, direction: direction};
-  //       this.getNotes(this.pagingData.pageNumber, this.pagingData.pageSize, this.searchingData, this.sortingData);
-  //     }
-  //   }
-  //   // Si aucun chip n'a déjà été sélectionné auparavant
-  //   if (!this.previousSelectedChip) {
-  //     chip.isSelected = true;
-  //     chip.isAscendingSorted = true;
-  //     this.previousSelectedChip = chip;
-  //     this.sortingData = {field: chip.name, direction: 'asc'};
-  //     this.getNotes(this.pagingData.pageNumber, this.pagingData.pageSize, this.searchingData, this.sortingData);
-  //   }
-  // }
 
   onClickChip(currentSelectedChip: Chip): void {
     this.isSortingProcess$.next(true);

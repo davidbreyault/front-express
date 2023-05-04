@@ -25,34 +25,35 @@ $spaces: (
 // COLORS
 
 $background-colors: (
-  primary: #2196f3,
-  primary-light: #F7FBFD,
-  primary-dark: #0D3C61,
+  blue-25: #F7FBFD,
+  blue-500: #2196F3,
+  orange-50: #FFF3E0,
+  orange-700: #F57C00,
   white: #FFFFFF,
-  tin: #F5F5F5,
+  tin: #F8F8F8,
   success: #EDFFF9,
   error: #FFF6F6,
   hover: rgba(0, 0, 0, 0.04)
 );
 
 $text-colors: (
-  primary: #757575,
-  blue-default: #2196F3,
-  blue-light: #E6F1F5,
-  blue-dark: #0D3C61,
-  steel: #a4a4a4,
+  grey-400: #BDBDBD,
+  grey-500: #9E9E9E,
+  grey-600: #757575,
+  blue-500: #2196F3,
+  orange500: #FF9800, 
+  orange-700: #F57C00,
+  orange-900: #E65100,
   success: #00B490,
   error: #F44336,
-  white: #FFFFFF,
-  delete: #F44336,
-  black: #000000
+  white: #FFFFFF
 );
 
 $border-colors: (
   default: #E4E4E4,
   success: #00B490,
   error: #F44336,
-  best: #63A7DF
+  best: #F8E7CB
 );
 
 // RADIUS

@@ -1,12 +1,13 @@
 import { HttpClient, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, Subject } from "rxjs";
-import { SearchingData } from "src/app/shared/_models/searching-data.model";
 import { environment } from "src/environments/environment";
 import { Note } from "../_models/note.model";
 import { ResponseNotes } from "../_models/response-notes.model";
 import { ResponseSuccess } from "../_models/response-success.model";
 import { SortingData } from "src/app/shared/_models/sorting-data.model";
+import { NoteSearchingData } from "src/app/shared/_models/note-searching-data";
+import { DatesHandler } from "src/app/shared/_utils/dates-handler";
 
 @Injectable()
 export class NotesService {
@@ -20,15 +21,33 @@ export class NotesService {
     return this.refreshSubject.asObservable();
   }
 
-  getAllNotes(pageNumber: number, pageSize: number, searchingParams?: SearchingData, sortParams?: SortingData): Observable<ResponseNotes> {
+  getAllNotes(pageNumber: number, pageSize: number, searchingParams?: NoteSearchingData, sortParams?: SortingData): Observable<ResponseNotes> {
     let url: string = `${environment.apiRootUrl}/${this.notesApiPoint}?page=${pageNumber}&size=${pageSize}`;
-    if (searchingParams && searchingParams.searchingTerm.length > 0) {
-      url = url.concat('', `&${searchingParams.searchingType}=${searchingParams.searchingTerm}`);
+    if (searchingParams) {
+      url += this.addSearchingParameters(searchingParams);
     }
     if (sortParams && sortParams.field.length > 0) {
-      url = url.concat('', `&sort=${sortParams.field},${sortParams.direction}`);
+      url += `&sort=${sortParams.field},${sortParams.direction}`;
     }
     return this.http.get<ResponseNotes>(url);
+  }
+
+  private addSearchingParameters(searchingParams: NoteSearchingData): string {
+    let parametersChain = '';
+    const {username, noteKeyword, dateStart, dateEnd} = searchingParams;
+      if (username) {
+        parametersChain += `&username=${username}`;
+      }
+      if (noteKeyword) {
+        parametersChain += `&keyword=${noteKeyword}`;
+      }
+      if (dateStart) {
+        parametersChain += `&dateStart=${DatesHandler.toDateString(dateStart)}`;
+      }
+      if (dateEnd) {
+        parametersChain += `&dateEnd=${DatesHandler.toDateString(dateEnd)}`;
+      }
+    return parametersChain;
   }
 
   getBestNotes(topParameter: number): Observable<ResponseNotes> {

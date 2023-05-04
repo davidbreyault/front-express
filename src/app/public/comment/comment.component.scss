@@ -13,11 +13,11 @@
     margin-bottom: map-get($spaces, xxs);
     p {
       font-weight: 400;
-      color: darken($color: map-get($text-colors, primary), $amount: 15);
+      color: darken($color: map-get($text-colors, grey-600), $amount: 15);
     }
     span {
-      font-size: 1.2rem;
-      color: map-get($text-colors, steel);
+      font-size: 1rem;
+      color: map-get($text-colors, grey-500);
     }
   }
   &__footer {
@@ -27,7 +27,7 @@
       @include flex-rsbc;
       mat-icon {
         margin: 0;
-        color: map-get($text-colors, primary);
+        color: map-get($text-colors, grey-600);
       }
     }
   }

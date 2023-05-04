@@ -1,11 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SearchingData } from '../_models/searching-data.model';
-
-interface SelectValues {
-  name: string,
-  value: string
-}
+import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
+import { NoteSearchingData } from '../_models/note-searching-data';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-search',
@@ -14,29 +10,39 @@ interface SelectValues {
 })
 export class SearchComponent implements OnInit {
 
-  @Output() searchEvent: EventEmitter<SearchingData> = new EventEmitter<SearchingData>();
+  @Output() searchEvent: EventEmitter<NoteSearchingData> = new EventEmitter<NoteSearchingData>();
   searchForm!: FormGroup;
-  selectTypes: SelectValues[] = [
-    {name: 'Keyword', value: 'keyword'},
-    {name: 'Publication date', value: 'createdAt'},
-    {name: 'Username', value: 'username'}
-  ];
-  selectTypeDefault = this.selectTypes[2].value;
+  isResetFormButtonDisabled!: boolean;
 
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.initSearchForm();
+    this.isResetFormButtonDisabled = true;
+    this.toggleResetFormButton();
   }
 
   private initSearchForm(): void {
     this.searchForm = this.formBuilder.group({
-      searchingTerm: [null],
-      searchingType: [null, Validators.required]
+      username: [null],
+      noteKeyword: [null],
+      dateStart: [null],
+      dateEnd: [null]
     });
   }
 
   onClickSearch(): void {
     this.searchEvent.emit(this.searchForm.value);
+  }
+
+  onClickReset(): void {
+    this.searchForm.reset();
+    this.searchEvent.emit(this.searchForm.value);
+  }
+
+  toggleResetFormButton(): void {
+    this.searchForm.valueChanges
+      .pipe(tap(values => this.isResetFormButtonDisabled = Object.entries(values).every(item => (item[1] === null || item[1] === ''))))
+      .subscribe();
   }
 }
