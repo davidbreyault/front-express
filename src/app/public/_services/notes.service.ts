@@ -6,7 +6,7 @@ import { Note } from "../_models/note.model";
 import { ResponseNotes } from "../_models/response-notes.model";
 import { ResponseSuccess } from "../_models/response-success.model";
 import { SortingData } from "src/app/shared/_models/sorting-data.model";
-import { NoteSearchingData } from "src/app/shared/_models/note-searching-data";
+import { NoteSearchingData } from "src/app/shared/_models/note-searching-data.model";
 import { DatesHandler } from "src/app/shared/_utils/dates-handler";
 
 @Injectable()
@@ -21,13 +21,13 @@ export class NotesService {
     return this.refreshSubject.asObservable();
   }
 
-  getAllNotes(pageNumber: number, pageSize: number, searchingParams?: NoteSearchingData, sortParams?: SortingData): Observable<ResponseNotes> {
+  getAllNotes(pageNumber: number, pageSize: number, searchingParams?: NoteSearchingData, sortingParams?: SortingData): Observable<ResponseNotes> {
     let url: string = `${environment.apiRootUrl}/${this.notesApiPoint}?page=${pageNumber}&size=${pageSize}`;
     if (searchingParams) {
       url += this.addSearchingParameters(searchingParams);
     }
-    if (sortParams && sortParams.field.length > 0) {
-      url += `&sort=${sortParams.field},${sortParams.direction}`;
+    if (sortingParams && sortingParams.field && sortingParams.direction) {
+      url += `&sort=${sortingParams.field},${sortingParams.direction}`;
     }
     return this.http.get<ResponseNotes>(url);
   }

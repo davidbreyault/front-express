@@ -1,0 +1,11 @@
+@import '../../../mixins';
+@import '../../../variables';
+
+.sorting {
+  @include flex-rsbc;
+  margin-top: map-get($spaces, m);
+}
+
+.chip {
+  cursor: pointer;
+}

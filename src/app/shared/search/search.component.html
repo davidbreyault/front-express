@@ -28,7 +28,7 @@
   <div class="form-submit">
     <button 
       (click)="onClickReset()" 
-      [disabled]="isResetFormButtonDisabled" 
+      *ngIf="isResetFormButtonVisible" 
       mat-raised-button color="primary">
       <mat-icon>cancel</mat-icon>
       <span>Reset</span>

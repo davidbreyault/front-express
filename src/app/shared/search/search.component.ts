@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
-import { NoteSearchingData } from '../_models/note-searching-data';
+import { NoteSearchingData } from '../_models/note-searching-data.model';
 import { tap } from 'rxjs';
 
 @Component({
@@ -12,14 +12,14 @@ export class SearchComponent implements OnInit {
 
   @Output() searchEvent: EventEmitter<NoteSearchingData> = new EventEmitter<NoteSearchingData>();
   searchForm!: FormGroup;
-  isResetFormButtonDisabled!: boolean;
+  isResetFormButtonVisible!: boolean;
 
   constructor(private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.initSearchForm();
-    this.isResetFormButtonDisabled = true;
-    this.toggleResetFormButton();
+    this.isResetFormButtonVisible = false;
+    this.toggleResetFormButtonVisibility();
   }
 
   private initSearchForm(): void {
@@ -40,9 +40,9 @@ export class SearchComponent implements OnInit {
     this.searchEvent.emit(this.searchForm.value);
   }
 
-  toggleResetFormButton(): void {
+  toggleResetFormButtonVisibility(): void {
     this.searchForm.valueChanges
-      .pipe(tap(values => this.isResetFormButtonDisabled = Object.entries(values).every(item => (item[1] === null || item[1] === ''))))
+      .pipe(tap(values => this.isResetFormButtonVisible = !Object.entries(values).every(item => (item[1] === null || item[1] === ''))))
       .subscribe();
   }
 }

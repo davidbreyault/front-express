@@ -15,13 +15,15 @@ import { ErrorValidatorService } from './_services/error-validator.service';
 import { AlertComponent } from './alert/alert.component';
 import { SearchComponent } from './search/search.component';
 import { ButtonBurgerComponent } from './button-burger/button-burger.component';
+import { SortComponent } from './sort/sort.component';
 
 @NgModule({
   declarations: [
     SanitizePipe,
     AlertComponent,
     SearchComponent,
-    ButtonBurgerComponent
+    ButtonBurgerComponent,
+    SortComponent
   ],
   imports: [
     CommonModule,
@@ -38,7 +40,8 @@ import { ButtonBurgerComponent } from './button-burger/button-burger.component';
     SanitizePipe,
     AlertComponent,
     SearchComponent,
-    ButtonBurgerComponent
+    ButtonBurgerComponent,
+    SortComponent
   ], 
   providers: [
     TokenService,

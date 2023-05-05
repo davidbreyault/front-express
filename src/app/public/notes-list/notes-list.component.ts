@@ -10,15 +10,7 @@ import { Note } from '../_models/note.model';
 import { ResponseNotes } from '../_models/response-notes.model';
 import { NotesService } from '../_services/notes.service';
 import { SortingData } from 'src/app/shared/_models/sorting-data.model';
-import { NoteSearchingData } from 'src/app/shared/_models/note-searching-data';
-
-interface Chip {
-  label: string,
-  name: string,
-  isSelected: boolean,
-  isAscendingSorted: boolean,
-  isDescendingSorted: boolean
-}
+import { NoteSearchingData } from 'src/app/shared/_models/note-searching-data.model';
 
 @Component({
   selector: 'app-notes-list',
@@ -37,8 +29,6 @@ export class NotesListComponent extends DialogInspector implements OnInit, OnDes
   isSortingProcess$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   isSearchingProcess!: boolean;
   isSearchingProcess$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  chips!: Chip[];
-  previousSelectedChip!: Chip;
   panelOpenState: boolean = false;
   @ViewChild('paginator') paginator!: MatPaginator;
 
@@ -50,7 +40,6 @@ export class NotesListComponent extends DialogInspector implements OnInit, OnDes
   }
 
   ngOnInit(): void {
-    this.initChips();
     this.initPagingData();
     this.destroyComponent$ = new Subject<boolean>();
     this.getNotes(this.pagingData.pageNumber, this.pagingData.pageSize);
@@ -97,7 +86,7 @@ export class NotesListComponent extends DialogInspector implements OnInit, OnDes
    * Mise à jour de la liste des notes toutes les 10 secondes
    */
   private updateNotesList(): void {
-    interval(8000)
+    interval(10000)
       .pipe(
         takeWhile(() => !this.isSortingProcess),
         takeWhile(() => !this.isSearchingProcess),
@@ -158,6 +147,14 @@ export class NotesListComponent extends DialogInspector implements OnInit, OnDes
     }
   }
 
+  sortNotes(sortingData: SortingData) {
+    this.sortingData = sortingData;
+    sortingData.field && sortingData.direction 
+      ? this.isSortingProcess$.next(true)
+      : this.isSortingProcess$.next(false);
+    this.getNotes(this.pagingData.pageNumber, this.pagingData.pageSize, this.searchingData, this.sortingData);
+  }
+
   private watchNotesSortingProcess(): void {
     this.getIsSortingProcess()
       .pipe(
@@ -184,66 +181,6 @@ export class NotesListComponent extends DialogInspector implements OnInit, OnDes
           }
         }))
       .subscribe();
-  }
-
-  onClickChip(currentSelectedChip: Chip): void {
-    this.isSortingProcess$.next(true);
-    // Récupération du chip sur lequel on a cliqué
-    let chip = this.chips.find(c => c.label === currentSelectedChip.label)!
-    // Si un chip a déjà été sélectionné auparavant 
-    if (this.previousSelectedChip) {
-      if (this.previousSelectedChip.label !== currentSelectedChip.label) {
-        this.resetChips();
-        this.firstClickSortingChip(chip);
-        this.sortingData = {field: chip.name, direction: 'asc'};
-        this.previousSelectedChip = chip;
-      } else {
-        this.secondClickSortingChip(chip);
-        this.sortingData = {field: chip.name, direction: chip.isDescendingSorted ? 'desc' : 'asc'};
-      }
-    }
-    // Si aucun chip n'a déjà été sélectionné auparavant
-    if (!this.previousSelectedChip) {
-      this.firstClickSortingChip(chip);
-      this.sortingData = {field: chip.name, direction: 'asc'};
-      this.previousSelectedChip = chip;
-    }
-    this.getNotes(this.pagingData.pageNumber, this.pagingData.pageSize, this.searchingData, this.sortingData);
-  }
-
-  private firstClickSortingChip(chip: Chip): void {
-    chip.isSelected = true;
-    chip.isAscendingSorted = true;
-    chip.isDescendingSorted = false;
-  }
-
-  private secondClickSortingChip(chip: Chip): void {
-    chip.isSelected = true;
-    chip.isAscendingSorted = !this.previousSelectedChip.isAscendingSorted;
-    chip.isDescendingSorted = !this.previousSelectedChip.isDescendingSorted;
-  }
-
-  private initChips(): void {
-    this.chips = [
-      {label: 'Username', name: 'user.username', isSelected: false, isAscendingSorted: false, isDescendingSorted: false},
-      {label: 'Note', name: 'note', isSelected: false, isAscendingSorted: false, isDescendingSorted: false},
-      {label: 'Creation Date', name: 'createdAt', isSelected: false, isAscendingSorted: false, isDescendingSorted: false},
-      {label: 'Like', name: 'likes', isSelected: false, isAscendingSorted: false, isDescendingSorted: false},
-      {label: 'Dislike', name: 'dislikes', isSelected: false, isAscendingSorted: false, isDescendingSorted: false},
-    ];
-  }
-
-  private resetChips(): void {
-    this.chips.forEach(c => {
-      c.isSelected = false;
-      c.isAscendingSorted = false;
-    });
-  }
-
-  resetSorting(): void {
-    this.initChips();
-    this.isSortingProcess$.next(false);
-    this.getNotes(this.pagingData.pageNumber, this.pagingData.pageSize, this.searchingData);
   }
 
   ngOnDestroy(): void {

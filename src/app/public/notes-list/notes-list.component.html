@@ -13,27 +13,7 @@
       </button>
     </mat-expansion-panel-header>
     <app-search (searchEvent)="filterNotesBySearching($event)"></app-search>
-    <h3>Sort by</h3>
-    <div class="sorting">
-      <mat-chip-list>
-        <mat-chip 
-          *ngFor="let chip of chips" 
-          (click)="onClickChip(chip)" 
-          [selected]="chip.isSelected" 
-          color="accent"
-          class="chip">
-            {{ chip.label }}
-            <ng-container *ngIf="chip.isSelected">
-              <mat-icon *ngIf="chip.isAscendingSorted">north</mat-icon>
-              <mat-icon *ngIf="chip.isDescendingSorted">south</mat-icon>
-            </ng-container>
-        </mat-chip>
-      </mat-chip-list>
-      <button *ngIf="isSortingProcess" mat-raised-button color="primary" (click)="resetSorting()">
-        <mat-icon>cancel</mat-icon>
-        <span>Reset sorting</span>
-      </button>
-    </div>
+    <app-sort (sortingEvent)="sortNotes($event)"></app-sort>
   </mat-expansion-panel>
 </mat-accordion>
 

@@ -1,4 +1,4 @@
 export class SortingData {
-  field!: string;
-  direction!: string;
+  field!: string | null;
+  direction!: string | null;
 }
