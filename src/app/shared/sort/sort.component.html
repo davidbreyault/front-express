@@ -1,0 +1,21 @@
+<h3>Sort by</h3>
+<div class="sorting">
+  <mat-chip-list>
+    <mat-chip 
+      *ngFor="let chip of chips" 
+      (click)="onClickChip(chip)" 
+      [selected]="chip.isSelected" 
+      color="accent"
+      class="chip">
+        {{ chip.label }}
+        <ng-container *ngIf="chip.isSelected">
+          <mat-icon *ngIf="chip.isAscendingSorted">north</mat-icon>
+          <mat-icon *ngIf="chip.isDescendingSorted">south</mat-icon>
+        </ng-container>
+    </mat-chip>
+  </mat-chip-list>
+  <button *ngIf="sortingData?.field" mat-raised-button color="primary" (click)="resetSorting()">
+    <mat-icon>cancel</mat-icon>
+    <span>Reset sorting</span>
+  </button>
+</div>

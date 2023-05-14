@@ -7,7 +7,6 @@
   min-width: 29rem;
   max-width: 51rem;
   border-radius: map-get($radius, default);
-  box-shadow: map-get($shadows, default);
   background-color: map-get($background-colors, tin);
   font-weight: 300;
   &__header {
@@ -49,7 +48,7 @@
     border-left: 1px solid map-get($border-colors, default);
     mat-icon {
       margin: 0;
-      color: map-get($text-colors, primary);
+      color: map-get($text-colors, grey-600);
     }
   }
 }
@@ -75,25 +74,21 @@
     font-weight: 200;
     span {
       font-weight: 400;
-      color: darken($color: map-get($text-colors, primary), $amount: 15);
+      color: darken($color: map-get($text-colors, grey-600), $amount: 15);
     }
   }
   &--date {
     font-size: 1rem;
-    color: map-get($text-colors, steel);
+    color: map-get($text-colors, grey-400);
   }
 }
 
 .popular.note {
-  background-color: map-get($background-colors, primary);
-  mat-icon {margin: 0; color: map-get($text-colors, blue-light);}
-  p, span { color: map-get($text-colors, white)};
-  .note__header--avatar {background-color: lighten($color: map-get($background-colors, primary), $amount: 40)};
-  .note__header--date {color: map-get($text-colors, blue-light)};
+  background-color: map-get($background-colors, orange-50);
+  mat-icon {margin: 0; color: map-get($text-colors, orange-700);}
+  p, span { color: map-get($text-colors, orange-700)};
   .note__content {border-bottom-color: map-get($border-colors, best)};
-  .note__footer--actions {border-left-color: map-get($border-colors, best)};
   .note__header--author {
-    color: map-get($text-colors, blue-light);
-    span {color: map-get($text-colors, white)};
+    span {color: map-get($text-colors, orange-900)};
   }
 }

@@ -51,7 +51,7 @@ export class CommentComponent extends Affiliations implements OnInit {
       .pipe(
         take(1),
         tap(response => {
-          if (response.status === 200) {
+          if (response.status === 204) {
             commentDeletionData.deletionSuccess = true;
             commentDeletionData.deleteMessage = 'Your comment has been deleted successfully';
             commentDeletionData.alertType = AlertType.success;

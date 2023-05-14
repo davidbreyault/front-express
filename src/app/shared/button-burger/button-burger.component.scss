@@ -12,7 +12,7 @@ button {
   border: solid transparent 1px;
   outline-width: thin;
   outline-offset: 8px;
-  outline-color: map-get($text-colors, steel);
+  outline-color: lighten($color: map-get($text-colors, grey-500), $amount: 15);
   background-color: transparent;
   -webkit-transform: rotate(0deg);
   -moz-transform: rotate(0deg);
@@ -23,18 +23,13 @@ button {
   -o-transition: .5s ease-in-out;
   transition: .5s ease-in-out;
   cursor: pointer;
-  &:focus {
-    span {
-      background-color: map-get($background-colors, primary);
-    }
-  }
   span {
     position: absolute;
     display: block;
     width: 100%;
     height: $bar-thickness;
     border-radius: math.div($bar-thickness, 2);
-    background-color: map-get($background-colors, primary);
+    background-color: map-get($background-colors, blue-500);
     opacity: 1;
     -webkit-transition: .25s ease-in-out;
     -moz-transition: .25s ease-in-out;

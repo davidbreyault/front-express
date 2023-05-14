@@ -23,9 +23,8 @@ button[mat-menu-item] {
   }
   &:last-child {
     color: map-get($background-colors, white);
-    background-color: map-get($background-colors, primary);
-    mat-icon, div {color: map-get($text-colors, white)};
-    &:hover {background-color: darken($color: map-get($background-colors, primary), $amount: 5)};
+    background-color: map-get($background-colors, blue-500);
+    mat-icon, div {color: map-get($text-colors, white)};  
   }
 }
 

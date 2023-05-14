@@ -1,0 +1,29 @@
+@import '../../../mixins';
+@import '../../../variables';
+
+.sorting {
+  @include flex-rsbc;
+  margin-top: map-get($spaces, m);
+}
+
+.chip {
+  cursor: pointer;
+}
+
+.mat-expansion-panel:not([class*=mat-elevation-z]) {
+  box-shadow: none;
+}
+
+.mat-expansion-panel .mat-expansion-panel-header.cdk-keyboard-focused:not([aria-disabled=true]), 
+.mat-expansion-panel .mat-expansion-panel-header.cdk-program-focused:not([aria-disabled=true]), 
+.mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:hover:not([aria-disabled=true]) {
+  background: transparent;
+}
+
+.mat-expansion-panel-header {
+  padding: 0;
+}
+
+.notes-list {
+  margin-top: map-get($spaces, m);
+}

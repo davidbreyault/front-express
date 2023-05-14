@@ -1,0 +1,41 @@
+<h3>Search by</h3>
+<form [formGroup]="searchForm" (ngSubmit)="onClickSearch()">
+  <div class="group-form-field">
+    <mat-form-field appearance="fill">
+      <mat-label>Username</mat-label>
+      <input matInput placeholder="Search by username" formControlName="username">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Keyword</mat-label>
+      <input matInput placeholder="Search by note keyword" formControlName="noteKeyword">
+    </mat-form-field>
+  </div>
+  <div class="group-form-field">
+    <mat-form-field appearance="fill">
+      <mat-label>Start date</mat-label>
+      <input matInput [matDatepicker]="startpicker" formControlName="dateStart">
+      <mat-datepicker-toggle matSuffix [for]="startpicker"></mat-datepicker-toggle>
+      <mat-datepicker #startpicker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>End date</mat-label>
+      <input matInput [matDatepicker]="endpicker" formControlName="dateEnd">
+      <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+      <mat-datepicker #endpicker></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+  <div class="form-submit">
+    <button 
+      (click)="onClickReset()" 
+      *ngIf="isResetFormButtonVisible" 
+      mat-raised-button color="primary">
+      <mat-icon>cancel</mat-icon>
+      <span>Reset</span>
+    </button>
+    <button mat-raised-button color="primary">
+      <mat-icon>search</mat-icon>
+      <span>Search</span>
+    </button>
+  </div>
+</form>

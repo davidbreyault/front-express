@@ -1,0 +1,24 @@
+@import "../../../variables";
+@import "../../../mixins";
+
+h3 {
+  padding-top: map-get($spaces, m);
+}
+
+form {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.group-form-field {
+  @include flex-rsbc;
+  mat-form-field {
+    width: 48%;
+  }
+}
+
+.form-submit {
+  button:first-child {
+    margin-right: map-get($spaces, m);
+  }
+}

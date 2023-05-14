@@ -1,7 +1,7 @@
 <div class="comment">
   <div class="comment__header">
     <p>{{ comment.username }}</p>
-    <span>{{ comment.createdAt | date: 'dd/MM/yy - HH:ss' }}</span>
+    <span>{{ comment.createdAt | date: 'dd/MM/yy - HH:mm' }}</span>
   </div>
   <ng-container *ngIf="!isBeingUpdated">
     <p class="comment__content">{{ comment.message }}</p>

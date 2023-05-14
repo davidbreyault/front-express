@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { Subscription, tap } from 'rxjs';
 import { Authentication } from './public/_models/authentication.model';
 import { AuthenticationService } from './public/_services/authentication.service';
-import { AlertType } from './shared/_models/alert.model';
 import { AlertService } from './shared/_services/alert.service';
 
 @Component({
