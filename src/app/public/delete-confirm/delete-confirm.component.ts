@@ -1,5 +1,5 @@
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { catchError, take, tap, throwError } from 'rxjs';
 import { AlertType } from 'src/app/shared/_models/alert.model';
@@ -12,7 +12,7 @@ import { NotesService } from '../_services/notes.service';
   templateUrl: './delete-confirm.component.html',
   styleUrls: ['./delete-confirm.component.scss']
 })
-export class DeleteConfirmComponent implements OnInit {
+export class DeleteConfirmComponent {
 
   constructor(
     private alertService: AlertService,
@@ -20,9 +20,6 @@ export class DeleteConfirmComponent implements OnInit {
     private matDialogRef: MatDialogRef<DeleteConfirmComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Note
   ) {}
-
-  ngOnInit(): void {
-  }
 
   onClickDeleteNote(): void {
     this.notesService.deleteNote(this.data)

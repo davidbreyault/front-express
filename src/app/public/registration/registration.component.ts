@@ -97,7 +97,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       this.registrationService.registrate(credentialsRegistration)
         .pipe(
           tap(response => {
-            if (response.status === 200) {
+            if (response.status === 201) {
               this.onSwitchForAuthentication();
               this.alertService.addAlert(response.body.message, AlertType.success, true);
             }

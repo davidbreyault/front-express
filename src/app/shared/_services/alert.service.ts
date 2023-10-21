@@ -10,6 +10,10 @@ export class AlertService {
   alertsSubject: BehaviorSubject<Alert[]> = new BehaviorSubject<Alert[]>([]);
   isAnyDialogOpenedSubject: Subject<boolean> = new Subject<boolean>();
 
+  getAlerts(): Alert[] {
+    return this.alerts;
+  }
+
   addAlert(message: string, type: AlertType, inDialogOnly: boolean): void {
     const alert: Alert = new Alert();
     alert.type = type;

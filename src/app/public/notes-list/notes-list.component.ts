@@ -67,8 +67,13 @@ export class NotesListComponent extends DialogInspector implements OnInit, OnDes
           this.pagingData.totalItems = response.totalItems;
           this.pagingData.totalPages = response.totalPages;
           this.isLoadingSpinnerVisible = false;
-          if (this.notes.length === 0) {
-            this.alertService.addAlert('No notes has been found with these criteria.', AlertType.error, false);
+          if (!this.isSearchingProcess && !this.isSortingProcess && this.notes.length === 0 && !this.isAnyDialogOpenned) {
+            if (!this.alertService.getAlerts().find(alert => alert.notification === 'No note has been published yet.')) {
+              this.alertService.addAlert('No note has been published yet.', AlertType.error, false);
+            }
+          }
+          if ((this.isSearchingProcess || this.isSortingProcess) && this.notes?.length === 0) {
+            this.alertService.addAlert('No notes has been found with this criteria.', AlertType.error, false);
           }
         }),
         catchError((httpErrorResponse: HttpErrorResponse) => {
