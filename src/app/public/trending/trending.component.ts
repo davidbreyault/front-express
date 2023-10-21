@@ -19,6 +19,8 @@ export class TrendingComponent extends DialogInspector implements OnInit, OnDest
   destroyComponent$!: Subject<boolean>;
   isLoadingWheelVisible: boolean = true;
   mapValueDescOrder = (a: KeyValue<string, number>, b: KeyValue<string, number>): number => b.value - a.value;
+  maxWordValue!: number;
+  maxSize: number = 75;
 
   constructor(
     private trendingService: TrendingService,
@@ -43,6 +45,7 @@ export class TrendingComponent extends DialogInspector implements OnInit, OnDest
             this.trending.set(key, value);
           }
           this.isLoadingWheelVisible = false;
+          this.maxWordValue = this.getMaxValueFromTrending();
         }),
         catchError((httpErrorResponse: HttpErrorResponse) => {
           const message = httpErrorResponse.error ? httpErrorResponse.error : 'An error occured, cannot get trending...';
@@ -53,6 +56,31 @@ export class TrendingComponent extends DialogInspector implements OnInit, OnDest
           return throwError(() => httpErrorResponse);
         }))
       .subscribe();
+  }
+
+  getMaxValueFromTrending(): number {
+    return Math.max.apply(null, Array.from(this.trending.values()));
+  }
+
+  setWordSize(wordValue: number): number {
+    let pixel: number = 12;
+
+    if (wordValue === 1) {
+      pixel = pixel * 0.58;
+    }
+    if (wordValue === 2) {
+      pixel = pixel * 0.66;
+    }
+    if (wordValue === 3) {
+      pixel = pixel * 0.74;
+    }
+    if (wordValue === 4) {
+      pixel = pixel * 0.82;
+    }
+    if (wordValue === 5) {
+      pixel = pixel * 0.90;
+    }
+    return ((wordValue * this.maxSize) / this.maxWordValue) + pixel;
   }
 
   ngOnDestroy(): void {
